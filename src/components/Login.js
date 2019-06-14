@@ -6,7 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
 import firebaseHelper from '../config/firebase/firebaseHelper';
 import { withContext } from '../context/WithContext';
 

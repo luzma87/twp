@@ -1,5 +1,5 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSignInAlt, } from '@fortawesome/pro-regular-svg-icons';
+import { faSignInAlt, faSignOutAlt } from '@fortawesome/pro-regular-svg-icons';
 import PropTypes from "prop-types";
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -20,17 +20,17 @@ import routes from './routes';
 import * as serviceWorker from './serviceWorker';
 
 library.add(
-  faSignInAlt,
+  faSignInAlt, faSignOutAlt
 );
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const PrivateRoute = ({component: Component, ...rest}) => (
   <Route
     {...rest}
     render={props => (
       <GlobalContext.Consumer>
         {state => (state.currentUser
           ? <Component {...props} />
-          : <Redirect to={{ pathname: routes.login(), state: { from: props.location } }} />)}
+          : <Redirect to={{pathname: routes.login(), state: {from: props.location}}} />)}
       </GlobalContext.Consumer>
     )}
   />

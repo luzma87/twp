@@ -57,11 +57,10 @@ function task_color {
 }
 
 function task_start {
-  check_for_tool "node" "nvm install node"
   echo "${start_fg}Copying dev firebase config${normal_fg}"
   cp src/config/firebase/firebase.dev.config src/config/firebase/firebaseConfig.js
   echo "${start_fg}Starting app${normal_fg}"
-  npm start
+  yarn start
 }
 
 function task_clean {
@@ -69,17 +68,16 @@ function task_clean {
   echo -e "${start_fg}\tDeleting node modules${normal_fg}"
   rm -rf node_modules
   echo -e "${start_fg}\tReinstalling node modules${normal_fg}"
-  npm install
+  yarn install
 }
 
 function task_build {
-  check_for_tool "node" "nvm install node"
   echo "${deploy_fg}Copying prod firebase config${normal_fg}"
   cp src/config/firebase/firebase.prod.config src/config/firebase/firebaseConfig.js
   echo "${deploy_fg}Copying prod analytics config${normal_fg}"
   cp src/config/analytics/analytics.prod.config src/config/analytics/analyticsConfig.js
   echo "${deploy_fg}Building project${normal_fg}"
-  npm run build
+  yarn build
 }
 
 function task_deploy {

@@ -1,8 +1,12 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "@material-ui/core/Button";
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withContext } from '../context/WithContext';
 import routes from '../routes';
+import Content from "./_common/Content";
+import CustomNavBar from "./CustomNavBar";
 
 const Home = (props) => {
   const { context } = props;
@@ -11,22 +15,30 @@ const Home = (props) => {
   const routeNames = Object.keys(routes);
   return (
     <div>
+      <CustomNavBar/>
+      <Content>
       {`Logged In as ${email}`}
       <br />
       <br />
+      <ul>
       {routeNames.map(routeName => (
-        <div key={routeName}>
+        <li key={routeName}>
           <Link to={routes[routeName]()}>{routeName}</Link>
-        </div>
+        </li>
       ))}
+      </ul>
       <br />
       <br />
-      <button
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
         onClick={() => context.logout()}
-        type="button"
       >
         Logout
-      </button>
+        <FontAwesomeIcon icon={['far', 'sign-out-alt']} style={{ marginLeft: 16 }} />
+      </Button>
+      </Content>
     </div>
   );
 };
