@@ -6,26 +6,23 @@ import { Link } from 'react-router-dom';
 import { withContext } from '../context/WithContext';
 import routes from '../routes';
 import Content from "./_common/Content";
-import CustomNavBar from "./CustomNavBar";
 
 const Home = (props) => {
-  const { context } = props;
-  const { getUser } = context;
-  const { email } = getUser();
+  const {context} = props;
+  const {getUser} = context;
+  const {email} = getUser();
   const routeNames = Object.keys(routes);
   return (
-    <div>
-      <CustomNavBar/>
-      <Content>
+    <Content>
       {`Logged In as ${email}`}
       <br />
       <br />
       <ul>
-      {routeNames.map(routeName => (
-        <li key={routeName}>
-          <Link to={routes[routeName]()}>{routeName}</Link>
-        </li>
-      ))}
+        {routeNames.map(routeName => (
+          <li key={routeName}>
+            <Link to={routes[routeName]()}>{routeName}</Link>
+          </li>
+        ))}
       </ul>
       <br />
       <br />
@@ -36,10 +33,9 @@ const Home = (props) => {
         onClick={() => context.logout()}
       >
         Logout
-        <FontAwesomeIcon icon={['far', 'sign-out-alt']} style={{ marginLeft: 16 }} />
+        <FontAwesomeIcon icon={['far', 'sign-out-alt']} style={{marginLeft: 16}} />
       </Button>
-      </Content>
-    </div>
+    </Content>
   );
 };
 

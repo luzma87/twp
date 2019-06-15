@@ -1,3 +1,4 @@
+import Typography from "@material-ui/core/Typography";
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Content from "../_common/Content";
@@ -15,10 +16,12 @@ class PersonForm extends Component {
 
   render() {
     const { personId } = this.state;
-    const title = personId ? `Person ${personId} form` : 'New person form!!';
+    const title = personId ? `Person ${personId} form` : 'New person';
     return (
       <Content>
+        <Typography variant="h5">
         {title}
+        </Typography>
       </Content>
     );
   }

@@ -1,5 +1,5 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSignInAlt, faSignOutAlt } from '@fortawesome/pro-regular-svg-icons';
+import { faSignInAlt, faSignOutAlt, faUserAstronaut } from '@fortawesome/pro-regular-svg-icons';
 import PropTypes from "prop-types";
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -20,7 +20,7 @@ import routes from './routes';
 import * as serviceWorker from './serviceWorker';
 
 library.add(
-  faSignInAlt, faSignOutAlt
+  faSignInAlt, faSignOutAlt, faUserAstronaut
 );
 
 const PrivateRoute = ({component: Component, ...rest}) => (
