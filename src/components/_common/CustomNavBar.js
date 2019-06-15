@@ -25,7 +25,7 @@ const CustomNavBar = (props) => {
 
         <Link to={routes.personList()} style={{color: 'white'}}>
           <IconButton aria-label="Show 4 new mails" color="inherit">
-            <FontAwesomeIcon icon={['far', 'user-astronaut']} style={{marginLeft: 16}} />
+            <FontAwesomeIcon icon={['far', 'user-astronaut']}/>
           </IconButton>
         </Link>
 

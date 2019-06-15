@@ -1,0 +1,13 @@
+.full-meteor {
+  color: #e53d1b;
+}
+.full-meteor:hover {
+  color: #dd8a7c;
+}
+
+.empty-meteor {
+  color: #ffc3b7;
+}
+.empty-meteor:hover {
+  color: #e53d1b;
+}

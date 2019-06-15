@@ -1,5 +1,11 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSignInAlt, faSignOutAlt, faUserAstronaut } from '@fortawesome/pro-regular-svg-icons';
+import {
+  faSignInAlt, faSignOutAlt,
+  faUserAstronaut, faSpaceShuttle,
+  faEye, faEyeSlash,
+  faMeteor as farMeteor
+} from '@fortawesome/pro-regular-svg-icons';
+import { faMeteor as fasMeteor } from '@fortawesome/pro-solid-svg-icons';
 import PropTypes from "prop-types";
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -20,7 +26,9 @@ import routes from './routes';
 import * as serviceWorker from './serviceWorker';
 
 library.add(
-  faSignInAlt, faSignOutAlt, faUserAstronaut
+  faSignInAlt, faSignOutAlt, faUserAstronaut, faSpaceShuttle,
+  faEye, faEyeSlash,
+  farMeteor, fasMeteor
 );
 
 const PrivateRoute = ({component: Component, ...rest}) => (
