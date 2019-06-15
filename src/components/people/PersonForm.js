@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -11,30 +12,33 @@ import Switch from '@material-ui/core/Switch';
 import PropTypes from 'prop-types';
 import React from 'react';
 import constants from "../../context/constants";
+import { withContext } from "../../context/WithContext";
 import Content from "../_common/Content";
 import CustomSelect from "../_common/CustomSelect";
 import MeteorRating from "../_common/meteorRating/MeteorRating";
 
 const PersonForm = (props) => {
-  const {match} = props;
+  const {match, context} = props;
   const {personId} = match.params;
   const personTitle = personId === ':personId' ? 'Nueva persona' : `Persona ${personId}`;
   const carTitle = personId === ':personId' ? 'Nuevo auto' : `Auto de ${personId}`;
 
   const [values, setValues] = React.useState({
     showPassword: false,
-    id: '',
-    name: '',
-    email: '',
-    password: '',
-    admin: false,
-    active: true,
-    parkingMeteors: 1,
-    car: {
-      brand: '',
-      model: '',
-      plate: '',
-      size: constants.carSizes.medium
+    person: {
+      id: '',
+      name: '',
+      email: '',
+      password: '',
+      admin: false,
+      active: true,
+      parkingMeteors: 1,
+      car: {
+        brand: '',
+        model: '',
+        plate: '',
+        size: constants.carSizes.medium
+      }
     }
   });
 
@@ -42,29 +46,36 @@ const PersonForm = (props) => {
     setValues({...values, showPassword: !values.showPassword});
   };
 
-  const handleChange = name => event => {
-    setValues({...values, [name]: event.target.value});
+  const handlePersonChange = name => event => {
+    const newPerson = {...values.person, [name]: event.target.value};
+    setValues({...values, person: newPerson});
   };
 
-  const handleSwitchChange = name => event => {
-    setValues({...values, [name]: event.target.checked});
+  const handlePersonSwitchChange = name => event => {
+    const newPerson = {...values.person, [name]: event.target.checked};
+    setValues({...values, person: newPerson});
+  };
+
+  const onRatingClicked = (val) => {
+    const newPerson = {...values.person, parkingMeteors: val};
+    setValues({...values, person: newPerson});
   };
 
   const handleCarChange = name => event => {
-    const newCar = {...values.car, [name]: event.target.value};
-    setValues({...values, car: newCar});
-  };
-
-  const tfStyle = {};
-
-  const onRatingClicked = (val) => {
-    setValues({...values, parkingMeteors: val});
+    const newCar = {...values.person.car, [name]: event.target.value};
+    const newPerson = {...values.person, car: newCar};
+    setValues({...values, person: newPerson});
   };
 
   const onCarSizeChanged = (val) => {
-    const newCar = {...values.car, size: val};
-    setValues({...values, car: newCar});
+    const newCar = {...values.person.car, size: val};
+    const newPerson = {...values.person, car: newCar};
+    setValues({...values, person: newPerson});
   };
+
+  const tfStyle = {};
+  const personValues = values.person;
+  const carValues = personValues.car;
 
   return (
     <Content>
@@ -84,24 +95,24 @@ const PersonForm = (props) => {
           <TextField
             id="id"
             label="Cédula"
-            value={values.id}
-            onChange={handleChange('id')}
+            value={personValues.id}
+            onChange={handlePersonChange('id')}
             margin="normal"
             style={tfStyle}
           />
           <TextField
             id="name"
             label="Nombre"
-            value={values.name}
-            onChange={handleChange('name')}
+            value={personValues.name}
+            onChange={handlePersonChange('name')}
             margin="normal"
             style={tfStyle}
           />
           <TextField
             id="email"
             label="E-mail"
-            value={values.email}
-            onChange={handleChange('email')}
+            value={personValues.email}
+            onChange={handlePersonChange('email')}
             margin="normal"
             style={tfStyle}
           />
@@ -111,8 +122,8 @@ const PersonForm = (props) => {
             <Input
               id="adornment-password"
               type={values.showPassword ? 'text' : 'password'}
-              value={values.password}
-              onChange={handleChange('password')}
+              value={personValues.password}
+              onChange={handlePersonChange('password')}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton aria-label="Toggle password visibility" onClick={handleClickShowPassword}>
@@ -130,8 +141,8 @@ const PersonForm = (props) => {
             <FormControlLabel
               value="top"
               control={<Switch
-                checked={values.admin}
-                onChange={handleSwitchChange('admin')}
+                checked={personValues.admin}
+                onChange={handlePersonSwitchChange('admin')}
                 value="admin"
                 color="primary"
               />}
@@ -141,8 +152,8 @@ const PersonForm = (props) => {
             <FormControlLabel
               value="top"
               control={<Switch
-                checked={values.active}
-                onChange={handleSwitchChange('active')}
+                checked={personValues.active}
+                onChange={handlePersonSwitchChange('active')}
                 value="active"
                 color="primary"
               />}
@@ -153,7 +164,7 @@ const PersonForm = (props) => {
 
           <FormControlLabel
             value="top"
-            control={<MeteorRating value={values.parkingMeteors} onClick={onRatingClicked} />}
+            control={<MeteorRating value={personValues.parkingMeteors} onClick={onRatingClicked} />}
             label="Parking stars"
             labelPlacement="top"
             style={{marginTop: 8, textAlign: 'left'}}
@@ -163,14 +174,14 @@ const PersonForm = (props) => {
 
         <div style={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column'}}>
           <Typography variant="h5">
-            <FontAwesomeIcon icon={['far', 'space-shuttle']} style={{marginRight: 16}} />
+            <FontAwesomeIcon icon={['far', 'rocket']} style={{marginRight: 16}} />
             {carTitle}
           </Typography>
 
           <TextField
             id="brand"
             label="Marca"
-            value={values.car.brand}
+            value={carValues.brand}
             onChange={handleCarChange('brand')}
             margin="normal"
             style={tfStyle}
@@ -178,7 +189,7 @@ const PersonForm = (props) => {
           <TextField
             id="model"
             label="Modelo"
-            value={values.car.model}
+            value={carValues.model}
             onChange={handleCarChange('model')}
             margin="normal"
             style={tfStyle}
@@ -186,18 +197,31 @@ const PersonForm = (props) => {
           <TextField
             id="plate"
             label="Placa"
-            value={values.car.plate}
+            value={carValues.plate}
             onChange={handleCarChange('plate')}
             margin="normal"
             style={tfStyle}
           />
           <CustomSelect
             id="carSize"
-            value={values.car.size}
+            value={carValues.size}
             label="Tamaño"
             values={constants.carSizes}
             onChange={onCarSizeChanged}
           />
+        </div>
+
+        <div />
+        <div style={{marginTop: 24, textAlign: 'right'}}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={() => context.savePerson(values.person)}
+          >
+            <FontAwesomeIcon icon={['far', 'save']} style={{marginRight: 16}} />
+            Save
+          </Button>
         </div>
       </form>
     </Content>
@@ -206,8 +230,9 @@ const PersonForm = (props) => {
 
 PersonForm.propTypes = {
   match: PropTypes.object.isRequired,
+  context: PropTypes.any.isRequired
 };
 
 PersonForm.defaultProps = {};
 
-export default PersonForm;
+export default withContext(PersonForm);

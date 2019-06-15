@@ -1,8 +1,8 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faSignInAlt, faSignOutAlt,
-  faUserAstronaut, faSpaceShuttle,
-  faEye, faEyeSlash,
+  faUserAstronaut, faRocket,
+  faEye, faEyeSlash, faSave,
   faMeteor as farMeteor
 } from '@fortawesome/pro-regular-svg-icons';
 import { faMeteor as fasMeteor } from '@fortawesome/pro-solid-svg-icons';
@@ -26,8 +26,8 @@ import routes from './routes';
 import * as serviceWorker from './serviceWorker';
 
 library.add(
-  faSignInAlt, faSignOutAlt, faUserAstronaut, faSpaceShuttle,
-  faEye, faEyeSlash,
+  faSignInAlt, faSignOutAlt, faUserAstronaut, faRocket,
+  faEye, faEyeSlash, faSave,
   farMeteor, fasMeteor
 );
 
