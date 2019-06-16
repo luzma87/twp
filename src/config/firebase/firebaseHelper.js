@@ -6,6 +6,9 @@ import firebaseConfig from './firebaseConfig';
 
 firebase.initializeApp(firebaseConfig.config);
 
+const createUsersApp = firebase.initializeApp(firebaseConfig.config, "createUsers");
+const createUsersAuth = createUsersApp.auth();
+
 const auth = firebase.auth();
 const database = firebase.database();
 
@@ -15,6 +18,7 @@ const logout = () => auth.signOut();
 const firebaseHelper = {
   database,
   auth,
+  createUsersAuth,
   login,
   logout,
 };

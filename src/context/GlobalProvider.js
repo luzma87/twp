@@ -79,18 +79,38 @@ class GlobalProvider extends React.Component {
 
   savePerson(newPerson) {
     this.checkForUser().then(() => {
-      console.log(newPerson);
-      // var user = firebase.auth().currentUser;
-      // user.updateProfile({
-      //   displayName: "Jane Q. User",
-      //   photoURL: "https://example.com/jane-q-user/profile.jpg"
-      // }).then(function() {
-      //   // Update successful.
-      // }).catch(function(error) {
-      //   // An error happened.
-      // });
-      firebaseHelper.database.ref('people').set(newPerson);
+      const {email, password, name} = newPerson;
+      delete newPerson.password;
+      firebaseHelper.createUsersAuth.createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          firebaseHelper.database.ref(`people/${newPerson.id}`).set(newPerson);
+          const user = firebaseHelper.createUsersAuth.currentUser;
+          user.updateProfile({
+            displayName: name,
+          }).catch(function(error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log("Error updating user's display name", errorCode, errorMessage)
+          });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log("Error creating user", errorCode, errorMessage)
+        });
     });
+  }
+
+  updateMyself() {
+    // var user = firebase.auth().currentUser;
+    // user.updateProfile({
+    //   displayName: "Jane Q. User",
+    //   photoURL: "https://example.com/jane-q-user/profile.jpg"
+    // }).then(function() {
+    //   // Update successful.
+    // }).catch(function(error) {
+    //   // An error happened.
+    // });
   }
 
   render() {

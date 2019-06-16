@@ -13,7 +13,7 @@ import routes from "../../routes";
 const CustomNavBar = (props) => {
   const {context} = props;
   const {getUser} = context;
-  const {email} = getUser();
+  const {email, displayName} = getUser();
   return (
     <AppBar position="static">
       <Toolbar>
@@ -30,7 +30,7 @@ const CustomNavBar = (props) => {
         </Link>
 
         <Typography color="inherit" style={{flex: 1}}>
-          {email}
+          {displayName ? displayName : email}
         </Typography>
         <Button color="inherit" onClick={() => context.logout()}>
           Logout

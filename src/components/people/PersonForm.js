@@ -17,30 +17,36 @@ import Content from "../_common/Content";
 import CustomSelect from "../_common/CustomSelect";
 import MeteorRating from "../_common/meteorRating/MeteorRating";
 
+const defaultState = {
+  showPassword: false,
+  person: {
+    id: '',
+    name: '',
+    email: '',
+    password: '',
+    admin: false,
+    active: true,
+    parkingMeteors: 1,
+    car: {
+      brand: '',
+      model: '',
+      plate: '',
+      size: constants.carSizes.medium
+    }
+  }
+};
+
 const PersonForm = (props) => {
   const {match, context} = props;
   const {personId} = match.params;
   const personTitle = personId === ':personId' ? 'Nueva persona' : `Persona ${personId}`;
   const carTitle = personId === ':personId' ? 'Nuevo auto' : `Auto de ${personId}`;
 
-  const [values, setValues] = React.useState({
-    showPassword: false,
-    person: {
-      id: '',
-      name: '',
-      email: '',
-      password: '',
-      admin: false,
-      active: true,
-      parkingMeteors: 1,
-      car: {
-        brand: '',
-        model: '',
-        plate: '',
-        size: constants.carSizes.medium
-      }
-    }
-  });
+  const [values, setValues] = React.useState(defaultState);
+
+  const resetForm = () => {
+    setValues(defaultState);
+  };
 
   const handleClickShowPassword = () => {
     setValues({...values, showPassword: !values.showPassword});
@@ -71,6 +77,11 @@ const PersonForm = (props) => {
     const newCar = {...values.person.car, size: val};
     const newPerson = {...values.person, car: newCar};
     setValues({...values, person: newPerson});
+  };
+
+  const onSave = () => {
+    resetForm();
+    context.savePerson(values.person)
   };
 
   const tfStyle = {};
@@ -217,7 +228,7 @@ const PersonForm = (props) => {
             variant="contained"
             color="primary"
             size="large"
-            onClick={() => context.savePerson(values.person)}
+            onClick={onSave}
           >
             <FontAwesomeIcon icon={['far', 'save']} style={{marginRight: 16}} />
             Save
