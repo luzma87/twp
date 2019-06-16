@@ -26,6 +26,7 @@ const CustomNavBar = (props) => {
         <Link to={routes.personList()} style={{color: 'white'}}>
           <IconButton aria-label="Show 4 new mails" color="inherit">
             <FontAwesomeIcon icon={['far', 'user-astronaut']}/>
+            <FontAwesomeIcon icon={['far', 'rocket']} style={{marginLeft: 8}}/>
           </IconButton>
         </Link>
 
@@ -34,7 +35,7 @@ const CustomNavBar = (props) => {
         </Typography>
         <Button color="inherit" onClick={() => context.logout()}>
           Logout
-          <FontAwesomeIcon icon={['far', 'sign-out-alt']} style={{marginLeft: 16}} />
+          <FontAwesomeIcon icon={['far', 'sign-out-alt']} style={{marginLeft: 8}} />
         </Button>
       </Toolbar>
     </AppBar>

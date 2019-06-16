@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "@material-ui/core/Button";
 import React from 'react';
 import { Link } from "react-router-dom";
@@ -9,6 +10,7 @@ const PeopleList = () => {
     <Content>
       <Link to={routes.personForm()} style={{textDecoration: 'none'}}>
         <Button>
+          <FontAwesomeIcon icon={['far', 'plus-hexagon']} style={{marginRight: 8}} />
           New person
         </Button>
       </Link>

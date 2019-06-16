@@ -3,6 +3,7 @@ import {
   faSignInAlt, faSignOutAlt,
   faUserAstronaut, faRocket,
   faEye, faEyeSlash, faSave,
+  faPlusHexagon,
   faMeteor as farMeteor
 } from '@fortawesome/pro-regular-svg-icons';
 import { faMeteor as fasMeteor } from '@fortawesome/pro-solid-svg-icons';
@@ -16,7 +17,7 @@ import Main from './components/Home';
 import Login from './components/Login';
 import NotFound from './components/NotFound';
 import PeopleList from './components/people/PeopleList';
-import PersonForm from './components/people/PersonForm';
+import PersonCarForm from './components/people/PersonCarForm';
 import PersonPayments from './components/people/PersonPayments';
 import Placeholder from './components/Placeholder';
 import GlobalProvider from './context/GlobalProvider';
@@ -27,7 +28,7 @@ import * as serviceWorker from './serviceWorker';
 
 library.add(
   faSignInAlt, faSignOutAlt, faUserAstronaut, faRocket,
-  faEye, faEyeSlash, faSave,
+  faEye, faEyeSlash, faSave, faPlusHexagon,
   farMeteor, fasMeteor
 );
 
@@ -56,7 +57,7 @@ ReactDOM.render(
         <Route path={routes.login()} component={Login} />
         <PrivateRoute path={routes.personPayments()} component={PersonPayments} />
         <PrivateRoute path={routes.personCarForm()} component={Placeholder} />
-        <PrivateRoute path={routes.personForm()} component={PersonForm} />
+        <PrivateRoute path={routes.personForm()} component={PersonCarForm} />
         <PrivateRoute path={routes.personList()} component={PeopleList} />
         <PrivateRoute path={routes.buildingPlaceForm()} component={Placeholder} />
         <PrivateRoute path={routes.buildingForm()} component={Placeholder} />
