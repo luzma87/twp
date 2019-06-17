@@ -21,6 +21,8 @@ class GlobalProvider extends React.Component {
       logout: () => this.logout(),
 
       savePerson: (newPerson) => this.savePerson(newPerson),
+      getAllPeople: () => this.getAllPeople(),
+      getActivePeople: () => this.getActivePeople()
     };
     firebaseHelper.auth.onAuthStateChanged((user) => {
       if (user) {
@@ -87,7 +89,7 @@ class GlobalProvider extends React.Component {
           const user = firebaseHelper.createUsersAuth.currentUser;
           user.updateProfile({
             displayName: name,
-          }).catch(function(error) {
+          }).catch(function (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log("Error updating user's display name", errorCode, errorMessage)
@@ -99,6 +101,20 @@ class GlobalProvider extends React.Component {
           console.log("Error creating user", errorCode, errorMessage)
         });
     });
+  }
+
+  getAllPeople() {
+    return firebaseHelper.database
+      .ref('people')
+      .once('value');
+  }
+
+  getActivePeople() {
+    return firebaseHelper.database
+      .ref('people')
+      .orderByChild('active')
+      // .equalTo(true)
+      .once('value');
   }
 
   updateMyself() {
