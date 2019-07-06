@@ -14,10 +14,13 @@ import routes from "../../routes";
 import Content from "../_common/Content";
 
 const PeopleList = ({context}) => {
+  const [values, setValues] = React.useState({
+    people:{}
+  });
   const {getActivePeople} = context;
   getActivePeople().then((snapshot) => {
-    console.log(snapshot.val());
-  })
+    setValues({...values, people: snapshot.val()});
+  });
   return (
     <Content>
       <Link to={routes.personForm()} style={{textDecoration: 'none'}}>
@@ -35,11 +38,35 @@ const PeopleList = ({context}) => {
               <TableCell>E-mail</TableCell>
               <TableCell>Admin?</TableCell>
               <TableCell>Cédula</TableCell>
+              <TableCell>Meteors</TableCell>
               <TableCell>Auto</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-
+            {
+              Object.values(values.people).map(person => (
+                <TableRow>
+                  <TableCell>
+                    {person.name}
+                  </TableCell>
+                  <TableCell>
+                    {person.email}
+                  </TableCell>
+                  <TableCell>
+                    {person.admin}
+                  </TableCell>
+                  <TableCell>
+                    {person.id}
+                  </TableCell>
+                  <TableCell>
+                    {person.parkingMeteors}
+                  </TableCell>
+                  <TableCell>
+                    {`${person.car.brand} ${person.car.model}`}
+                  </TableCell>
+                </TableRow>
+              ))
+            }
           </TableBody>
         </Table>
       </Paper>
