@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { withContext } from "../../context/WithContext";
 import routes from "../../routes";
 import Content from "../_common/Content";
+import MeteorRating from "../_common/meteorRating/MeteorRating";
 
 const PeopleList = ({context}) => {
   const [values, setValues] = React.useState({
@@ -45,7 +46,7 @@ const PeopleList = ({context}) => {
           <TableBody>
             {
               Object.values(values.people).map(person => (
-                <TableRow>
+                <TableRow key={person.id}>
                   <TableCell>
                     {person.name}
                   </TableCell>
@@ -53,13 +54,18 @@ const PeopleList = ({context}) => {
                     {person.email}
                   </TableCell>
                   <TableCell>
-                    {person.admin}
+                    {person.admin ? (
+                      <FontAwesomeIcon
+                        icon={['far', 'alicorn']}
+                        size="2x"
+                      />
+                    ) : null}
                   </TableCell>
                   <TableCell>
                     {person.id}
                   </TableCell>
                   <TableCell>
-                    {person.parkingMeteors}
+                    <MeteorRating value={person.parkingMeteors} size="lg" readonly/>
                   </TableCell>
                   <TableCell>
                     {`${person.car.brand} ${person.car.model}`}

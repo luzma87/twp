@@ -3,7 +3,7 @@ import {
   faSignInAlt, faSignOutAlt,
   faUserAstronaut, faRocket,
   faEye, faEyeSlash, faSave,
-  faPlusHexagon,
+  faPlusHexagon, faAlicorn,
   faMeteor as farMeteor
 } from '@fortawesome/pro-regular-svg-icons';
 import { faMeteor as fasMeteor } from '@fortawesome/pro-solid-svg-icons';
@@ -29,7 +29,7 @@ import * as serviceWorker from './serviceWorker';
 library.add(
   faSignInAlt, faSignOutAlt, faUserAstronaut, faRocket,
   faEye, faEyeSlash, faSave, faPlusHexagon,
-  farMeteor, fasMeteor
+  farMeteor, fasMeteor, faAlicorn,
 );
 
 const PrivateRoute = ({component: Component, ...rest}) => (

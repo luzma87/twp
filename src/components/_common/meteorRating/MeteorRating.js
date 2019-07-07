@@ -8,28 +8,28 @@ import PropTypes from 'prop-types';
 const total = 5;
 
 const MeteorRating = (props) => {
-  const {value, onClick} = props;
+  const {value, onClick, readonly, size} = props;
   return (
     <div>
       {range(total).map(s => {
         let currentValue = s + 1;
         if (currentValue <= value) {
           return <FontAwesomeIcon
-            key={`meteor_${s}`} icon={['fas', 'meteor']} size="2x"
-            className="full-meteor"
+            size={size}
+            key={`meteor_${s}`} icon={['fas', 'meteor']}
+            className={`full-meteor ${readonly ? '' : 'hoverable'}`}
             onClick={() => {
-              onClick(currentValue, true);
-            }
-            }
+              if(onClick) onClick(currentValue, true);
+            }}
           />
         }
         return <FontAwesomeIcon
-          key={`meteor_${s}`} icon={['far', 'meteor']} size="2x"
-          className="empty-meteor"
+          size={size}
+          key={`meteor_${s}`} icon={['far', 'meteor']}
+          className={`empty-meteor ${readonly ? '' : 'hoverable'}`}
           onClick={() => {
-            onClick(currentValue, false);
-          }
-          }
+            if(onClick) onClick(currentValue, false);
+          }}
         />
       })}
     </div>
@@ -38,11 +38,16 @@ const MeteorRating = (props) => {
 
 MeteorRating.propTypes = {
   value: PropTypes.number,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+  readonly: PropTypes.bool,
+  size: PropTypes.string
 };
 
 MeteorRating.defaultProps = {
-  value: 0
+  value: 0,
+  onClick: null,
+  readonly: false,
+  size: "2x",
 };
 
 export default MeteorRating;
