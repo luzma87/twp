@@ -2,7 +2,7 @@ import React from 'react';
 
 const Placeholder = () => (
   <div>Placeholder</div>
-  );
+);
 
 Placeholder.propTypes = {};
 

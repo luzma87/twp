@@ -1,21 +1,21 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
-import constants from "../../context/constants";
-import CustomSelect from "../_common/CustomSelect";
+import constants from '../../context/constants';
+import CustomSelect from '../_common/CustomSelect';
 
 const CarForm = (props) => {
   const {
     carTitle, carValues,
-    handleCarChange, onCarSizeChanged
+    handleCarChange, onCarSizeChanged,
   } = props;
 
   return (
-    <div style={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column'}}>
+    <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}>
       <Typography variant="h5">
-        <FontAwesomeIcon icon={['far', 'rocket']} style={{marginRight: 16}} />
+        <FontAwesomeIcon icon={['far', 'rocket']} style={{ marginRight: 16 }} />
         {carTitle}
       </Typography>
 
@@ -30,14 +30,14 @@ const CarForm = (props) => {
         label="Modelo"
         value={carValues.model}
         onChange={handleCarChange('model')}
-        style={{marginTop: 16}}
+        style={{ marginTop: 16 }}
       />
       <TextField
         id="plate"
         label="Placa"
         value={carValues.plate}
         onChange={handleCarChange('plate')}
-        style={{marginTop: 16}}
+        style={{ marginTop: 16 }}
       />
       <CustomSelect
         id="carSize"

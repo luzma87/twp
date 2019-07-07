@@ -6,7 +6,7 @@ import firebaseConfig from './firebaseConfig';
 
 firebase.initializeApp(firebaseConfig.config);
 
-const createUsersApp = firebase.initializeApp(firebaseConfig.config, "createUsers");
+const createUsersApp = firebase.initializeApp(firebaseConfig.config, 'createUsers');
 const createUsersAuth = createUsersApp.auth();
 
 const auth = firebase.auth();

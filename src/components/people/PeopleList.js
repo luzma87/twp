@@ -1,35 +1,29 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import PropTypes from "prop-types";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from "react-router-dom";
-import { withContext } from "../../context/WithContext";
-import routes from "../../routes";
-import Content from "../_common/Content";
-import MeteorRating from "../_common/meteorRating/MeteorRating";
+import { withContext } from '../../context/WithContext';
+import routes from '../../routes';
+import Content from '../_common/Content';
+import CreateButton from '../_common/CreateButton';
+import MeteorRating from '../_common/meteorRating/MeteorRating';
 
-const PeopleList = ({context}) => {
+const PeopleList = ({ context }) => {
   const [values, setValues] = React.useState({
-    people:{}
+    people: {},
   });
-  const {getActivePeople} = context;
+  const { getActivePeople } = context;
   getActivePeople().then((snapshot) => {
-    setValues({...values, people: snapshot.val()});
+    setValues({ ...values, people: snapshot.val() });
   });
   return (
     <Content>
-      <Link to={routes.personForm()} style={{textDecoration: 'none'}}>
-        <Button>
-          <FontAwesomeIcon icon={['far', 'plus-hexagon']} style={{marginRight: 8}} />
-          New person
-        </Button>
-      </Link>
+      <CreateButton linkTo={routes.personForm()} />
 
       <Paper>
         <Table>
@@ -39,7 +33,7 @@ const PeopleList = ({context}) => {
               <TableCell>E-mail</TableCell>
               <TableCell>Admin?</TableCell>
               <TableCell>Cédula</TableCell>
-              <TableCell>Meteors</TableCell>
+              <TableCell>Parking</TableCell>
               <TableCell>Auto</TableCell>
             </TableRow>
           </TableHead>
@@ -65,7 +59,7 @@ const PeopleList = ({context}) => {
                     {person.id}
                   </TableCell>
                   <TableCell>
-                    <MeteorRating value={person.parkingMeteors} size="lg" readonly/>
+                    <MeteorRating value={person.parkingMeteors} size="lg" readonly />
                   </TableCell>
                   <TableCell>
                     {`${person.car.brand} ${person.car.model}`}
@@ -82,7 +76,7 @@ const PeopleList = ({context}) => {
 };
 
 PeopleList.propTypes = {
-  context: PropTypes.any.isRequired
+  context: PropTypes.any.isRequired,
 };
 
 PeopleList.defaultProps = {};

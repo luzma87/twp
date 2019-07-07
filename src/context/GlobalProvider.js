@@ -4,6 +4,16 @@ import * as React from 'react';
 import firebaseHelper from '../config/firebase/firebaseHelper';
 import MyContext from './MyContext';
 
+const getAllPeople = () => firebaseHelper.database
+  .ref('people')
+  .once('value');
+
+const getActivePeople = () => firebaseHelper.database
+  .ref('people')
+  .orderByChild('active')
+// .equalTo(true)
+  .once('value');
+
 class GlobalProvider extends React.Component {
   constructor(props) {
     super(props);
@@ -20,9 +30,9 @@ class GlobalProvider extends React.Component {
       isLoggedIn: () => this.isLoggedIn(),
       logout: () => this.logout(),
 
-      savePerson: (newPerson) => this.savePerson(newPerson),
-      getAllPeople: () => this.getAllPeople(),
-      getActivePeople: () => this.getActivePeople()
+      savePerson: newPerson => this.savePerson(newPerson),
+      getAllPeople: () => getAllPeople(),
+      getActivePeople: () => getActivePeople(),
     };
     firebaseHelper.auth.onAuthStateChanged((user) => {
       if (user) {
@@ -45,22 +55,35 @@ class GlobalProvider extends React.Component {
   }
 
   getUser() {
-    const {currentUser} = this.state;
+    const { currentUser } = this.state;
     return currentUser;
   }
 
-  logout() {
-    firebaseHelper.logout().then(() => {
-      this.setState({currentUser: null});
+  savePerson(newPerson) {
+    const person = { ...newPerson };
+    this.checkForUser().then(() => {
+      const { email, password, name } = person;
+      delete person.password;
+      firebaseHelper.createUsersAuth.createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          firebaseHelper.database.ref(`people/${person.id}`).set(person);
+          const user = firebaseHelper.createUsersAuth.currentUser;
+          user.updateProfile({
+            displayName: name,
+          }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // eslint-disable-next-line no-console
+            console.log("Error updating user's display name", errorCode, errorMessage);
+          });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // eslint-disable-next-line no-console
+          console.log('Error creating user', errorCode, errorMessage);
+        });
     });
-  }
-
-  isLoggedIn() {
-    const {currentUser} = this.state;
-    if (!currentUser) {
-      return false;
-    }
-    return true;
   }
 
   checkForUser() {
@@ -72,65 +95,41 @@ class GlobalProvider extends React.Component {
           }, () => {
             resolve();
           });
-        } else {
-          console.log("Not logged in :(");
-        }
+        }/* else {
+          console.log('Not logged in :(');
+        } */
       });
     });
   }
 
-  savePerson(newPerson) {
-    this.checkForUser().then(() => {
-      const {email, password, name} = newPerson;
-      delete newPerson.password;
-      firebaseHelper.createUsersAuth.createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          firebaseHelper.database.ref(`people/${newPerson.id}`).set(newPerson);
-          const user = firebaseHelper.createUsersAuth.currentUser;
-          user.updateProfile({
-            displayName: name,
-          }).catch(function (error) {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log("Error updating user's display name", errorCode, errorMessage)
-          });
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log("Error creating user", errorCode, errorMessage)
-        });
+  isLoggedIn() {
+    const { currentUser } = this.state;
+    if (!currentUser) {
+      return false;
+    }
+    return true;
+  }
+
+  logout() {
+    firebaseHelper.logout().then(() => {
+      this.setState({ currentUser: null });
     });
   }
 
-  getAllPeople() {
-    return firebaseHelper.database
-      .ref('people')
-      .once('value');
-  }
-
-  getActivePeople() {
-    return firebaseHelper.database
-      .ref('people')
-      .orderByChild('active')
-      // .equalTo(true)
-      .once('value');
-  }
-
-  updateMyself() {
-    // var user = firebase.auth().currentUser;
-    // user.updateProfile({
-    //   displayName: "Jane Q. User",
-    //   photoURL: "https://example.com/jane-q-user/profile.jpg"
-    // }).then(function() {
-    //   // Update successful.
-    // }).catch(function(error) {
-    //   // An error happened.
-    // });
-  }
+  // updateMyself() {
+  // var user = firebase.auth().currentUser;
+  // user.updateProfile({
+  //   displayName: "Jane Q. User",
+  //   photoURL: "https://example.com/jane-q-user/profile.jpg"
+  // }).then(function() {
+  //   // Update successful.
+  // }).catch(function(error) {
+  //   // An error happened.
+  // });
+  // }
 
   render() {
-    const {children} = this.props;
+    const { children } = this.props;
     return (
       <MyContext.Provider value={this.state}>
         {children}

@@ -1,16 +1,16 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "@material-ui/core/Button";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withContext } from '../context/WithContext';
 import routes from '../routes';
-import Content from "./_common/Content";
+import Content from './_common/Content';
 
 const Home = (props) => {
-  const {context} = props;
-  const {getUser} = context;
-  const {email} = getUser();
+  const { context } = props;
+  const { getUser } = context;
+  const { email } = getUser();
   const routeNames = Object.keys(routes);
   return (
     <Content>
@@ -33,7 +33,7 @@ const Home = (props) => {
         onClick={() => context.logout()}
       >
         Logout
-        <FontAwesomeIcon icon={['far', 'sign-out-alt']} style={{marginLeft: 16}} />
+        <FontAwesomeIcon icon={['far', 'sign-out-alt']} style={{ marginLeft: 16 }} />
       </Button>
     </Content>
   );

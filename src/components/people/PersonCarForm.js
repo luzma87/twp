@@ -1,12 +1,13 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "@material-ui/core/Button";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
-import constants from "../../context/constants";
-import { withContext } from "../../context/WithContext";
-import Content from "../_common/Content";
-import CarForm from "./CarForm";
-import PersonForm from "./PersonForm";
+import constants from '../../context/constants';
+import { withContext } from '../../context/WithContext';
+import Content from '../_common/Content';
+import CarForm from './CarForm';
+import PersonForm from './PersonForm';
 
 const defaultState = {
   id: '',
@@ -21,13 +22,13 @@ const defaultState = {
     brand: '',
     model: '',
     plate: '',
-    size: constants.carSizes.medium
-  }
+    size: constants.carSizes.medium,
+  },
 };
 
 const PersonCarForm = (props) => {
-  const {match, context} = props;
-  const {personId} = match.params;
+  const { match, context } = props;
+  const { personId } = match.params;
   const personTitle = personId === ':personId' ? 'Nueva persona' : `Persona ${personId}`;
   const carTitle = personId === ':personId' ? 'Nuevo auto' : `Auto de ${personId}`;
 
@@ -38,41 +39,41 @@ const PersonCarForm = (props) => {
   };
 
   const changePersonValue = (field, newValue) => {
-    setValues({...values, [field]: newValue});
+    setValues({ ...values, [field]: newValue });
   };
 
   const changeCarValue = (field, newValue) => {
-    const newCar = {...values.car, [field]: newValue};
-    changePersonValue("car", newCar);
+    const newCar = { ...values.car, [field]: newValue };
+    changePersonValue('car', newCar);
   };
 
-  const handlePersonChange = name => event => {
+  const handlePersonChange = name => (event) => {
     changePersonValue(name, event.target.value);
   };
 
-  const handlePersonSwitchChange = name => event => {
+  const handlePersonSwitchChange = name => (event) => {
     changePersonValue(name, event.target.checked);
   };
 
   const onRatingClicked = (val) => {
-    changePersonValue("parkingMeteors", val);
+    changePersonValue('parkingMeteors', val);
   };
 
   const onBankChanged = (val) => {
-    changePersonValue("bank", val);
+    changePersonValue('bank', val);
   };
 
-  const handleCarChange = name => event => {
+  const handleCarChange = name => (event) => {
     changeCarValue(name, event.target.value);
   };
 
   const onCarSizeChanged = (val) => {
-    changeCarValue("size", val);
+    changeCarValue('size', val);
   };
 
   const onSave = () => {
     resetForm();
-    context.savePerson(values)
+    context.savePerson(values);
   };
 
   const personValues = values;
@@ -83,47 +84,51 @@ const PersonCarForm = (props) => {
       <form
         style={{
           display: 'grid',
-          gridTemplateColumns: '250px 250px',
-          gridColumnGap: 72
+          gridTemplateColumns: '300px 300px',
+          gridColumnGap: 72,
         }}
       >
 
-        <PersonForm
-          personTitle={personTitle}
-          personValues={personValues}
-          handlePersonChange={handlePersonChange}
-          handlePersonSwitchChange={handlePersonSwitchChange}
-          onRatingClicked={onRatingClicked}
-          onBankChanged={onBankChanged}
-        />
+        <Paper style={{ padding: 32 }}>
+          <PersonForm
+            personTitle={personTitle}
+            personValues={personValues}
+            handlePersonChange={handlePersonChange}
+            handlePersonSwitchChange={handlePersonSwitchChange}
+            onRatingClicked={onRatingClicked}
+            onBankChanged={onBankChanged}
+          />
+        </Paper>
 
-        <CarForm
-          carTitle={carTitle}
-          carValues={carValues}
-          handleCarChange={handleCarChange}
-          onCarSizeChanged={onCarSizeChanged}
-        />
+        <Paper style={{ padding: 32 }}>
+          <CarForm
+            carTitle={carTitle}
+            carValues={carValues}
+            handleCarChange={handleCarChange}
+            onCarSizeChanged={onCarSizeChanged}
+          />
+        </Paper>
 
         <div />
-        <div style={{marginTop: 24, textAlign: 'right'}}>
+        <div style={{ marginTop: 24, textAlign: 'right' }}>
           <Button
             variant="contained"
             color="primary"
             size="large"
             onClick={onSave}
           >
-            <FontAwesomeIcon icon={['far', 'save']} style={{marginRight: 16}} />
-            Save
+            <FontAwesomeIcon icon={['far', 'save']} style={{ marginRight: 16 }} />
+            Guardar
           </Button>
         </div>
       </form>
     </Content>
-  )
+  );
 };
 
 PersonCarForm.propTypes = {
   match: PropTypes.object.isRequired,
-  context: PropTypes.any.isRequired
+  context: PropTypes.any.isRequired,
 };
 
 PersonCarForm.defaultProps = {};

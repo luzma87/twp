@@ -4,14 +4,16 @@ import {
   faUserAstronaut, faRocket,
   faEye, faEyeSlash, faSave,
   faPlusHexagon, faAlicorn,
-  faMeteor as farMeteor
+  faWarehouse,
+  faMeteor as farMeteor,
 } from '@fortawesome/pro-regular-svg-icons';
 import { faMeteor as fasMeteor } from '@fortawesome/pro-solid-svg-icons';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Redirect, Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
+import BuildingPlaceForm from './components/buildings/BuildingPlaceForm';
 import BuildingsList from './components/buildings/BuildingsList';
 import Main from './components/Home';
 import Login from './components/Login';
@@ -29,17 +31,17 @@ import * as serviceWorker from './serviceWorker';
 library.add(
   faSignInAlt, faSignOutAlt, faUserAstronaut, faRocket,
   faEye, faEyeSlash, faSave, faPlusHexagon,
-  farMeteor, fasMeteor, faAlicorn,
+  farMeteor, fasMeteor, faAlicorn, faWarehouse,
 );
 
-const PrivateRoute = ({component: Component, ...rest}) => (
+const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props => (
       <GlobalContext.Consumer>
         {state => (state.currentUser
           ? <Component {...props} />
-          : <Redirect to={{pathname: routes.login(), state: {from: props.location}}} />)}
+          : <Redirect to={{ pathname: routes.login(), state: { from: props.location } }} />)}
       </GlobalContext.Consumer>
     )}
   />
@@ -50,17 +52,19 @@ PrivateRoute.propTypes = {
   location: PropTypes.any,
 };
 
+PrivateRoute.defaultProps = {
+  location: null,
+};
+
 ReactDOM.render(
   <GlobalProvider>
     <BrowserRouter>
       <Switch>
         <Route path={routes.login()} component={Login} />
         <PrivateRoute path={routes.personPayments()} component={PersonPayments} />
-        <PrivateRoute path={routes.personCarForm()} component={Placeholder} />
         <PrivateRoute path={routes.personForm()} component={PersonCarForm} />
         <PrivateRoute path={routes.personList()} component={PeopleList} />
-        <PrivateRoute path={routes.buildingPlaceForm()} component={Placeholder} />
-        <PrivateRoute path={routes.buildingForm()} component={Placeholder} />
+        <PrivateRoute path={routes.buildingForm()} component={BuildingPlaceForm} />
         <PrivateRoute path={routes.buildingList()} component={BuildingsList} />
         <PrivateRoute path={routes.assign()} component={Placeholder} />
         <PrivateRoute path={routes.checkPayments()} component={Placeholder} />
