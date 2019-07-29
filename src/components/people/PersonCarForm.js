@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
 import constants from '../../context/constants';
@@ -73,15 +75,30 @@ const PersonCarForm = (props) => {
   };
 
   const onSave = () => {
-    resetForm();
+    // resetForm();
     context.savePerson(values);
   };
 
   const personValues = values;
   const carValues = personValues.car;
+  const { errorMessage } = context;
+  const messageComponent = errorMessage
+    ? (
+      <Box
+        bgcolor="error.main"
+        color="error.contrastText"
+        style={{ padding: 8, borderRadius: 8, marginBottom: 16 }}
+      >
+        <Typography>
+          {errorMessage}
+        </Typography>
+      </Box>
+    )
+    : null;
 
   return (
     <Content>
+      {messageComponent}
       <CustomForm>
         <Paper style={{ padding: 32 }}>
           <PersonForm

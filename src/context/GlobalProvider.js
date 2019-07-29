@@ -30,6 +30,7 @@ class GlobalProvider extends React.Component {
 
     const initialState = {
       currentUser: null,
+      errorMessage: null,
     };
 
     const state = {
@@ -41,9 +42,10 @@ class GlobalProvider extends React.Component {
       logout: () => this.logout(),
 
       savePerson: newPerson => this.savePerson(newPerson),
-      saveBuilding: newBuilding => this.saveBuilding(newBuilding),
       getAllPeople: () => getAllPeople(),
       getActivePeople: () => getActivePeople(),
+
+      saveBuilding: newBuilding => this.saveBuilding(newBuilding),
       getAllBuildings: () => getAllBuildings(),
       getActiveBuildings: () => getActiveBuildings(),
     };
@@ -84,17 +86,13 @@ class GlobalProvider extends React.Component {
           user.updateProfile({
             displayName: name,
           }).catch((error) => {
-            const errorCode = error.code;
             const errorMessage = error.message;
-            // eslint-disable-next-line no-console
-            console.log("Error updating user's display name", errorCode, errorMessage);
+            this.setState({ errorMessage });
           });
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // eslint-disable-next-line no-console
-          console.log('Error creating user', errorCode, errorMessage);
+          const errorMessage = error.message
+          this.setState({ errorMessage });
         });
     });
   }
