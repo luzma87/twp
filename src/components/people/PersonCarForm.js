@@ -6,6 +6,7 @@ import React from 'react';
 import constants from '../../context/constants';
 import { withContext } from '../../context/WithContext';
 import Content from '../_common/Content';
+import CustomForm from '../_common/CustomForm';
 import CarForm from './CarForm';
 import PersonForm from './PersonForm';
 
@@ -81,14 +82,7 @@ const PersonCarForm = (props) => {
 
   return (
     <Content>
-      <form
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '300px 300px',
-          gridColumnGap: 72,
-        }}
-      >
-
+      <CustomForm>
         <Paper style={{ padding: 32 }}>
           <PersonForm
             personTitle={personTitle}
@@ -121,7 +115,7 @@ const PersonCarForm = (props) => {
             Guardar
           </Button>
         </div>
-      </form>
+      </CustomForm>
     </Content>
   );
 };

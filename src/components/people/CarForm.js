@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
 import constants from '../../context/constants';
 import CustomSelect from '../_common/CustomSelect';
+import CustomTextField from '../_common/CustomTextField';
 
 const CarForm = (props) => {
   const {
@@ -19,25 +19,24 @@ const CarForm = (props) => {
         {carTitle}
       </Typography>
 
-      <TextField
+      <CustomTextField
         id="brand"
         label="Marca"
         value={carValues.brand}
         onChange={handleCarChange('brand')}
+        margin={false}
       />
-      <TextField
+      <CustomTextField
         id="model"
         label="Modelo"
         value={carValues.model}
         onChange={handleCarChange('model')}
-        style={{ marginTop: 16 }}
       />
-      <TextField
+      <CustomTextField
         id="plate"
         label="Placa"
         value={carValues.plate}
         onChange={handleCarChange('plate')}
-        style={{ marginTop: 16 }}
       />
       <CustomSelect
         id="carSize"

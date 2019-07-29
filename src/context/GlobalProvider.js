@@ -11,7 +11,7 @@ const getAllPeople = () => firebaseHelper.database
 const getActivePeople = () => firebaseHelper.database
   .ref('people')
   .orderByChild('active')
-// .equalTo(true)
+  // .equalTo(true)
   .once('value');
 
 class GlobalProvider extends React.Component {
@@ -31,6 +31,7 @@ class GlobalProvider extends React.Component {
       logout: () => this.logout(),
 
       savePerson: newPerson => this.savePerson(newPerson),
+      saveBuilding: newBuilding => this.saveBuilding(newBuilding),
       getAllPeople: () => getAllPeople(),
       getActivePeople: () => getActivePeople(),
     };
@@ -83,6 +84,17 @@ class GlobalProvider extends React.Component {
           // eslint-disable-next-line no-console
           console.log('Error creating user', errorCode, errorMessage);
         });
+    });
+  }
+
+  saveBuilding(newBuilding) {
+    // console.log("SAVE", newBuilding);
+    const building = { ...newBuilding };
+    this.checkForUser().then(() => {
+      const ref = firebaseHelper.database.ref('buildings');
+      const newRef = ref.push();
+      building.id = newRef.key;
+      ref.push(building);
     });
   }
 

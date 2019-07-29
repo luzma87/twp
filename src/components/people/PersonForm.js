@@ -6,12 +6,12 @@ import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import Switch from '@material-ui/core/Switch';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
 import constants from '../../context/constants';
 import CustomSelect from '../_common/CustomSelect';
+import CustomTextField from '../_common/CustomTextField';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 
 const PersonForm = (props) => {
@@ -51,25 +51,24 @@ const PersonForm = (props) => {
         {personTitle}
       </Typography>
 
-      <TextField
+      <CustomTextField
         id="id"
         label="Cédula"
         value={personValues.id}
         onChange={handlePersonChange('id')}
+        margin={false}
       />
-      <TextField
+      <CustomTextField
         id="name"
         label="Nombre"
         value={personValues.name}
         onChange={handlePersonChange('name')}
-        style={{ marginTop: 16 }}
       />
-      <TextField
+      <CustomTextField
         id="email"
         label="E-mail"
         value={personValues.email}
         onChange={handlePersonChange('email')}
-        style={{ marginTop: 16 }}
       />
 
       <FormControl style={{ marginTop: 16 }}>
