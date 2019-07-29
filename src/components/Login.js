@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import firebaseHelper from '../config/firebase/firebaseHelper';
 import { withContext } from '../context/WithContext';
+import CustomError from "./_common/CustomError";
 
 class Login extends Component {
   constructor(props) {
@@ -73,19 +74,7 @@ class Login extends Component {
       history.push(from.pathname);
       // return <Redirect to="/" />;
     }
-    const messageComponent = message
-      ? (
-        <Box
-          bgcolor="error.main"
-          color="error.contrastText"
-          style={{ padding: 8, borderRadius: 8 }}
-        >
-          <Typography>
-            {message}
-          </Typography>
-        </Box>
-      )
-      : null;
+
     return (
       <Paper
         style={{
@@ -96,7 +85,7 @@ class Login extends Component {
           <Typography gutterBottom color="textSecondary" variant="h4">
             Login
           </Typography>
-          {messageComponent}
+          <CustomError message={message} />
           <div>
             <TextField
               id="email"

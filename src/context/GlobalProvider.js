@@ -30,7 +30,6 @@ class GlobalProvider extends React.Component {
 
     const initialState = {
       currentUser: null,
-      errorMessage: null,
     };
 
     const state = {
@@ -75,36 +74,48 @@ class GlobalProvider extends React.Component {
   }
 
   savePerson(newPerson) {
-    const person = { ...newPerson };
-    this.checkForUser().then(() => {
-      const { email, password, name } = person;
-      delete person.password;
-      firebaseHelper.createUsersAuth.createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          firebaseHelper.database.ref(`people/${person.id}`).set(person);
-          const user = firebaseHelper.createUsersAuth.currentUser;
-          user.updateProfile({
-            displayName: name,
-          }).catch((error) => {
+    return new Promise((resolve, reject) => {
+      const person = { ...newPerson };
+      this.checkForUser().then(() => {
+        const { email, password, name } = person;
+        delete person.password;
+        firebaseHelper.createUsersAuth.createUserWithEmailAndPassword(email, password)
+          .then(() => {
+            firebaseHelper.database.ref(`people/${person.id}`).set(person);
+            const user = firebaseHelper.createUsersAuth.currentUser;
+            resolve();
+            user.updateProfile({
+              displayName: name,
+            }).catch((error) => {
+              const errorMessage = error.message;
+              reject(new Error(errorMessage));
+            });
+          })
+          .catch((error) => {
             const errorMessage = error.message;
-            this.setState({ errorMessage });
+            reject(new Error(errorMessage));
           });
-        })
-        .catch((error) => {
-          const errorMessage = error.message
-          this.setState({ errorMessage });
-        });
+      });
+      reject(new Error());
     });
   }
 
   saveBuilding(newBuilding) {
-    // console.log("SAVE", newBuilding);
-    const building = { ...newBuilding };
-    this.checkForUser().then(() => {
-      const ref = firebaseHelper.database.ref('buildings');
-      const newRef = ref.push();
-      building.id = newRef.key;
-      ref.push(building);
+    return new Promise((resolve, reject) => {
+      const building = { ...newBuilding };
+      this.checkForUser().then(() => {
+        const ref = firebaseHelper.database.ref('buildings');
+        const newRef = ref.push();
+        building.id = newRef.key;
+        ref.set(building, (err) => {
+          if (err) {
+            reject(new Error(err.message));
+          } else {
+            resolve();
+          }
+        });
+      });
+      reject(new Error());
     });
   }
 

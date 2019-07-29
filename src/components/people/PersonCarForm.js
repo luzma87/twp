@@ -1,13 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
 import constants from '../../context/constants';
 import { withContext } from '../../context/WithContext';
 import Content from '../_common/Content';
+import CustomError from '../_common/CustomError';
 import CustomForm from '../_common/CustomForm';
 import CarForm from './CarForm';
 import PersonForm from './PersonForm';
@@ -36,6 +35,7 @@ const PersonCarForm = (props) => {
   const carTitle = personId === ':personId' ? 'Nuevo auto' : `Auto de ${personId}`;
 
   const [values, setValues] = React.useState(defaultState);
+  const [errorMessage, setErrorMessage] = React.useState({ errorMessage: undefined });
 
   const resetForm = () => {
     setValues(defaultState);
@@ -75,30 +75,20 @@ const PersonCarForm = (props) => {
   };
 
   const onSave = () => {
-    // resetForm();
-    context.savePerson(values);
+    context.savePerson(values).then(() => {
+      resetForm();
+    }).catch((err) => {
+      setErrorMessage({ errorMessage: err.message });
+    });
   };
 
   const personValues = values;
   const carValues = personValues.car;
-  const { errorMessage } = context;
-  const messageComponent = errorMessage
-    ? (
-      <Box
-        bgcolor="error.main"
-        color="error.contrastText"
-        style={{ padding: 8, borderRadius: 8, marginBottom: 16 }}
-      >
-        <Typography>
-          {errorMessage}
-        </Typography>
-      </Box>
-    )
-    : null;
+  const { errorMessage: message } = errorMessage;
 
   return (
     <Content>
-      {messageComponent}
+      <CustomError message={message} />
       <CustomForm>
         <Paper style={{ padding: 32 }}>
           <PersonForm

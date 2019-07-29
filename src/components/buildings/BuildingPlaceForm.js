@@ -6,6 +6,7 @@ import React from 'react';
 import constants from '../../context/constants';
 import { withContext } from '../../context/WithContext';
 import Content from '../_common/Content';
+import CustomError from '../_common/CustomError';
 import CustomForm from '../_common/CustomForm';
 import BuildingForm from './BuildingForm';
 
@@ -36,6 +37,7 @@ const BuildingPlaceForm = (props) => {
   const placeTitle = buildingId === ':buildingId' ? 'Nuevo puesto' : `Puesto de ${buildingId}`;
 
   const [values, setValues] = React.useState(defaultState);
+  const [errorMessage, setErrorMessage] = React.useState({ errorMessage: undefined });
 
   const resetForm = () => {
     setValues(defaultState);
@@ -50,14 +52,19 @@ const BuildingPlaceForm = (props) => {
   };
 
   const onSave = () => {
-    // resetForm();
-    context.saveBuilding(values);
+    context.saveBuilding(values).then(() => {
+      resetForm();
+    }).catch((err) => {
+      setErrorMessage({ errorMessage: err.message });
+    });
   };
 
   const buildingValues = values;
+  const { errorMessage: message } = errorMessage;
 
   return (
     <Content>
+      <CustomError message={message} />
       <CustomForm>
         <Paper style={{ padding: 32 }}>
           <BuildingForm
