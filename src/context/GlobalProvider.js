@@ -14,6 +14,16 @@ const getActivePeople = () => firebaseHelper.database
   // .equalTo(true)
   .once('value');
 
+const getAllBuildings = () => firebaseHelper.database
+  .ref('buildings')
+  .once('value');
+
+const getActiveBuildings = () => firebaseHelper.database
+  .ref('buildings')
+  .orderByChild('active')
+  // .equalTo(true)
+  .once('value');
+
 class GlobalProvider extends React.Component {
   constructor(props) {
     super(props);
@@ -34,6 +44,8 @@ class GlobalProvider extends React.Component {
       saveBuilding: newBuilding => this.saveBuilding(newBuilding),
       getAllPeople: () => getAllPeople(),
       getActivePeople: () => getActivePeople(),
+      getAllBuildings: () => getAllBuildings(),
+      getActiveBuildings: () => getActiveBuildings(),
     };
     firebaseHelper.auth.onAuthStateChanged((user) => {
       if (user) {

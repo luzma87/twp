@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import constants from '../../context/constants';
-import { withContext } from "../../context/WithContext";
+import { withContext } from '../../context/WithContext';
 import Content from '../_common/Content';
 import CustomForm from '../_common/CustomForm';
 import BuildingForm from './BuildingForm';
@@ -26,6 +26,7 @@ const defaultState = {
   coords: { lat: 0, long: 0 },
   observations: '',
   places: {},
+  active: true,
 };
 
 const BuildingPlaceForm = (props) => {
