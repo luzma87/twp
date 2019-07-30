@@ -53,12 +53,19 @@ class GlobalProvider extends React.Component {
         state.currentUser = user;
       }
     });
+
     this.state = state;
+    // firebaseHelper.auth.onAuthStateChanged((user) => {
+    //     //   if (user) {
+    //     //     state.currentUser = user;
+    //     //     this.state = state;
+    //     //   }
+    //     // });
   }
 
-  componentDidMount() {
-    firebaseHelper.auth.onAuthStateChanged(user => this.setCurrentUser(user));
-  }
+  // componentDidMount() {
+  //   firebaseHelper.auth.onAuthStateChanged(user => this.setCurrentUser(user));
+  // }
 
   setCurrentUser(user) {
     if (user) {
@@ -143,10 +150,12 @@ class GlobalProvider extends React.Component {
     return true;
   }
 
-  logout() {
-    firebaseHelper.logout().then(() => {
-      this.setState({ currentUser: null });
-    });
+  async logout() {
+    await firebaseHelper.logout();
+    this.setState({ currentUser: null });
+    // firebaseHelper.logout().then(() => {
+    //   this.setState({ currentUser: null });
+    // });
   }
 
   // updateMyself() {

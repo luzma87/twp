@@ -1,14 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CardContent, Paper } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
 import firebaseHelper from '../config/firebase/firebaseHelper';
 import { withContext } from '../context/WithContext';
-import CustomError from "./_common/CustomError";
+import CustomError from './_common/CustomError';
 
 class Login extends Component {
   constructor(props) {
@@ -19,9 +19,6 @@ class Login extends Component {
       isLoggedIn: false,
       message: '',
     };
-  }
-
-  componentDidMount() {
     firebaseHelper.auth.onAuthStateChanged((user) => {
       if (user) {
         const { email } = user;
@@ -68,11 +65,10 @@ class Login extends Component {
     const {
       isLoggedIn, email, password, message,
     } = this.state;
-    const { context, history, location } = this.props;
+    const { context, location } = this.props;
     if (isLoggedIn || context.isLoggedIn()) {
       const { from } = location.state || { from: { pathname: '/' } };
-      history.push(from.pathname);
-      // return <Redirect to="/" />;
+      return <Redirect to={from.pathname} />;
     }
 
     return (
@@ -128,7 +124,6 @@ class Login extends Component {
 
 Login.propTypes = {
   context: PropTypes.any.isRequired,
-  history: PropTypes.any.isRequired,
   location: PropTypes.any.isRequired,
 };
 

@@ -20,9 +20,11 @@ const CustomError = ({ message }) => (
 );
 
 CustomError.propTypes = {
-  message: PropTypes.string.isRequired,
+  message: PropTypes.string,
 };
 
-CustomError.defaultProps = {};
+CustomError.defaultProps = {
+  message: undefined,
+};
 
 export default CustomError;
