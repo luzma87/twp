@@ -5,12 +5,12 @@ import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
-import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
 import constants from '../../context/constants';
 import CustomSelect from '../_common/CustomSelect';
+import CustomSwitch from '../_common/CustomSwitch';
 import CustomTextField from '../_common/CustomTextField';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 
@@ -29,21 +29,6 @@ const PersonForm = (props) => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
 
-  const makeSwitch = (checked, id, label) => (
-    <FormControlLabel
-      value="top"
-      control={(
-        <Switch
-          checked={checked}
-          onChange={handlePersonSwitchChange(id)}
-          value={id}
-          color="primary"
-        />
-      )}
-      label={label}
-      labelPlacement="top"
-    />
-  );
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}>
       <Typography variant="h5">
@@ -83,8 +68,7 @@ const PersonForm = (props) => {
               <IconButton aria-label="Toggle password visibility" onClick={handleClickShowPassword}>
                 {values.showPassword
                   ? <FontAwesomeIcon icon={['far', 'eye']} />
-                  : <FontAwesomeIcon icon={['far', 'eye-slash']} />
-                }
+                  : <FontAwesomeIcon icon={['far', 'eye-slash']} />}
               </IconButton>
             </InputAdornment>
           )}
@@ -100,8 +84,18 @@ const PersonForm = (props) => {
 
       </FormControl>
       <div style={{ marginTop: 16 }}>
-        {makeSwitch(personValues.admin, 'admin', 'Admin')}
-        {makeSwitch(personValues.active, 'active', 'Activo')}
+        <CustomSwitch
+          checked={personValues.admin}
+          handleSwitchChange={handlePersonSwitchChange}
+          id="admin"
+          label="Admin"
+        />
+        <CustomSwitch
+          checked={personValues.active}
+          handleSwitchChange={handlePersonSwitchChange}
+          id="active"
+          label="Activo"
+        />
       </div>
 
       <FormControlLabel

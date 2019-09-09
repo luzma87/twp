@@ -1,12 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
 import PropTypes from 'prop-types';
-import CustomTextField from "../_common/CustomTextField";
+import React from 'react';
+import CustomTextField from '../_common/CustomTextField';
 
 const BuildingForm = (props) => {
   const {
-    buildingTitle, buildingValues, handleBuildingChange
+    buildingTitle, buildingValues, handleBuildingChange,
   } = props;
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}>

@@ -9,8 +9,9 @@ import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
 import CustomForm from '../_common/CustomForm';
 import BuildingForm from './BuildingForm';
+import Places from './Places';
 
-const defaultSpace = {
+const defaultPlace = {
   size: constants.carSizes.medium,
   number: '',
   price: 0,
@@ -36,7 +37,8 @@ const BuildingPlaceForm = (props) => {
   const buildingTitle = buildingId === ':buildingId' ? 'Nuevo edificio' : `Edificio ${buildingId}`;
   const placeTitle = buildingId === ':buildingId' ? 'Nuevo puesto' : `Puesto de ${buildingId}`;
 
-  const [values, setValues] = React.useState(defaultState);
+  const [buildingValues, setValues] = React.useState(defaultState);
+  const [placeValues, setPlaceValues] = React.useState(defaultPlace);
   const [errorMessage, setErrorMessage] = React.useState({ errorMessage: undefined });
 
   const resetForm = () => {
@@ -44,22 +46,41 @@ const BuildingPlaceForm = (props) => {
   };
 
   const changeBuildingValue = (field, newValue) => {
-    setValues({ ...values, [field]: newValue });
+    setValues({ ...buildingValues, [field]: newValue });
   };
 
-  const handleBuildingChange = name => (event) => {
+  const handleBuildingChange = (name) => (event) => {
     changeBuildingValue(name, event.target.value);
   };
 
+  const changePlaceValue = (field, newValue) => {
+    setPlaceValues({ ...placeValues, [field]: newValue });
+  };
+
+  const handlePlaceChange = (type, event, name) => {
+    switch (type) {
+      case 'text':
+        changePlaceValue(name, event.target.value);
+        break;
+      case 'switch':
+        changePlaceValue(name, !placeValues[name]);
+        break;
+      case 'select':
+        changePlaceValue(name, event);
+        break;
+      default:
+        break;
+    }
+  };
+
   const onSave = () => {
-    context.saveBuilding(values).then(() => {
+    context.saveBuilding(buildingValues).then(() => {
       resetForm();
     }).catch((err) => {
       setErrorMessage({ errorMessage: err.message });
     });
   };
 
-  const buildingValues = values;
   const { errorMessage: message } = errorMessage;
 
   return (
@@ -73,6 +94,11 @@ const BuildingPlaceForm = (props) => {
             handleBuildingChange={handleBuildingChange}
           />
         </Paper>
+        <Places
+          placeTitle={placeTitle}
+          placeValues={placeValues}
+          handlePlaceChange={handlePlaceChange}
+        />
         <div style={{ marginTop: 24, textAlign: 'right' }}>
           <Button
             variant="contained"
