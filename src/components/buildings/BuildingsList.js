@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -36,7 +37,7 @@ const BuildingsList = ({ context }) => {
           </TableHead>
           <TableBody>
             {
-              Object.values(values.buildings).map(building => (
+              Object.values(values.buildings).map((building) => (
                 <TableRow key={building.id}>
                   <TableCell>
                     {building.name}
@@ -46,6 +47,17 @@ const BuildingsList = ({ context }) => {
                   </TableCell>
                   <TableCell>
                     {building.observations}
+                  </TableCell>
+                  <TableCell>
+                    {Object.values(building.places).map((place) => (
+                      <div key={place.number}>
+                        <FontAwesomeIcon
+                          icon={['far', 'draw-square']}
+                          style={{ marginRight: 8, color: place.active ? '#2E7D32' : '#B71C1C' }}
+                        />
+                        {`#${place.number}, ${place.size.label}, $${place.price}`}
+                      </div>
+                    ))}
                   </TableCell>
                 </TableRow>
               ))
