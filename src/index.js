@@ -5,7 +5,7 @@ import {
   faEye, faEyeSlash, faSave,
   faPlusHexagon, faAlicorn,
   faWarehouse, faDrawSquare,
-  faTrashAlt,
+  faTrashAlt, faGhost,
   faMeteor as farMeteor,
 } from '@fortawesome/pro-regular-svg-icons';
 import { faMeteor as fasMeteor } from '@fortawesome/pro-solid-svg-icons';
@@ -33,7 +33,7 @@ library.add(
   faSignInAlt, faSignOutAlt, faUserAstronaut, faRocket,
   faEye, faEyeSlash, faSave, faPlusHexagon,
   farMeteor, fasMeteor, faAlicorn, faWarehouse,
-  faDrawSquare, faTrashAlt,
+  faDrawSquare, faTrashAlt, faGhost,
 );
 
 const PrivateRoute = ({ component: Component, ...rest }) => (

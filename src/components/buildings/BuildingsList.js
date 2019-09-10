@@ -12,6 +12,79 @@ import routes from '../../routes';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
 
+const buildingsBody = (values) => {
+  if (values.buildings === null) {
+    return (
+      <TableBody>
+        <TableRow>
+          <TableCell colSpan={4} align="center">
+            <span style={{ color: '#aabbcc', fontWeight: 'bold' }}>
+              No hay nada aquí
+            </span>
+            <FontAwesomeIcon
+              icon={['far', 'ghost']}
+              style={{ marginLeft: 8 }}
+              size="2x"
+              color="#aabbcc"
+            />
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    );
+  }
+  return (
+    <TableBody>
+      {
+        Object.values(values.buildings).map((building) => {
+          const places = Object.values(building.places);
+          return (
+            <TableRow key={building.id}>
+              <TableCell>
+                {building.name}
+              </TableCell>
+              <TableCell>
+                {building.address}
+              </TableCell>
+              <TableCell>
+                {building.observations}
+              </TableCell>
+              <TableCell>
+                {places.map((place) => (
+                  <div key={place.number}>
+                    <FontAwesomeIcon
+                      icon={['far', 'draw-square']}
+                      style={{ marginRight: 8, color: place.active ? '#2E7D32' : '#B71C1C' }}
+                    />
+                    {`#${place.number}, ${place.size.label}, $${place.price}, `}
+                    <span className="full-meteor">
+                      {`${place.difficulty} `}
+                    </span>
+                    <FontAwesomeIcon icon={['fas', 'meteor']} className="full-meteor" />
+                  </div>
+                ))}
+              </TableCell>
+            </TableRow>
+          );
+        })
+      }
+    </TableBody>
+  );
+};
+
+const buildingsTable = (values) => (
+  <Table>
+    <TableHead>
+      <TableRow>
+        <TableCell>Nombre</TableCell>
+        <TableCell>Dirección</TableCell>
+        <TableCell>Observaciones</TableCell>
+        <TableCell>Puestos</TableCell>
+      </TableRow>
+    </TableHead>
+    {buildingsBody(values)}
+  </Table>
+);
+
 const BuildingsList = ({ context }) => {
   const [values, setValues] = React.useState({
     buildings: {},
@@ -24,50 +97,8 @@ const BuildingsList = ({ context }) => {
   return (
     <Content>
       <CreateButton linkTo={routes.buildingForm()} />
-
       <Paper>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Dirección</TableCell>
-              <TableCell>Observaciones</TableCell>
-              <TableCell>Puestos</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {
-              Object.values(values.buildings).map((building) => (
-                <TableRow key={building.id}>
-                  <TableCell>
-                    {building.name}
-                  </TableCell>
-                  <TableCell>
-                    {building.address}
-                  </TableCell>
-                  <TableCell>
-                    {building.observations}
-                  </TableCell>
-                  <TableCell>
-                    {Object.values(building.places).map((place) => (
-                      <div key={place.number}>
-                        <FontAwesomeIcon
-                          icon={['far', 'draw-square']}
-                          style={{ marginRight: 8, color: place.active ? '#2E7D32' : '#B71C1C' }}
-                        />
-                        {`#${place.number}, ${place.size.label}, $${place.price}, `}
-                        <span className="full-meteor">
-                          {`${place.difficulty} `}
-                        </span>
-                        <FontAwesomeIcon icon={['fas', 'meteor']} className="full-meteor" />
-                      </div>
-                    ))}
-                  </TableCell>
-                </TableRow>
-              ))
-            }
-          </TableBody>
-        </Table>
+        {buildingsTable(values)}
       </Paper>
     </Content>
   );
