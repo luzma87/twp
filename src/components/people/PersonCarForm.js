@@ -50,32 +50,40 @@ const PersonCarForm = (props) => {
     changePersonValue('car', newCar);
   };
 
-  const handlePersonChange = name => (event) => {
-    changePersonValue(name, event.target.value);
+  const onCarChange = (type, event, name) => {
+    switch (type) {
+      case 'text':
+        changeCarValue(name, event.target.value);
+        break;
+      case 'select':
+        changeCarValue(name, event);
+        break;
+      default:
+        break;
+    }
   };
 
-  const handlePersonSwitchChange = name => (event) => {
-    changePersonValue(name, event.target.checked);
-  };
-
-  const onRatingClicked = (val) => {
-    changePersonValue('parkingMeteors', val);
-  };
-
-  const onBankChanged = (val) => {
-    changePersonValue('bank', val);
-  };
-
-  const handleCarChange = name => (event) => {
-    changeCarValue(name, event.target.value);
-  };
-
-  const onCarSizeChanged = (val) => {
-    changeCarValue('size', val);
+  const onPersonChange = (type, event, name) => {
+    switch (type) {
+      case 'text':
+        changePersonValue(name, event.target.value);
+        break;
+      case 'select':
+        changePersonValue(name, event);
+        break;
+      case 'switch':
+        changePersonValue(name, !values[name]);
+        break;
+      case 'rating':
+        changePersonValue('parkingMeteors', event);
+        break;
+      default:
+        break;
+    }
   };
 
   const onSave = () => {
-    context.savePerson(values).then(() => {
+    context.savePerson(values).then((what) => {
       resetForm();
     }).catch((err) => {
       setErrorMessage({ errorMessage: err.message });
@@ -94,10 +102,7 @@ const PersonCarForm = (props) => {
           <PersonForm
             personTitle={personTitle}
             personValues={personValues}
-            handlePersonChange={handlePersonChange}
-            handlePersonSwitchChange={handlePersonSwitchChange}
-            onRatingClicked={onRatingClicked}
-            onBankChanged={onBankChanged}
+            onPersonChange={onPersonChange}
           />
         </Paper>
 
@@ -105,8 +110,7 @@ const PersonCarForm = (props) => {
           <CarForm
             carTitle={carTitle}
             carValues={carValues}
-            handleCarChange={handleCarChange}
-            onCarSizeChanged={onCarSizeChanged}
+            onCarChange={onCarChange}
           />
         </Paper>
 

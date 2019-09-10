@@ -7,10 +7,7 @@ import CustomSelect from '../_common/CustomSelect';
 import CustomTextField from '../_common/CustomTextField';
 
 const CarForm = (props) => {
-  const {
-    carTitle, carValues,
-    handleCarChange, onCarSizeChanged,
-  } = props;
+  const { carTitle, carValues, onCarChange } = props;
 
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}>
@@ -23,27 +20,27 @@ const CarForm = (props) => {
         id="brand"
         label="Marca"
         value={carValues.brand}
-        onChange={handleCarChange('brand')}
+        onChange={(event) => onCarChange('text', event, 'brand')}
         margin={false}
       />
       <CustomTextField
         id="model"
         label="Modelo"
         value={carValues.model}
-        onChange={handleCarChange('model')}
+        onChange={(event) => onCarChange('text', event, 'model')}
       />
       <CustomTextField
         id="plate"
         label="Placa"
         value={carValues.plate}
-        onChange={handleCarChange('plate')}
+        onChange={(event) => onCarChange('text', event, 'plate')}
       />
       <CustomSelect
         id="carSize"
         value={carValues.size}
         label="Tamaño"
         values={constants.carSizes}
-        onChange={onCarSizeChanged}
+        onChange={(event) => onCarChange('select', event, 'size')}
       />
     </div>
   );
@@ -52,8 +49,7 @@ const CarForm = (props) => {
 CarForm.propTypes = {
   carTitle: PropTypes.string.isRequired,
   carValues: PropTypes.object.isRequired,
-  handleCarChange: PropTypes.func.isRequired,
-  onCarSizeChanged: PropTypes.func.isRequired,
+  onCarChange: PropTypes.func.isRequired,
 };
 
 CarForm.defaultProps = {};

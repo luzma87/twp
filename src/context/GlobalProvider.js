@@ -35,16 +35,16 @@ class GlobalProvider extends React.Component {
     const state = {
       ...initialState,
 
-      setCurrentUser: user => this.setCurrentUser(user),
+      setCurrentUser: (user) => this.setCurrentUser(user),
       getUser: () => this.getUser(),
       isLoggedIn: () => this.isLoggedIn(),
       logout: () => this.logout(),
 
-      savePerson: newPerson => this.savePerson(newPerson),
+      savePerson: (newPerson) => this.savePerson(newPerson),
       getAllPeople: () => getAllPeople(),
       getActivePeople: () => getActivePeople(),
 
-      saveBuilding: newBuilding => this.saveBuilding(newBuilding),
+      saveBuilding: (newBuilding) => this.saveBuilding(newBuilding),
       getAllBuildings: () => getAllBuildings(),
       getActiveBuildings: () => getActiveBuildings(),
     };
@@ -90,20 +90,19 @@ class GlobalProvider extends React.Component {
           .then(() => {
             firebaseHelper.database.ref(`people/${person.id}`).set(person);
             const user = firebaseHelper.createUsersAuth.currentUser;
-            resolve();
             user.updateProfile({
               displayName: name,
             }).catch((error) => {
               const errorMessage = error.message;
               reject(new Error(errorMessage));
             });
+            resolve();
           })
           .catch((error) => {
             const errorMessage = error.message;
             reject(new Error(errorMessage));
           });
       });
-      reject(new Error());
     });
   }
 
@@ -122,12 +121,11 @@ class GlobalProvider extends React.Component {
           }
         });
       });
-      reject(new Error());
     });
   }
 
   checkForUser() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       firebaseHelper.auth.onAuthStateChanged((user) => {
         if (user) {
           this.setState({
@@ -135,9 +133,9 @@ class GlobalProvider extends React.Component {
           }, () => {
             resolve();
           });
-        }/* else {
-          console.log('Not logged in :(');
-        } */
+        } else {
+          reject(new Error('Not logged in :('));
+        }
       });
     });
   }

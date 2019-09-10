@@ -19,11 +19,7 @@ const PersonForm = (props) => {
     showPassword: false,
   });
 
-  const {
-    personTitle, personValues,
-    handlePersonChange, handlePersonSwitchChange,
-    onRatingClicked, onBankChanged,
-  } = props;
+  const { personTitle, personValues, onPersonChange } = props;
 
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
@@ -40,20 +36,20 @@ const PersonForm = (props) => {
         id="id"
         label="Cédula"
         value={personValues.id}
-        onChange={handlePersonChange('id')}
+        onChange={(event) => onPersonChange('text', event, 'id')}
         margin={false}
       />
       <CustomTextField
         id="name"
         label="Nombre"
         value={personValues.name}
-        onChange={handlePersonChange('name')}
+        onChange={(event) => onPersonChange('text', event, 'name')}
       />
       <CustomTextField
         id="email"
         label="E-mail"
         value={personValues.email}
-        onChange={handlePersonChange('email')}
+        onChange={(event) => onPersonChange('text', event, 'email')}
       />
 
       <FormControl style={{ marginTop: 16 }}>
@@ -62,7 +58,7 @@ const PersonForm = (props) => {
           id="adornment-password"
           type={values.showPassword ? 'text' : 'password'}
           value={personValues.password}
-          onChange={handlePersonChange('password')}
+          onChange={(event) => onPersonChange('text', event, 'password')}
           endAdornment={(
             <InputAdornment position="end">
               <IconButton aria-label="Toggle password visibility" onClick={handleClickShowPassword}>
@@ -79,20 +75,20 @@ const PersonForm = (props) => {
           value={personValues.bank}
           label="Banco"
           values={constants.banks}
-          onChange={onBankChanged}
+          onChange={(event) => onPersonChange('select', event, 'bank')}
         />
 
       </FormControl>
       <div style={{ marginTop: 16 }}>
         <CustomSwitch
           checked={personValues.admin}
-          handleSwitchChange={handlePersonSwitchChange}
+          handleSwitchChange={(event) => onPersonChange('switch', event, 'admin')}
           id="admin"
           label="Admin"
         />
         <CustomSwitch
           checked={personValues.active}
-          handleSwitchChange={handlePersonSwitchChange}
+          handleSwitchChange={(event) => onPersonChange('switch', event, 'active')}
           id="active"
           label="Activo"
         />
@@ -100,7 +96,12 @@ const PersonForm = (props) => {
 
       <FormControlLabel
         value="top"
-        control={<MeteorRating value={personValues.parkingMeteors} onClick={onRatingClicked} />}
+        control={(
+          <MeteorRating
+            value={personValues.parkingMeteors}
+            onClick={(event) => onPersonChange('rating', event, 'active')}
+          />
+        )}
         label="Parking"
         labelPlacement="top"
         style={{ marginTop: 8, textAlign: 'left' }}
@@ -112,10 +113,7 @@ const PersonForm = (props) => {
 PersonForm.propTypes = {
   personTitle: PropTypes.string.isRequired,
   personValues: PropTypes.object.isRequired,
-  handlePersonChange: PropTypes.func.isRequired,
-  handlePersonSwitchChange: PropTypes.func.isRequired,
-  onRatingClicked: PropTypes.func.isRequired,
-  onBankChanged: PropTypes.func.isRequired,
+  onPersonChange: PropTypes.func.isRequired,
 };
 
 PersonForm.defaultProps = {};
