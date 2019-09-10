@@ -21,7 +21,7 @@ const Places = (props) => {
       </Paper>
       {Object.values(allPlaces).map((place) => (
         <Paper key={place.number} style={{ padding: 16, marginTop: 8 }}>
-          {`#${place.number}, ${place.size.label}, ${place.owner}, $${place.price}`}
+          {`#${place.number}, ${place.difficulty}*, ${place.size.label}, ${place.owner}, $${place.price}`}
           <IconButton
             color="secondary"
             onClick={() => onDeletePlace(place.number)}

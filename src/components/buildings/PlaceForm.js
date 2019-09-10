@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
@@ -7,6 +8,7 @@ import constants from '../../context/constants';
 import CustomSelect from '../_common/CustomSelect';
 import CustomSwitch from '../_common/CustomSwitch';
 import CustomTextField from '../_common/CustomTextField';
+import MeteorRating from "../_common/meteorRating/MeteorRating";
 
 const PlaceForm = (props) => {
   const {
@@ -44,6 +46,18 @@ const PlaceForm = (props) => {
         rows={4}
         value={placeValues.owner}
         onChange={(event) => onPlaceChange('text', event, 'owner')}
+      />
+      <FormControlLabel
+        value="top"
+        control={(
+          <MeteorRating
+            value={placeValues.difficulty}
+            onClick={(event) => onPlaceChange('rating', event, 'difficulty')}
+          />
+        )}
+        label="Difficulty"
+        labelPlacement="top"
+        style={{ marginTop: 16, textAlign: 'left' }}
       />
       <div style={{ marginTop: 16 }}>
         <CustomSwitch

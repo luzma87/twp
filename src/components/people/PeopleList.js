@@ -39,9 +39,13 @@ const PeopleList = ({ context }) => {
           </TableHead>
           <TableBody>
             {
-              Object.values(values.people).map(person => (
+              Object.values(values.people).map((person) => (
                 <TableRow key={person.id}>
                   <TableCell>
+                    <FontAwesomeIcon
+                      icon={['far', 'user-astronaut']}
+                      style={{ marginRight: 8, color: person.active ? '#2E7D32' : '#B71C1C' }}
+                    />
                     {person.name}
                   </TableCell>
                   <TableCell>
