@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -5,7 +7,7 @@ import PlaceForm from './PlaceForm';
 
 const Places = (props) => {
   const {
-    placeTitle, placeValues, onPlaceChange, onAddPlace, allPlaces,
+    placeTitle, placeValues, onPlaceChange, onAddPlace, onDeletePlace, allPlaces,
   } = props;
   return (
     <div>
@@ -18,8 +20,14 @@ const Places = (props) => {
         />
       </Paper>
       {Object.values(allPlaces).map((place) => (
-        <Paper style={{ padding: 16, marginTop: 8 }}>
+        <Paper key={place.number} style={{ padding: 16, marginTop: 8 }}>
           {`#${place.number}, ${place.size.label}, ${place.owner}, $${place.price}`}
+          <IconButton
+            color="secondary"
+            onClick={() => onDeletePlace(place.number)}
+          >
+            <FontAwesomeIcon icon={['far', 'trash-alt']} />
+          </IconButton>
         </Paper>
       ))}
     </div>
@@ -31,6 +39,7 @@ Places.propTypes = {
   placeValues: PropTypes.object.isRequired,
   onPlaceChange: PropTypes.func.isRequired,
   onAddPlace: PropTypes.func.isRequired,
+  onDeletePlace: PropTypes.func.isRequired,
   allPlaces: PropTypes.shape({}).isRequired,
 };
 

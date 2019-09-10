@@ -5,6 +5,7 @@ import {
   faEye, faEyeSlash, faSave,
   faPlusHexagon, faAlicorn,
   faWarehouse, faDrawSquare,
+  faTrashAlt,
   faMeteor as farMeteor,
 } from '@fortawesome/pro-regular-svg-icons';
 import { faMeteor as fasMeteor } from '@fortawesome/pro-solid-svg-icons';
@@ -32,15 +33,15 @@ library.add(
   faSignInAlt, faSignOutAlt, faUserAstronaut, faRocket,
   faEye, faEyeSlash, faSave, faPlusHexagon,
   farMeteor, fasMeteor, faAlicorn, faWarehouse,
-  faDrawSquare,
+  faDrawSquare, faTrashAlt,
 );
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={props => (
+    render={(props) => (
       <GlobalContext.Consumer>
-        {state => (state.currentUser
+        {(state) => (state.currentUser
           ? <Component {...props} />
           : <Redirect to={{ pathname: routes.login(), state: { from: props.location } }} />)}
       </GlobalContext.Consumer>

@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import { omit } from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import constants from '../../context/constants';
@@ -69,6 +70,11 @@ const BuildingPlaceForm = (props) => {
     setPlaceValues(defaultPlace);
   };
 
+  const onDeletePlace = (id) => {
+    const newPlaces = omit(buildingValues.places, id);
+    setValues({ ...buildingValues, places: newPlaces });
+  };
+
   const onSave = () => {
     context.saveBuilding(buildingValues).then(() => {
       resetForm();
@@ -96,6 +102,7 @@ const BuildingPlaceForm = (props) => {
           placeValues={placeValues}
           onPlaceChange={onPlaceChange}
           onAddPlace={onAddPlace}
+          onDeletePlace={onDeletePlace}
         />
         <div style={{ marginTop: 24, textAlign: 'right' }}>
           <Button
