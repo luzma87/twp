@@ -13,7 +13,7 @@ const CustomSwitch = (props) => {
       control={(
         <Switch
           checked={checked}
-          onChange={() => handleSwitchChange(id)}
+          onChange={() => handleSwitchChange(!checked)}
           value={id}
           color="primary"
         />

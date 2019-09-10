@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import constants from '../../context/constants';
 import { withContext } from '../../context/WithContext';
+import formHelper from '../../utils/formHelper';
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
 import CustomForm from '../_common/CustomForm';
@@ -34,7 +35,7 @@ const PersonCarForm = (props) => {
   const personTitle = personId === ':personId' ? 'Nueva persona' : `Persona ${personId}`;
   const carTitle = personId === ':personId' ? 'Nuevo auto' : `Auto de ${personId}`;
 
-  const [values, setValues] = React.useState(defaultState);
+  const [personValues, setValues] = React.useState(defaultState);
   const [errorMessage, setErrorMessage] = React.useState({ errorMessage: undefined });
 
   const resetForm = () => {
@@ -42,55 +43,30 @@ const PersonCarForm = (props) => {
   };
 
   const changePersonValue = (field, newValue) => {
-    setValues({ ...values, [field]: newValue });
+    setValues({ ...personValues, [field]: newValue });
   };
 
   const changeCarValue = (field, newValue) => {
-    const newCar = { ...values.car, [field]: newValue };
+    const newCar = { ...personValues.car, [field]: newValue };
     changePersonValue('car', newCar);
   };
 
   const onCarChange = (type, event, name) => {
-    switch (type) {
-      case 'text':
-        changeCarValue(name, event.target.value);
-        break;
-      case 'select':
-        changeCarValue(name, event);
-        break;
-      default:
-        break;
-    }
+    formHelper.onChange(type, event, name, changeCarValue);
   };
 
   const onPersonChange = (type, event, name) => {
-    switch (type) {
-      case 'text':
-        changePersonValue(name, event.target.value);
-        break;
-      case 'select':
-        changePersonValue(name, event);
-        break;
-      case 'switch':
-        changePersonValue(name, !values[name]);
-        break;
-      case 'rating':
-        changePersonValue('parkingMeteors', event);
-        break;
-      default:
-        break;
-    }
+    formHelper.onChange(type, event, name, changePersonValue);
   };
 
   const onSave = () => {
-    context.savePerson(values).then((what) => {
+    context.savePerson(personValues).then(() => {
       resetForm();
     }).catch((err) => {
       setErrorMessage({ errorMessage: err.message });
     });
   };
 
-  const personValues = values;
   const carValues = personValues.car;
   const { errorMessage: message } = errorMessage;
 
