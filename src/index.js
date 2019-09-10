@@ -1,12 +1,19 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faSignInAlt, faSignOutAlt,
-  faUserAstronaut, faRocket,
-  faEye, faEyeSlash, faSave,
-  faPlusHexagon, faAlicorn,
-  faWarehouse, faDrawSquare,
-  faTrashAlt, faGhost,
+  faAlicorn,
+  faDrawSquare,
+  faEye,
+  faEyeSlash,
+  faGhost,
   faMeteor as farMeteor,
+  faPlusHexagon,
+  faRocket,
+  faSave,
+  faSignInAlt,
+  faSignOutAlt,
+  faTrashAlt,
+  faUserAstronaut,
+  faWarehouse,
 } from '@fortawesome/pro-regular-svg-icons';
 import { faMeteor as fasMeteor } from '@fortawesome/pro-solid-svg-icons';
 import PropTypes from 'prop-types';
@@ -14,6 +21,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Redirect, Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
+import AssignmentsList from './components/assign/AssignmentsList';
 import BuildingPlaceForm from './components/buildings/BuildingPlaceForm';
 import BuildingsList from './components/buildings/BuildingsList';
 import Main from './components/Home';
@@ -68,7 +76,7 @@ ReactDOM.render(
         <PrivateRoute path={routes.personList()} component={PeopleList} />
         <PrivateRoute path={routes.buildingForm()} component={BuildingPlaceForm} />
         <PrivateRoute path={routes.buildingList()} component={BuildingsList} />
-        <PrivateRoute path={routes.assign()} component={Placeholder} />
+        <PrivateRoute path={routes.assignments()} component={AssignmentsList} />
         <PrivateRoute path={routes.checkPayments()} component={Placeholder} />
         <PrivateRoute path={routes.home()} component={Main} />
         <Route component={NotFound} />

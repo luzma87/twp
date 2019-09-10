@@ -6,7 +6,7 @@ const routes = {
   personList: () => '/people',
   buildingForm: (buildingId = ':buildingId') => `/buildings/${buildingId}/form`,
   buildingList: () => '/buildings',
-  assign: () => '/assign',
+  assignments: () => '/assignments',
   checkPayments: () => '/checkPayments',
   home: () => '/',
 };
