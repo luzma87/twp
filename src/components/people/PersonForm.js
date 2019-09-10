@@ -99,7 +99,7 @@ const PersonForm = (props) => {
         control={(
           <MeteorRating
             value={personValues.parkingMeteors}
-            onClick={(event) => onPersonChange('rating', event, 'active')}
+            onClick={(event) => onPersonChange('rating', event, 'parkingMeteors')}
           />
         )}
         label="Parking"

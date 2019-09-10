@@ -113,7 +113,7 @@ class GlobalProvider extends React.Component {
         const ref = firebaseHelper.database.ref('buildings');
         const newRef = ref.push();
         building.id = newRef.key;
-        ref.set(building, (err) => {
+        firebaseHelper.database.ref(`buildings/${building.id}`).set(building, (err) => {
           if (err) {
             reject(new Error(err.message));
           } else {

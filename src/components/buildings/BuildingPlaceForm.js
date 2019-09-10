@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import constants from '../../context/constants';
 import { withContext } from '../../context/WithContext';
+import formHelper from '../../utils/formHelper';
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
 import CustomForm from '../_common/CustomForm';
@@ -49,7 +50,7 @@ const BuildingPlaceForm = (props) => {
     setValues({ ...buildingValues, [field]: newValue });
   };
 
-  const handleBuildingChange = (name) => (event) => {
+  const onBuildingChange = (type, event, name) => {
     changeBuildingValue(name, event.target.value);
   };
 
@@ -57,20 +58,15 @@ const BuildingPlaceForm = (props) => {
     setPlaceValues({ ...placeValues, [field]: newValue });
   };
 
-  const handlePlaceChange = (type, event, name) => {
-    switch (type) {
-      case 'text':
-        changePlaceValue(name, event.target.value);
-        break;
-      case 'switch':
-        changePlaceValue(name, !placeValues[name]);
-        break;
-      case 'select':
-        changePlaceValue(name, event);
-        break;
-      default:
-        break;
-    }
+  const onPlaceChange = (type, event, name) => {
+    formHelper.onChange(type, event, name, changePlaceValue);
+  };
+
+  const onAddPlace = () => {
+    const placeId = placeValues.number;
+    const newPlaces = { ...buildingValues.places, [placeId]: { ...placeValues } };
+    setValues({ ...buildingValues, places: newPlaces });
+    setPlaceValues(defaultPlace);
   };
 
   const onSave = () => {
@@ -91,13 +87,15 @@ const BuildingPlaceForm = (props) => {
           <BuildingForm
             buildingTitle={buildingTitle}
             buildingValues={buildingValues}
-            handleBuildingChange={handleBuildingChange}
+            onBuildingChange={onBuildingChange}
           />
         </Paper>
         <Places
           placeTitle={placeTitle}
+          allPlaces={buildingValues.places}
           placeValues={placeValues}
-          handlePlaceChange={handlePlaceChange}
+          onPlaceChange={onPlaceChange}
+          onAddPlace={onAddPlace}
         />
         <div style={{ marginTop: 24, textAlign: 'right' }}>
           <Button

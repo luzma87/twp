@@ -10,7 +10,7 @@ const onChange = (type, event, name, callback) => {
       callback(name, event);
       break;
     case 'rating':
-      callback('parkingMeteors', event);
+      callback(name, event);
       break;
     default:
       break;

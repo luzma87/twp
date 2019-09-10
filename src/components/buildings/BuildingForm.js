@@ -6,7 +6,7 @@ import CustomTextField from '../_common/CustomTextField';
 
 const BuildingForm = (props) => {
   const {
-    buildingTitle, buildingValues, handleBuildingChange,
+    buildingTitle, buildingValues, onBuildingChange,
   } = props;
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}>
@@ -19,7 +19,7 @@ const BuildingForm = (props) => {
         id="name"
         label="Nombre"
         value={buildingValues.name}
-        onChange={handleBuildingChange('name')}
+        onChange={(event) => onBuildingChange('text', event, 'name')}
       />
       <CustomTextField
         id="address"
@@ -27,7 +27,7 @@ const BuildingForm = (props) => {
         multiline
         rows={4}
         value={buildingValues.address}
-        onChange={handleBuildingChange('address')}
+        onChange={(event) => onBuildingChange('text', event, 'address')}
       />
       <CustomTextField
         id="observations"
@@ -35,7 +35,7 @@ const BuildingForm = (props) => {
         multiline
         rows={4}
         value={buildingValues.observations}
-        onChange={handleBuildingChange('observations')}
+        onChange={(event) => onBuildingChange('text', event, 'observations')}
       />
     </div>
   );
@@ -44,7 +44,7 @@ const BuildingForm = (props) => {
 BuildingForm.propTypes = {
   buildingTitle: PropTypes.string.isRequired,
   buildingValues: PropTypes.object.isRequired,
-  handleBuildingChange: PropTypes.func.isRequired,
+  onBuildingChange: PropTypes.func.isRequired,
 };
 
 BuildingForm.defaultProps = {};

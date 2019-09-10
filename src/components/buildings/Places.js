@@ -5,7 +5,7 @@ import PlaceForm from './PlaceForm';
 
 const Places = (props) => {
   const {
-    placeTitle, placeValues, handlePlaceChange,
+    placeTitle, placeValues, onPlaceChange, onAddPlace, allPlaces,
   } = props;
   return (
     <div>
@@ -13,9 +13,15 @@ const Places = (props) => {
         <PlaceForm
           placeTitle={placeTitle}
           placeValues={placeValues}
-          handlePlaceChange={handlePlaceChange}
+          onPlaceChange={onPlaceChange}
+          onAddPlace={onAddPlace}
         />
       </Paper>
+      {Object.values(allPlaces).map((place) => (
+        <Paper style={{ padding: 16, marginTop: 8 }}>
+          {`#${place.number}, ${place.size.label}, ${place.owner}, $${place.price}`}
+        </Paper>
+      ))}
     </div>
   );
 };
@@ -23,7 +29,9 @@ const Places = (props) => {
 Places.propTypes = {
   placeTitle: PropTypes.string.isRequired,
   placeValues: PropTypes.object.isRequired,
-  handlePlaceChange: PropTypes.func.isRequired,
+  onPlaceChange: PropTypes.func.isRequired,
+  onAddPlace: PropTypes.func.isRequired,
+  allPlaces: PropTypes.shape({}).isRequired,
 };
 
 Places.defaultProps = {};
