@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import roles from '../../constants/roles';
@@ -15,23 +15,21 @@ const INITIAL_STATE = {
   error: null,
 };
 
-class SignUpFormBase extends Component {
-  constructor(props) {
-    super(props);
+const SignUpFormBase = ({ firebase, history }) => {
+  const [values, setValues] = useState(INITIAL_STATE);
 
-    this.state = { ...INITIAL_STATE };
-  }
+  const onChangeCheckbox = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.checked });
+  };
 
-  onChangeCheckbox(event) {
-    this.setState({ [event.target.name]: event.target.checked });
-  }
+  const onChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
 
-  onSubmit(event) {
+  const onSubmit = (event) => {
     const {
       username, email, passwordOne, isAdmin,
-    } = this.state;
-
-    const { firebase, history } = this.props;
+    } = values;
 
     const roles1 = {};
 
@@ -51,82 +49,76 @@ class SignUpFormBase extends Component {
           });
       })
       .then(() => {
-        this.setState({ ...INITIAL_STATE });
+        setValues(INITIAL_STATE);
         history.push(routes.HOME);
       })
       .catch((error) => {
-        this.setState({ error });
+        setValues({ ...values, error });
       });
     event.preventDefault();
-  }
+  };
 
-  onChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
+  const {
+    username,
+    email,
+    passwordOne,
+    passwordTwo,
+    isAdmin,
+    error,
+  } = values;
 
-  render() {
-    const {
-      username,
-      email,
-      passwordOne,
-      passwordTwo,
-      isAdmin,
-      error,
-    } = this.state;
+  const isInvalid = passwordOne !== passwordTwo
+    || passwordOne === ''
+    || email === ''
+    || username === '';
 
-    const isInvalid = passwordOne !== passwordTwo
-      || passwordOne === ''
-      || email === ''
-      || username === '';
-
-    return (
-      <form onSubmit={(event) => this.onSubmit(event)}>
+  return (
+    <form onSubmit={(event) => onSubmit(event)}>
+      <input
+        name="username"
+        value={username}
+        onChange={(event) => onChange(event)}
+        type="text"
+        placeholder="Full Name"
+      />
+      <input
+        name="email"
+        value={email}
+        onChange={(event) => onChange(event)}
+        type="text"
+        placeholder="Email Address"
+      />
+      <input
+        name="passwordOne"
+        value={passwordOne}
+        onChange={(event) => onChange(event)}
+        type="password"
+        placeholder="Password"
+      />
+      <input
+        name="passwordTwo"
+        value={passwordTwo}
+        onChange={(event) => onChange(event)}
+        type="password"
+        placeholder="Confirm Password"
+      />
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label>
+        Admin:
         <input
-          name="username"
-          value={username}
-          onChange={(event) => this.onChange(event)}
-          type="text"
-          placeholder="Full Name"
+          name="isAdmin"
+          type="checkbox"
+          checked={isAdmin}
+          onChange={(event) => onChangeCheckbox(event)}
         />
-        <input
-          name="email"
-          value={email}
-          onChange={(event) => this.onChange(event)}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="passwordOne"
-          value={passwordOne}
-          onChange={(event) => this.onChange(event)}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={(event) => this.onChange(event)}
-          type="password"
-          placeholder="Confirm Password"
-        />
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label>
-          Admin:
-          <input
-            name="isAdmin"
-            type="checkbox"
-            checked={isAdmin}
-            onChange={(event) => this.onChangeCheckbox(event)}
-          />
-        </label>
-        <button disabled={isInvalid} type="submit">
-          Sign Up
-        </button>
-        {error && <p>{error.message}</p>}
-      </form>
-    );
-  }
-}
+      </label>
+      <button disabled={isInvalid} type="submit">
+        Sign Up
+      </button>
+      {error && <p>{error.message}</p>}
+    </form>
+  );
+};
 
 SignUpFormBase.propTypes = {
   firebase: PropTypes.any.isRequired,

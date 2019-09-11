@@ -5,4 +5,5 @@ const LandingPage = () => (
     Landing
   </div>
 );
+
 export default LandingPage;
