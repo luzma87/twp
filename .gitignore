@@ -17,6 +17,8 @@
 .DS_Store
 .env.local
 .env.development.local
+.env.development
+.env
 .env.test.local
 .env.production.local
 
@@ -27,6 +29,6 @@ yarn-error.log*
 package-lock.json
 
 .firebase
-src/config/firebase/firebase.dev.config
-src/config/firebase/firebase.prod.config
-src/config/firebase/firebaseConfig.js
+src_old/config/firebase/firebase.dev.config
+src_old/config/firebase/firebase.prod.config
+src_old/config/firebase/firebaseConfig.js

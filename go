@@ -57,8 +57,8 @@ function task_color {
 }
 
 function task_start {
-  echo "${start_fg}Copying dev firebase config${normal_fg}"
-  cp src/config/firebase/firebase.dev.config src/config/firebase/firebaseConfig.js
+#  echo "${start_fg}Copying dev firebase config${normal_fg}"
+#  cp src/config/firebase/firebase.dev.config src/config/firebase/firebaseConfig.js
   echo "${start_fg}Starting app${normal_fg}"
   yarn start
 }
