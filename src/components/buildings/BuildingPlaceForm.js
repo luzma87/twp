@@ -52,7 +52,7 @@ const BuildingPlaceForm = (props) => {
   };
 
   const onBuildingChange = (type, event, name) => {
-    changeBuildingValue(name, event.target.value);
+    formHelper.onChange(type, event, name, changeBuildingValue);
   };
 
   const changePlaceValue = (field, newValue) => {

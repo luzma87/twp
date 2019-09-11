@@ -11,25 +11,34 @@ const getAllPeople = () => firebaseHelper.database
 const getActivePeople = () => firebaseHelper.database
   .ref('people')
   .orderByChild('active')
-  // .equalTo(true)
+  .equalTo(true)
   .once('value');
 
-const getAllBuildings = () => firebaseHelper.database
-  .ref('buildings')
-  .once('value');
 
 const getActiveBuildings = () => firebaseHelper.database
   .ref('buildings')
   .orderByChild('active')
-  // .equalTo(true)
+  .equalTo(true)
   .once('value');
 
 class GlobalProvider extends React.Component {
+  getAllBuildings() {
+    console.log('llamo');
+    firebaseHelper.database
+      .ref('buildings')
+      .once('value')
+      .then((s) => {
+        console.log(s.val())
+        this.setState({ buildings: s.val() });
+      });
+  }
+
   constructor(props) {
     super(props);
 
     const initialState = {
       currentUser: null,
+      buildings: [],
     };
 
     const state = {
@@ -45,7 +54,7 @@ class GlobalProvider extends React.Component {
       getActivePeople: () => getActivePeople(),
 
       saveBuilding: (newBuilding) => this.saveBuilding(newBuilding),
-      getAllBuildings: () => getAllBuildings(),
+      getAllBuildings: this.getAllBuildings.bind(this),
       getActiveBuildings: () => getActiveBuildings(),
     };
     firebaseHelper.auth.onAuthStateChanged((user) => {

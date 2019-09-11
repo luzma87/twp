@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
+import CustomSwitch from "../_common/CustomSwitch";
 import CustomTextField from '../_common/CustomTextField';
 
 const BuildingForm = (props) => {
@@ -37,6 +38,14 @@ const BuildingForm = (props) => {
         value={buildingValues.observations}
         onChange={(event) => onBuildingChange('text', event, 'observations')}
       />
+      <div style={{ marginTop: 16 }}>
+        <CustomSwitch
+          id="active"
+          label="Activo"
+          checked={buildingValues.active}
+          handleSwitchChange={(event) => onBuildingChange('switch', event, 'active')}
+        />
+      </div>
     </div>
   );
 };

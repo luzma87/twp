@@ -12,8 +12,8 @@ import routes from '../../routes';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
 
-const buildingsBody = (values) => {
-  if (values.buildings === null) {
+const buildingsBody = (buildings) => {
+  if (buildings === null) {
     return (
       <TableBody>
         <TableRow>
@@ -35,11 +35,15 @@ const buildingsBody = (values) => {
   return (
     <TableBody>
       {
-        Object.values(values.buildings).map((building) => {
+        Object.values(buildings).map((building) => {
           const places = Object.values(building.places);
           return (
             <TableRow key={building.id}>
               <TableCell>
+                <FontAwesomeIcon
+                  icon={['far', 'warehouse']}
+                  style={{ marginRight: 8, color: building.active ? '#2E7D32' : '#B71C1C' }}
+                />
                 {building.name}
               </TableCell>
               <TableCell>
@@ -71,7 +75,7 @@ const buildingsBody = (values) => {
   );
 };
 
-const buildingsTable = (values) => (
+const buildingsTable = (buildings) => (
   <Table>
     <TableHead>
       <TableRow>
@@ -81,33 +85,28 @@ const buildingsTable = (values) => (
         <TableCell>Puestos</TableCell>
       </TableRow>
     </TableHead>
-    {buildingsBody(values)}
+    {buildingsBody(buildings)}
   </Table>
 );
 
-const BuildingsList = ({ context }) => {
-  const [values, setValues] = React.useState({
-    buildings: {},
-  });
-  const { getActiveBuildings } = context;
-  getActiveBuildings().then((snapshot) => {
-    setValues({ ...values, buildings: snapshot.val() });
-  });
-
+const BuildingsList = ({ buildings }) => {
+  console.log('aqui');
   return (
     <Content>
       <CreateButton linkTo={routes.buildingForm()} />
       <Paper>
-        {buildingsTable(values)}
+        {buildingsTable(buildings)}
       </Paper>
     </Content>
   );
 };
 
 BuildingsList.propTypes = {
-  context: PropTypes.any.isRequired,
+  buildings: PropTypes.any,
 };
 
-BuildingsList.defaultProps = {};
+BuildingsList.defaultProps = {
+  buildings: [],
+};
 
-export default withContext(BuildingsList);
+export default BuildingsList;

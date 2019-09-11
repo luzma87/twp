@@ -17,8 +17,8 @@ const PeopleList = ({ context }) => {
   const [values, setValues] = React.useState({
     people: {},
   });
-  const { getActivePeople } = context;
-  getActivePeople().then((snapshot) => {
+  const { getAllPeople } = context;
+  getAllPeople().then((snapshot) => {
     setValues({ ...values, people: snapshot.val() });
   });
   return (

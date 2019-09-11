@@ -24,6 +24,7 @@ import { BrowserRouter } from 'react-router-dom';
 import AssignmentsList from './components/assign/AssignmentsList';
 import BuildingPlaceForm from './components/buildings/BuildingPlaceForm';
 import BuildingsList from './components/buildings/BuildingsList';
+import BuildingsListContainer from "./components/buildings/BuildingsListContainer";
 import Main from './components/Home';
 import Login from './components/Login';
 import NotFound from './components/NotFound';
@@ -75,7 +76,7 @@ ReactDOM.render(
         <PrivateRoute path={routes.personForm()} component={PersonCarForm} />
         <PrivateRoute path={routes.personList()} component={PeopleList} />
         <PrivateRoute path={routes.buildingForm()} component={BuildingPlaceForm} />
-        <PrivateRoute path={routes.buildingList()} component={BuildingsList} />
+        <PrivateRoute path={routes.buildingList()} component={BuildingsListContainer} />
         <PrivateRoute path={routes.assignments()} component={AssignmentsList} />
         <PrivateRoute path={routes.checkPayments()} component={Placeholder} />
         <PrivateRoute path={routes.home()} component={Main} />
