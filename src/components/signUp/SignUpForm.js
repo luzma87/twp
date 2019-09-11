@@ -31,22 +31,23 @@ const SignUpFormBase = ({ firebase, history }) => {
       username, email, passwordOne, isAdmin,
     } = values;
 
-    const roles1 = {};
+    const userRoles = {};
 
     if (isAdmin) {
-      roles1[roles.ADMIN] = roles.ADMIN;
+      userRoles[roles.ADMIN] = roles.ADMIN;
     }
+    const newUser = {
+      username,
+      email,
+      roles: userRoles,
+    };
 
     firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then((authUser) => {
         firebase
           .user(authUser.user.uid)
-          .set({
-            username,
-            email,
-            roles: roles1,
-          });
+          .set(newUser);
       })
       .then(() => {
         setValues(INITIAL_STATE);
