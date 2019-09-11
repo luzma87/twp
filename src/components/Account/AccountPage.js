@@ -1,5 +1,6 @@
 import { Typography } from '@material-ui/core';
 import React from 'react';
+import conditions from '../../constants/conditions';
 import Content from '../_common/Content';
 import PasswordChangeForm from '../PasswordChange/PasswordChangeForm';
 import AuthUserContext from '../Session/context';
@@ -25,6 +26,4 @@ const AccountPage = () => (
   </AuthUserContext.Consumer>
 );
 
-const condition = (authUser) => !!authUser;
-
-export default withAuthorization(condition)(AccountPage);
+export default withAuthorization(conditions.isLoggedUser)(AccountPage);

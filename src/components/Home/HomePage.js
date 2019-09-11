@@ -1,4 +1,5 @@
 import React from 'react';
+import conditions from '../../constants/conditions';
 import Content from '../_common/Content';
 import withAuthorization from '../Session/withAuthorization';
 
@@ -9,6 +10,4 @@ const HomePage = () => (
   </Content>
 );
 
-const condition = (authUser) => !!authUser;
-
-export default withAuthorization(condition)(HomePage);
+export default withAuthorization(conditions.isLoggedUser)(HomePage);

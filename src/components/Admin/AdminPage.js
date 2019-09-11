@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
-import roles from '../../constants/roles';
+import conditions from '../../constants/conditions';
 import Content from '../_common/Content';
 import withFirebase from '../Firebase/withFirebase';
 import withAuthorization from '../Session/withAuthorization';
@@ -56,10 +56,7 @@ AdminPage.propTypes = {
   firebase: PropTypes.any.isRequired,
 };
 
-
-const condition = (authUser) => authUser && !!authUser.roles[roles.ADMIN];
-
 export default compose(
-  withAuthorization(condition),
+  withAuthorization(conditions.isAdminUser),
   withFirebase,
 )(AdminPage);
