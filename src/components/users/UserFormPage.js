@@ -103,14 +103,20 @@ const UserFormPage = ({ firebase }) => {
       <CustomError error={errorMessage} />
       <CustomForm onSubmit={(event) => onSubmit(event)}>
         <Paper style={{ padding: 32 }}>
-          <Typography variant="h5">Persona</Typography>
+          <Typography variant="h5">
+            <FontAwesomeIcon icon={['far', 'user-astronaut']} style={{ marginRight: 16 }} />
+            Persona
+          </Typography>
           <PersonForm
             onPersonChange={(event) => onPersonChange(event)}
             personValues={personValues}
           />
         </Paper>
         <Paper style={{ padding: 32 }}>
-          <Typography variant="h5">Auto</Typography>
+          <Typography variant="h5">
+            <FontAwesomeIcon icon={['far', 'rocket']} style={{ marginRight: 16 }} />
+            Auto
+          </Typography>
           <CarForm
             onCarChange={(event) => onCarChange(event)}
             carValues={car}

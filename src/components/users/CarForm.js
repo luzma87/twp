@@ -17,7 +17,6 @@ const CarForm = (props) => {
         label="Marca"
         value={brand}
         onChange={(event) => onCarChange(event)}
-        margin={false}
       />
       <CustomTextField
         id="model"
