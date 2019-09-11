@@ -1,5 +1,11 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Typography } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import CustomError from '../_common/CustomError';
 import withFirebase from '../Firebase/withFirebase';
 
 const INITIAL_STATE = {
@@ -9,16 +15,22 @@ const INITIAL_STATE = {
 
 const PasswordForgetFormBase = ({ firebase }) => {
   const [values, setValues] = useState(INITIAL_STATE);
+  const [isLoading, setLoading] = useState(false);
+  const [isDone, setDone] = useState(false);
 
   const onSubmit = (event) => {
+    setLoading(true);
     const { email } = values;
     firebase
       .doPasswordReset(email)
       .then(() => {
         setValues(INITIAL_STATE);
+        setLoading(false);
+        setDone(true);
       })
       .catch((error) => {
         setValues({ ...values, error });
+        setLoading(false);
       });
     event.preventDefault();
   };
@@ -29,19 +41,44 @@ const PasswordForgetFormBase = ({ firebase }) => {
 
   const { email, error } = values;
   const isInvalid = email === '';
+  const icon = isLoading ? 'spinner' : 'paper-plane';
   return (
     <form onSubmit={(event) => onSubmit(event)}>
-      <input
-        name="email"
-        value={email}
-        onChange={(event) => onChange(event)}
-        type="text"
-        placeholder="Email Address"
-      />
-      <button disabled={isInvalid} type="submit">
-        Reset My Password
-      </button>
-      {error && <p>{error.message}</p>}
+      <div>
+        <TextField
+          id="email"
+          label="Email"
+          onChange={(event) => onChange(event)}
+          margin="normal"
+          variant="outlined"
+          type="email"
+          name="email"
+          value={email}
+        />
+      </div>
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        style={{ margin: '24px 0' }}
+        disabled={isInvalid || isLoading}
+        onClick={(event) => onSubmit(event)}
+      >
+        Recuperar
+        <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginLeft: 16 }} />
+      </Button>
+      <CustomError error={error} />
+      {!error && isDone ? (
+        <Box
+          bgcolor="secondary.main"
+          color="secondary.contrastText"
+          style={{ padding: 8, borderRadius: 8, marginTop: 16 }}
+        >
+          <Typography>
+              Email con recuperación de password enviado :)
+          </Typography>
+        </Box>
+      ) : null}
     </form>
   );
 };

@@ -8,18 +8,15 @@ const UserList = ({ users }) => (
       <li key={user.uid}>
         <span>
           <strong>ID:</strong>
-          {' '}
-          {user.uid}
+          {` ${user.uid}; `}
         </span>
         <span>
           <strong>E-Mail:</strong>
-          {' '}
-          {user.email}
+          {` ${user.email}; `}
         </span>
         <span>
           <strong>Username:</strong>
-          {' '}
-          {user.username}
+          {` ${user.username}`}
         </span>
       </li>
     ))}

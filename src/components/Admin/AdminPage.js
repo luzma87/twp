@@ -1,7 +1,10 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import roles from '../../constants/roles';
+import Content from '../_common/Content';
 import withFirebase from '../Firebase/withFirebase';
 import withAuthorization from '../Session/withAuthorization';
 import UserList from './UserList';
@@ -28,16 +31,24 @@ const AdminPage = ({ firebase }) => {
   }, [firebase]);
 
   return (
-    <div>
+    <Content>
       <h1>Admin</h1>
       <p>
         The Admin Page is accessible by every signed in admin user.
       </p>
 
-      {loading && <div>Loading ...</div>}
+      {loading && (
+        <Typography color="secondary">
+          <FontAwesomeIcon
+            icon={['far', 'spinner']}
+            pulse
+            size="4x"
+          />
+        </Typography>
+      )}
 
       <UserList users={users} />
-    </div>
+    </Content>
   );
 };
 
