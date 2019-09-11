@@ -3,7 +3,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import routes from '../../constants/routes';
-import withFirebase from '../Firebase/withFirebase';
+import withFirebase from '../firebase/withFirebase';
 import AuthUserContext from './context';
 
 const withAuthorization = (condition) => (Component) => {

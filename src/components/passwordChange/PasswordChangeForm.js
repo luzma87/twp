@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import CustomError from "../_common/CustomError";
-import withFirebase from '../Firebase/withFirebase';
+import withFirebase from '../firebase/withFirebase';
 
 const INITIAL_STATE = {
   passwordOne: '',

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import withFirebase from '../Firebase/withFirebase';
+import withFirebase from '../firebase/withFirebase';
 import AuthUserContext from './context';
 
 const withAuthentication = (Component) => {

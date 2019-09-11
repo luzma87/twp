@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import routes from '../../constants/routes';
 import CustomError from '../_common/CustomError';
-import withFirebase from '../Firebase/withFirebase';
+import withFirebase from '../firebase/withFirebase';
 
 const INITIAL_STATE = {
   email: '',

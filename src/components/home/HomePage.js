@@ -1,7 +1,7 @@
 import React from 'react';
 import conditions from '../../constants/conditions';
 import Content from '../_common/Content';
-import withAuthorization from '../Session/withAuthorization';
+import withAuthorization from '../session/withAuthorization';
 
 const HomePage = () => (
   <Content>

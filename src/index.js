@@ -21,9 +21,9 @@ import {
 import { faMeteor as fasMeteor } from '@fortawesome/pro-solid-svg-icons';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App/App';
-import FirebaseContext from './components/Firebase/context';
-import Firebase from './components/Firebase/firebase';
+import App from './components/app/App';
+import FirebaseContext from './components/firebase/context';
+import Firebase from './components/firebase/firebase';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 

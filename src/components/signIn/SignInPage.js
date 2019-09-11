@@ -1,7 +1,7 @@
 import { Paper } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
-import PasswordForgetLink from '../PasswordForget/PasswordForgetLink';
+import PasswordForgetLink from '../passwordForget/PasswordForgetLink';
 import SignInForm from './SignInForm';
 
 const SignInPage = () => (

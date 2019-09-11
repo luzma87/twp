@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import roles from '../../constants/roles';
 import routes from '../../constants/routes';
-import withFirebase from '../Firebase/withFirebase';
+import withFirebase from '../firebase/withFirebase';
 
 const INITIAL_STATE = {
   username: '',

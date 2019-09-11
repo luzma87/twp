@@ -5,8 +5,8 @@ import React from 'react';
 import roles from '../../constants/roles';
 import routes from '../../constants/routes';
 import shapes from '../../constants/shapes';
-import AuthUserContext from '../Session/context';
-import SignOutButton from '../SignOut/SignOutButton';
+import AuthUserContext from '../session/context';
+import SignOutButton from '../signOut/SignOutButton';
 import NavBarIconLink from './NavBarIconLink';
 import NavBarTextLink from './NavBarTextLink';
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import routes from '../../constants/routes';
-import AccountPage from '../Account/AccountPage';
-import AdminPage from '../Admin/AdminPage';
-import HomePage from '../Home/HomePage';
-import Navigation from '../Navigation/Navigation';
-import PasswordForgetPage from '../PasswordForget/PasswordForgetPage';
-import withAuthentication from '../Session/withAuthentication';
-import SignInPage from '../SignIn/SignInPage';
-import SignUpPage from '../SignUp/SignUpPage';
+import AccountPage from '../account/AccountPage';
+import AdminPage from '../admin/AdminPage';
+import HomePage from '../home/HomePage';
+import Navigation from '../navigation/Navigation';
+import PasswordForgetPage from '../passwordForget/PasswordForgetPage';
+import withAuthentication from '../session/withAuthentication';
+import SignInPage from '../signIn/SignInPage';
+import SignUpPage from '../signUp/SignUpPage';
 
 const App = () => (
   <BrowserRouter>

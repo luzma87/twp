@@ -2,9 +2,9 @@ import { Typography } from '@material-ui/core';
 import React from 'react';
 import conditions from '../../constants/conditions';
 import Content from '../_common/Content';
-import PasswordChangeForm from '../PasswordChange/PasswordChangeForm';
-import AuthUserContext from '../Session/context';
-import withAuthorization from '../Session/withAuthorization';
+import PasswordChangeForm from '../passwordChange/PasswordChangeForm';
+import AuthUserContext from '../session/context';
+import withAuthorization from '../session/withAuthorization';
 
 const AccountPage = () => (
   <AuthUserContext.Consumer>

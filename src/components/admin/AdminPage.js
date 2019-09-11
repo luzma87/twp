@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import Content from '../_common/Content';
-import withFirebase from '../Firebase/withFirebase';
-import withAuthorization from '../Session/withAuthorization';
+import withFirebase from '../firebase/withFirebase';
+import withAuthorization from '../session/withAuthorization';
 import UserList from './UserList';
 
 const AdminPage = ({ firebase }) => {
