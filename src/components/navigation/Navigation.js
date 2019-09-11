@@ -24,7 +24,10 @@ const NavigationAuth = ({ authUser }) => {
   const { name, email, roles: userRoles } = authUser;
 
   const adminNav = userRoles[roles.ADMIN] ? (
-    <NavBarIconLink title="Admin" icon="alicorn" to={routes.ADMIN} />
+    <>
+      <NavBarIconLink title="Personas" icon="user-astronaut" to={routes.USERS} />
+      <NavBarIconLink title="Puestos" icon="warehouse" to={routes.BUILDINGS} />
+    </>
   ) : null;
 
   return (
@@ -32,8 +35,6 @@ const NavigationAuth = ({ authUser }) => {
       <Toolbar style={{ justifyContent: 'space-between' }}>
         <div className="navbar-part">
           <NavBarTextLink to={routes.HOME} text="TWP" title="Inicio" />
-          <NavBarIconLink title="Personas" icon="user-astronaut" to={routes.USERS} />
-          <NavBarIconLink title="Puestos" icon="warehouse" to={routes.BUILDINGS} />
           {/* <NavBarIcon title="Asignaciones" icon="rocket" to={routes.assignments()} /> */}
           {adminNav}
         </div>
