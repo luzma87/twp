@@ -24,10 +24,7 @@ const UsersPage = ({ firebase }) => {
       const usersObject = snapshot.val();
 
       if (usersObject) {
-        const usersList = Object.keys(usersObject).map((key) => ({
-          ...usersObject[key],
-          uid: key,
-        }));
+        const usersList = Object.values(usersObject);
         setUsers(usersList);
         const activeUsers = usersList.filter((u) => u.isActive);
         setFilteredUsers(activeUsers);

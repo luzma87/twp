@@ -44,6 +44,7 @@ const BuildingFormPage = ({ firebase }) => {
   const onBuildingChange = (event) => {
     setBuildingValues({ ...buildingValues, [event.target.name]: event.target.value });
   };
+
   const onPlaceChange = (event) => {
     let { value } = event.target;
     const { name } = event.target;
