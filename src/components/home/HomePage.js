@@ -5,12 +5,21 @@ import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import Content from '../_common/Content';
+import CustomSelect from '../_common/CustomSelect';
 import AssignmentsList from '../assignments/AssignmentsList';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
 
+const ALL_BUILDINGS = {
+  value: '-1',
+  label: 'Todos',
+};
+
 const HomePage = ({ firebase }) => {
   const [buildings, setBuildings] = useState({});
+  const [filteredBuildings, setFilteredBuildings] = useState({});
+  const [buildingsForFilter, setBuildingsForFilter] = useState({});
+  const [filter, setFilter] = useState(ALL_BUILDINGS);
   const [users, setUsers] = useState([]);
   const [loadingBuildings, setLoadingBuildings] = useState(false);
   const [loadingUsers, setLoadingUsers] = useState(false);
@@ -22,6 +31,19 @@ const HomePage = ({ firebase }) => {
       const buildingsObject = snapshot.val();
       if (buildingsObject) {
         setBuildings(buildingsObject);
+        setFilteredBuildings(buildingsObject);
+
+        const availableBuildings = {};
+        const allBuildings = Object.values(buildingsObject);
+        const activeBuildings = allBuildings.filter((b) => b.isActive);
+        availableBuildings['-1'] = ALL_BUILDINGS;
+        activeBuildings.forEach((building) => {
+          availableBuildings[building.uid] = {
+            value: building,
+            label: building.name,
+          };
+        });
+        setBuildingsForFilter(availableBuildings);
       }
       setLoadingBuildings(false);
     });
@@ -41,6 +63,22 @@ const HomePage = ({ firebase }) => {
     };
   }, [firebase]);
 
+  const onFilterChange = (event) => {
+    const selectedValue = event.target.value;
+    setFilter(selectedValue);
+    let newBuildings = {};
+    if (selectedValue === ALL_BUILDINGS) {
+      newBuildings = buildings;
+    } else {
+      Object.values(buildings).forEach((building) => {
+        if (building === selectedValue.value) {
+          newBuildings[building.uid] = building;
+        }
+      });
+    }
+    setFilteredBuildings(newBuildings);
+  };
+
   return (
     <Content>
       {(loadingBuildings || loadingUsers) && (
@@ -52,7 +90,16 @@ const HomePage = ({ firebase }) => {
           />
         </Typography>
       )}
-      <AssignmentsList buildings={buildings} users={users} />
+      <CustomSelect
+        id="filter"
+        value={filter}
+        label="Edificio"
+        values={buildingsForFilter}
+        onChange={(event) => onFilterChange(event)}
+      />
+      <br />
+      <br />
+      <AssignmentsList buildings={filteredBuildings} users={users} />
     </Content>
   );
 };

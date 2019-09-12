@@ -24,36 +24,38 @@ const AssignmentsList = ({ buildings, users, skill }) => (
           Object.values(users).map((user) => {
             if (user.place) {
               const building = buildings[user.place.building];
-              const place = building.places[user.place.place];
-              return (
-                <TableRow key={user.uid}>
-                  <TableCell>
-                    {user.name}
-                    {skill ? (
-                      <>
-                        <span className="full-meteor" style={{ marginLeft: 8 }}>
-                          {`${user.parkingMeteors} `}
-                        </span>
-                        <FontAwesomeIcon icon={['fas', 'meteor']} className="full-meteor" />
-                      </>
-                    ) : ''}
-                  </TableCell>
-                  <TableCell>
-                    {`${user.car.brand} ${user.car.model} [${user.car.plate}]`}
-                  </TableCell>
-                  <TableCell>
-                    {`${building.name} #${place.number}`}
-                    {skill ? (
-                      <>
-                        <span className="full-meteor" style={{ marginLeft: 8 }}>
-                          {`${place.difficulty} `}
-                        </span>
-                        <FontAwesomeIcon icon={['fas', 'meteor']} className="full-meteor" />
-                      </>
-                    ) : ''}
-                  </TableCell>
-                </TableRow>
-              );
+              if (building) {
+                const place = building.places[user.place.place];
+                return (
+                  <TableRow key={user.uid}>
+                    <TableCell>
+                      {user.name}
+                      {skill ? (
+                        <>
+                          <span className="full-meteor" style={{ marginLeft: 8 }}>
+                            {`${user.parkingMeteors} `}
+                          </span>
+                          <FontAwesomeIcon icon={['fas', 'meteor']} className="full-meteor" />
+                        </>
+                      ) : ''}
+                    </TableCell>
+                    <TableCell>
+                      {`${user.car.brand} ${user.car.model} [${user.car.plate}]`}
+                    </TableCell>
+                    <TableCell>
+                      {`${building.name} #${place.number}`}
+                      {skill ? (
+                        <>
+                          <span className="full-meteor" style={{ marginLeft: 8 }}>
+                            {`${place.difficulty} `}
+                          </span>
+                          <FontAwesomeIcon icon={['fas', 'meteor']} className="full-meteor" />
+                        </>
+                      ) : ''}
+                    </TableCell>
+                  </TableRow>
+                );
+              }
             }
             return null;
           })
