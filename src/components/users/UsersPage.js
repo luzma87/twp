@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Typography } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
@@ -13,7 +14,9 @@ import UsersList from './UsersList';
 
 const UsersPage = ({ firebase }) => {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('Mostrando solo usuarios activos');
 
   useEffect(() => {
     setLoading(true);
@@ -26,6 +29,8 @@ const UsersPage = ({ firebase }) => {
           uid: key,
         }));
         setUsers(usersList);
+        const activeUsers = usersList.filter((u) => u.isActive);
+        setFilteredUsers(activeUsers);
       }
       setLoading(false);
     });
@@ -34,6 +39,17 @@ const UsersPage = ({ firebase }) => {
       firebase.users().off();
     };
   }, [firebase]);
+
+  const filterActive = (flag) => {
+    let newUserList;
+    if (flag) {
+      newUserList = users.filter((u) => u.isActive);
+    } else {
+      newUserList = users;
+      setMessage('Mostrando todos los usuarios');
+    }
+    setFilteredUsers(newUserList);
+  };
 
   return (
     <Content>
@@ -46,8 +62,21 @@ const UsersPage = ({ firebase }) => {
           />
         </Typography>
       )}
-      <CreateButton linkTo={routes.USERS_CREATE} />
-      <UsersList users={users} />
+      <div>
+        <CreateButton linkTo={routes.USERS_CREATE} />
+        <Button style={{ marginBottom: 16 }} onClick={() => filterActive(true)}>
+          <FontAwesomeIcon icon={['far', 'user-astronaut']} style={{ marginRight: 8 }} color="#2E7D32" />
+          Mostrar solo activos
+        </Button>
+        <Button style={{ marginBottom: 16 }} onClick={() => filterActive(false)}>
+          <FontAwesomeIcon icon={['far', 'user-astronaut']} style={{ marginRight: 8 }} color="#B71C1C" />
+          Mostrar todos
+        </Button>
+      </div>
+      <Typography>
+        {message}
+      </Typography>
+      <UsersList users={filteredUsers} />
     </Content>
   );
 };
