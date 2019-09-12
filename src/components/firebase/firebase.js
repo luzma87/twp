@@ -49,15 +49,19 @@ class Firebase {
           .once('value')
           .then((snapshot) => {
             const dbUser = snapshot.val();
-            if (!dbUser.roles) {
-              dbUser.roles = {};
+            if (dbUser) {
+              if (!dbUser.roles) {
+                dbUser.roles = {};
+              }
+              const mergedUser = {
+                uid: authUser.uid,
+                email: authUser.email,
+                ...dbUser,
+              };
+              next(mergedUser);
+            } else {
+              fallback();
             }
-            const mergedUser = {
-              uid: authUser.uid,
-              email: authUser.email,
-              ...dbUser,
-            };
-            next(mergedUser);
           });
       } else {
         fallback();
