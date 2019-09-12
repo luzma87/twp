@@ -27,34 +27,43 @@ const HomePage = ({ firebase }) => {
   useEffect(() => {
     setLoadingBuildings(true);
     setLoadingUsers(true);
-    firebase.buildings().on('value', (snapshot) => {
-      const buildingsObject = snapshot.val();
-      if (buildingsObject) {
-        setBuildings(buildingsObject);
-        setFilteredBuildings(buildingsObject);
-
-        const availableBuildings = {};
-        const allBuildings = Object.values(buildingsObject);
-        const activeBuildings = allBuildings.filter((b) => b.isActive);
-        availableBuildings['-1'] = ALL_BUILDINGS;
-        activeBuildings.forEach((building) => {
-          availableBuildings[building.uid] = {
-            value: building,
-            label: building.name,
-          };
-        });
-        setBuildingsForFilter(availableBuildings);
-      }
-      setLoadingBuildings(false);
-    });
-    firebase.users().on('value', (snapshot) => {
-      const usersObject = snapshot.val();
+    firebase.users().on('value', (snapshotUsers) => {
+      const usersObject = snapshotUsers.val();
+      const usedBuildings = [];
 
       if (usersObject) {
         const usersList = Object.values(usersObject).filter((u) => u.isActive);
         setUsers(usersList);
+        usersList.forEach((u) => {
+          if (u.place && usedBuildings.indexOf(u.place.building) === -1) {
+            usedBuildings.push(u.place.building);
+          }
+        });
       }
       setLoadingUsers(false);
+
+      firebase.buildings().on('value', (snapshotBuildings) => {
+        const buildingsObject = snapshotBuildings.val();
+        if (buildingsObject) {
+          setBuildings(buildingsObject);
+          setFilteredBuildings(buildingsObject);
+
+          const availableBuildings = {};
+          const allBuildings = Object.values(buildingsObject);
+          const activeBuildings = allBuildings.filter((b) => b.isActive);
+          availableBuildings['-1'] = ALL_BUILDINGS;
+          activeBuildings.forEach((building) => {
+            if (usedBuildings.indexOf(building.uid) !== -1) {
+              availableBuildings[building.uid] = {
+                value: building,
+                label: building.name,
+              };
+            }
+          });
+          setBuildingsForFilter(availableBuildings);
+        }
+        setLoadingBuildings(false);
+      });
     });
 
     return function cleanup() {
