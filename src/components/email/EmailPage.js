@@ -1,10 +1,10 @@
 /* eslint-disable react/no-array-index-key */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Typography } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import { round, startsWith } from 'lodash';
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
-import { startsWith } from 'lodash';
 import conditions from '../../constants/conditions';
 import Content from '../_common/Content';
 import AssignmentsForEmailList from '../assignments/AssignmentsForEmailList';
@@ -19,17 +19,18 @@ const EmailPage = ({ firebase }) => {
   const [loadingParams, setLoadingParams] = useState(false);
   const [emailText, setEmailText] = useState([]);
 
-  const cuota = 30;
-
   useEffect(() => {
     setLoadingBuildings(true);
     setLoadingUsers(true);
     setLoadingParams(true);
+    let otherBanks = 0;
+    let placePriceTotal = 0;
     firebase.users().on('value', (snapshot) => {
       const usersObject = snapshot.val();
+      let usersList = [];
 
       if (usersObject) {
-        const usersList = Object.values(usersObject).filter((u) => u.isActive);
+        usersList = Object.values(usersObject).filter((u) => u.isActive);
         setUsers(usersList);
       }
       setLoadingUsers(false);
@@ -39,13 +40,27 @@ const EmailPage = ({ firebase }) => {
           setBuildings(buildingsObject);
         }
         setLoadingBuildings(false);
+
         firebase.params().on('value', (snapshot3) => {
           const paramsObject = snapshot3.val();
           if (paramsObject) {
-            let paramEmailText = paramsObject.emailText.replace('{{cuota}}', `$${cuota}`);
+            usersList.forEach((user) => {
+              if (user.bank.value !== paramsObject.defaultBank) {
+                otherBanks += parseFloat(paramsObject.differentBank);
+              }
+              const userBuilding = buildingsObject[user.place.building];
+              const userPlace = userBuilding.places[user.place.place];
+              placePriceTotal += parseFloat(userPlace.price);
+            });
+
+            const totalValue = placePriceTotal + otherBanks + paramsObject.hosting;
+            const valuePerPerson = round(totalValue / usersList.length, 2);
+
+            let paramEmailText = paramsObject.emailText.replace('{{cuota}}', `$${valuePerPerson}`);
             paramEmailText = paramEmailText.split('{{br}}');
             setEmailText(paramEmailText);
           }
+
           setLoadingParams(false);
         });
       });
@@ -74,6 +89,13 @@ const EmailPage = ({ firebase }) => {
         const key = `${paragraph}_${index}`;
         if (paragraph === '') {
           return <br key={key} />;
+        }
+        if (paragraph.includes('cuota')) {
+          return (
+            <Typography key={key}>
+              <strong>{paragraph}</strong>
+            </Typography>
+          );
         }
         if (startsWith(paragraph, 'http')) {
           return (

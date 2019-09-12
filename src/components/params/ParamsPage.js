@@ -13,6 +13,7 @@ import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
 
 const INITIAL_STATE = {
+  defaultBank: 'pichincha',
   differentBank: 0,
   hosting: 0,
   emailText: '',
@@ -89,6 +90,12 @@ const ParamsPage = ({ firebase }) => {
             Params
           </Typography>
           <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}>
+            <CustomTextField
+              id="defaultBank"
+              label="Banco default"
+              value={params.defaultBank}
+              onChange={(event) => onParamChange(event)}
+            />
             <CustomTextField
               id="differentBank"
               label="Extra por otro banco"
