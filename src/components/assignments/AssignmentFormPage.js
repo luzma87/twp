@@ -28,53 +28,68 @@ const AssignmentFormPage = ({ firebase }) => {
   const [loadingPlaces, setLoadingPlaces] = useState(false);
   const [loadingUsers, setLoadingUsers] = useState(false);
 
+  const createUserForSelect = (user) => ({
+    value: user,
+    label: `${user.name} (${user.parkingMeteors}*)`,
+  });
+
+  const createPlaceForSelect = (building, place) => ({
+    value: {
+      building,
+      place,
+    },
+    label: `${building.name} #${place.number} (${place.difficulty}*)`,
+  });
+
+  const processUsers = (usersObject) => {
+    const availableUsers = {};
+    const takenPlaces = [];
+    if (usersObject) {
+      const allUsers = Object.values(usersObject);
+      const activeUsers = allUsers.filter((u) => u.isActive);
+      activeUsers.forEach((user) => {
+        if (user.place === undefined) {
+          availableUsers[user.uid] = createUserForSelect(user);
+        } else {
+          takenPlaces.push(`${user.place.building}_${user.place.place}`);
+        }
+      });
+    }
+    return { availableUsers, takenPlaces };
+  };
+
+  const processBuildings = (buildingsObject, takenPlaces) => {
+    const availablePlaces = {};
+    if (buildingsObject) {
+      const allBuildings = Object.values(buildingsObject);
+      const activeBuildings = allBuildings.filter((b) => b.isActive);
+      activeBuildings.forEach((building) => {
+        const allPlaces = Object.values(building.places);
+        const activePlaces = allPlaces.filter((p) => p.isActive);
+        activePlaces.forEach((place) => {
+          const placeKey = `${building.uid}_${place.number}`;
+          if (takenPlaces.indexOf(placeKey) === -1) {
+            const newBuilding = omit(building, 'places');
+            availablePlaces[placeKey] = createPlaceForSelect(newBuilding, place);
+          }
+        });
+      });
+    }
+    return availablePlaces;
+  };
+
   useEffect(() => {
     setLoadingPlaces(true);
     setLoadingUsers(true);
     firebase.users().on('value', (snapshotUsers) => {
       const usersObject = snapshotUsers.val();
-      const availableUsers = {};
-      const takenPlaces = [];
-      if (usersObject) {
-        const allUsers = Object.values(usersObject);
-        const activeUsers = allUsers.filter((u) => u.isActive);
-        activeUsers.forEach((user) => {
-          if (user.place === undefined) {
-            availableUsers[user.uid] = {
-              value: user,
-              label: `${user.name} (${user.parkingMeteors}*)`,
-            };
-          } else {
-            takenPlaces.push(`${user.place.building}_${user.place.place}`);
-          }
-        });
-      }
+      const { availableUsers, takenPlaces } = processUsers(usersObject);
       setUsers(availableUsers);
       setLoadingUsers(false);
+
       firebase.buildings().on('value', (snapshotBuildings) => {
         const buildingsObject = snapshotBuildings.val();
-        const availablePlaces = {};
-        if (buildingsObject) {
-          const allBuildings = Object.values(buildingsObject);
-          const activeBuildings = allBuildings.filter((b) => b.isActive);
-          activeBuildings.forEach((building) => {
-            const allPlaces = Object.values(building.places);
-            const activePlaces = allPlaces.filter((p) => p.isActive);
-            activePlaces.forEach((place) => {
-              const placeKey = `${building.uid}_${place.number}`;
-              if (takenPlaces.indexOf(placeKey) === -1) {
-                const newBuilding = omit(building, 'places');
-                availablePlaces[placeKey] = {
-                  value: {
-                    building: newBuilding,
-                    place,
-                  },
-                  label: `${building.name} #${place.number} (${place.difficulty}*)`,
-                };
-              }
-            });
-          });
-        }
+        const availablePlaces = processBuildings(buildingsObject, takenPlaces);
         setPlaces(availablePlaces);
         setLoadingPlaces(false);
       });
