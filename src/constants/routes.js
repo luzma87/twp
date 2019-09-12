@@ -8,6 +8,7 @@ const routes = {
   USERS: '/users',
   USERS_CREATE: '/users/create',
   BUILDINGS: '/buildings',
+  BUILDINGS_CREATE: '/buildings/create',
 };
 
 export default routes;

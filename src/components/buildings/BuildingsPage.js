@@ -9,29 +9,28 @@ import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
-import UsersList from './UsersList';
+import BuildingsList from './BuildingsList';
 
-const UsersPage = ({ firebase }) => {
-  const [users, setUsers] = useState([]);
+const BuildingsPage = ({ firebase }) => {
+  const [buildings, setBuildings] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    firebase.users().on('value', (snapshot) => {
-      const usersObject = snapshot.val();
-
-      if (usersObject) {
-        const usersList = Object.keys(usersObject).map((key) => ({
-          ...usersObject[key],
+    firebase.buildings().on('value', (snapshot) => {
+      const buildingsObject = snapshot.val();
+      if (buildingsObject) {
+        const buildingsList = Object.keys(buildingsObject).map((key) => ({
+          ...buildingsObject[key],
           uid: key,
         }));
-        setUsers(usersList);
+        setBuildings(buildingsList);
       }
       setLoading(false);
     });
 
     return function cleanup() {
-      firebase.users().off();
+      firebase.buildings().off();
     };
   }, [firebase]);
 
@@ -46,17 +45,16 @@ const UsersPage = ({ firebase }) => {
           />
         </Typography>
       )}
-      <CreateButton linkTo={routes.USERS_CREATE} />
-      <UsersList users={users} />
+      <CreateButton linkTo={routes.BUILDINGS_CREATE} />
+      <BuildingsList buildings={buildings} />
     </Content>
   );
 };
 
-UsersPage.propTypes = {
+BuildingsPage.propTypes = {
   firebase: PropTypes.any.isRequired,
 };
-
 export default compose(
   withAuthorization(conditions.isAdminUser),
   withFirebase,
-)(UsersPage);
+)(BuildingsPage);

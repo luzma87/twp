@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import routes from '../../constants/routes';
 import AccountPage from '../account/AccountPage';
+import BuildingFormPage from '../buildings/BuildingFormPage';
+import BuildingsPage from '../buildings/BuildingsPage';
 import HomePage from '../home/HomePage';
 import Navigation from '../navigation/Navigation';
 import PasswordForgetPage from '../passwordForget/PasswordForgetPage';
@@ -23,7 +25,8 @@ const App = () => (
 
       <Route exact path={routes.USERS} component={UsersPage} />
       <Route path={routes.USERS_CREATE} component={UserFormPage} />
-      <Route exact path={routes.BUILDINGS} component={UsersPage} />
+      <Route exact path={routes.BUILDINGS} component={BuildingsPage} />
+      <Route path={routes.BUILDINGS_CREATE} component={BuildingFormPage} />
     </div>
   </BrowserRouter>
 );

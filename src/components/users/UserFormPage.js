@@ -43,6 +43,7 @@ const UserFormPage = ({ firebase }) => {
   const onPersonChange = (event) => {
     setValues({ ...personValues, [event.target.name]: event.target.value });
   };
+
   const onCarChange = (event) => {
     const newCar = { ...personValues.car, [event.target.name]: event.target.value };
     setValues({ ...personValues, car: newCar });
@@ -133,7 +134,7 @@ const UserFormPage = ({ firebase }) => {
             onClick={(event) => onSubmit(event)}
           >
             <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
-          Guardar
+            Guardar
           </Button>
         </div>
       </CustomForm>

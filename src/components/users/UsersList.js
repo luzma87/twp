@@ -7,29 +7,24 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import React from 'react';
-import routes from '../../constants/routes';
 import shapes from '../../constants/shapes';
-import CreateButton from '../_common/CreateButton';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 
 const UsersList = ({ users }) => (
-  <>
-    <CreateButton linkTo={routes.USERS_CREATE} />
-
-    <Paper>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Nombre</TableCell>
-            <TableCell>E-mail</TableCell>
-            <TableCell>Admin?</TableCell>
-            <TableCell>Cédula</TableCell>
-            <TableCell>Parking</TableCell>
-            <TableCell>Auto</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {
+  <Paper>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>Nombre</TableCell>
+          <TableCell>E-mail</TableCell>
+          <TableCell>Admin?</TableCell>
+          <TableCell>Cédula</TableCell>
+          <TableCell>Parking</TableCell>
+          <TableCell>Auto</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {
             Object.values(users).map((person) => (
               <TableRow key={person.uid}>
                 <TableCell>
@@ -62,10 +57,9 @@ const UsersList = ({ users }) => (
               </TableRow>
             ))
           }
-        </TableBody>
-      </Table>
-    </Paper>
-  </>
+      </TableBody>
+    </Table>
+  </Paper>
 );
 
 UsersList.propTypes = {

@@ -77,6 +77,15 @@ class Firebase {
   users() {
     return this.db.ref('users');
   }
+
+  // *** Building API ***
+  building(uid) {
+    return this.db.ref(`buildings/${uid}`);
+  }
+
+  buildings() {
+    return this.db.ref('buildings');
+  }
 }
 
 export default Firebase;
