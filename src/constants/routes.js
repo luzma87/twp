@@ -9,6 +9,9 @@ const routes = {
   USERS_CREATE: '/users/create',
   BUILDINGS: '/buildings',
   BUILDINGS_CREATE: '/buildings/create',
+
+  ASSIGNMENTS: '/assignments',
+  ASSIGNMENTS_CREATE: '/assignments/create',
 };
 
 export default routes;

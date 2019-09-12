@@ -27,6 +27,7 @@ const NavigationAuth = ({ authUser }) => {
     <>
       <NavBarIconLink title="Personas" icon="user-astronaut" to={routes.USERS} />
       <NavBarIconLink title="Puestos" icon="warehouse" to={routes.BUILDINGS} />
+      <NavBarIconLink title="Asignaciones" icon="rocket" to={routes.ASSIGNMENTS} />
     </>
   ) : null;
 
@@ -35,7 +36,6 @@ const NavigationAuth = ({ authUser }) => {
       <Toolbar style={{ justifyContent: 'space-between' }}>
         <div className="navbar-part">
           <NavBarTextLink to={routes.HOME} text="TWP" title="Inicio" />
-          {/* <NavBarIcon title="Asignaciones" icon="rocket" to={routes.assignments()} /> */}
           {adminNav}
         </div>
 

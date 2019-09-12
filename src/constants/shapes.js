@@ -47,11 +47,18 @@ const building = {
   active: PropTypes.bool,
 };
 
+const assignment = {
+  user: PropTypes.string,
+  place: PropTypes.shape({ building: PropTypes.string, place: PropTypes.string }),
+  id: PropTypes.string,
+};
+
 const shapes = {
   user,
   car,
   building,
   place,
+  assignment,
 };
 
 export default shapes;
