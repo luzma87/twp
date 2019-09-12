@@ -41,6 +41,7 @@ const BuildingsPage = ({ firebase }) => {
     let newBuildingsList;
     if (flag) {
       newBuildingsList = buildings.filter((u) => u.isActive);
+      setMessage('Mostrando solo edificios activos');
     } else {
       newBuildingsList = buildings;
       setMessage('Mostrando todos los edificios');

@@ -41,6 +41,7 @@ const UsersPage = ({ firebase }) => {
     let newUserList;
     if (flag) {
       newUserList = users.filter((u) => u.isActive);
+      setMessage('Mostrando solo usuarios activos');
     } else {
       newUserList = users;
       setMessage('Mostrando todos los usuarios');
