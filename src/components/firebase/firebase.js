@@ -86,6 +86,11 @@ class Firebase {
   buildings() {
     return this.db.ref('buildings');
   }
+
+  // *** Admin API ***
+  params() {
+    return this.db.ref('params');
+  }
 }
 
 export default Firebase;
