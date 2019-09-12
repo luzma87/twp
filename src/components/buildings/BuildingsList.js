@@ -25,7 +25,7 @@ const BuildingsList = ({ buildings }) => (
           Object.values(buildings).map((building) => {
             const places = Object.values(building.places);
             return (
-              <TableRow key={building.id}>
+              <TableRow key={building.uid}>
                 <TableCell>
                   <FontAwesomeIcon
                     icon={['far', 'warehouse']}

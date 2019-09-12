@@ -65,8 +65,10 @@ const UserFormPage = ({ firebase }) => {
     firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then((authUser) => {
+        const { uid } = authUser.user;
+        newUser.uid = uid;
         firebase
-          .user(authUser.user.uid)
+          .user(uid)
           .set(newUser);
       })
       .then(() => {

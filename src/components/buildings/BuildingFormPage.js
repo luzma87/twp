@@ -71,10 +71,11 @@ const BuildingFormPage = ({ firebase }) => {
     const newRef = firebase.buildings().push();
     const newBuilding = { ...buildingValues };
     newBuilding.id = newRef.key;
+    newBuilding.uid = newRef.key;
 
     firebase
       .building(newBuilding.id)
-      .set(buildingValues)
+      .set(newBuilding)
       .then(() => {
         setBuildingValues(INITIAL_BUILDING);
         setPlaceValues(INITIAL_PLACE);
