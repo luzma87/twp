@@ -1,6 +1,5 @@
 const routes = {
   HOME: '/',
-  SIGN_UP: '/signup',
   SIGN_IN: '/signin',
   ACCOUNT: '/account',
   PASSWORD_FORGET: '/pw-forget',

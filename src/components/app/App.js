@@ -13,7 +13,6 @@ import ParamsPage from '../params/ParamsPage';
 import PasswordForgetPage from '../passwordForget/PasswordForgetPage';
 import withAuthentication from '../session/withAuthentication';
 import SignInPage from '../signIn/SignInPage';
-import SignUpPage from '../signUp/SignUpPage';
 import UserFormPage from '../users/UserFormPage';
 import UsersPage from '../users/UsersPage';
 
@@ -22,7 +21,6 @@ const App = () => (
     <div>
       <Navigation />
       <Route exact path={routes.HOME} component={HomePage} />
-      <Route path={routes.SIGN_UP} component={SignUpPage} />
       <Route path={routes.SIGN_IN} component={SignInPage} />
       <Route path={routes.PASSWORD_FORGET} component={PasswordForgetPage} />
       <Route path={routes.ACCOUNT} component={AccountPage} />
