@@ -4,9 +4,11 @@ const routes = {
   SIGN_IN: '/signin',
   ACCOUNT: '/account',
   PASSWORD_FORGET: '/pw-forget',
+  ADMIN: '/admin',
 
   USERS: '/users',
   USERS_CREATE: '/users/create',
+
   BUILDINGS: '/buildings',
   BUILDINGS_CREATE: '/buildings/create',
 

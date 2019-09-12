@@ -1,12 +1,11 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import shapes from '../../constants/shapes';
 
 const AssignmentsList = ({ buildings, users }) => (
@@ -15,6 +14,7 @@ const AssignmentsList = ({ buildings, users }) => (
       <TableHead>
         <TableRow>
           <TableCell>Persona</TableCell>
+          <TableCell>Auto</TableCell>
           <TableCell>Puesto</TableCell>
         </TableRow>
       </TableHead>
@@ -27,7 +27,10 @@ const AssignmentsList = ({ buildings, users }) => (
               return (
                 <TableRow key={user.uid}>
                   <TableCell>
-                    {`${user.name} - ${user.car.brand} ${user.car.model} [${user.car.plate}]`}
+                    {user.name}
+                  </TableCell>
+                  <TableCell>
+                    {`${user.car.brand} ${user.car.model} [${user.car.plate}]`}
                   </TableCell>
                   <TableCell>
                     {`${building.name} #${place.number}`}
