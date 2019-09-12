@@ -25,6 +25,7 @@ const EmailPage = ({ firebase }) => {
     setLoadingParams(true);
     let otherBanks = 0;
     let placePriceTotal = 0;
+    let assignedUsers = 0;
     firebase.users().on('value', (snapshot) => {
       const usersObject = snapshot.val();
       let usersList = [];
@@ -45,16 +46,19 @@ const EmailPage = ({ firebase }) => {
           const paramsObject = snapshot3.val();
           if (paramsObject) {
             usersList.forEach((user) => {
-              if (user.bank.value !== paramsObject.defaultBank) {
-                otherBanks += parseFloat(paramsObject.differentBank);
+              if (user.place) {
+                assignedUsers += 1;
+                if (user.bank.value !== paramsObject.defaultBank) {
+                  otherBanks += parseFloat(paramsObject.differentBank);
+                }
+                const userBuilding = buildingsObject[user.place.building];
+                const userPlace = userBuilding.places[user.place.place];
+                placePriceTotal += parseFloat(userPlace.price);
               }
-              const userBuilding = buildingsObject[user.place.building];
-              const userPlace = userBuilding.places[user.place.place];
-              placePriceTotal += parseFloat(userPlace.price);
             });
 
             const totalValue = placePriceTotal + otherBanks + paramsObject.hosting;
-            const valuePerPerson = round(totalValue / usersList.length, 2);
+            const valuePerPerson = round(totalValue / assignedUsers, 2);
 
             let paramEmailText = paramsObject.emailText.replace('{{cuota}}', `$${valuePerPerson}`);
             paramEmailText = paramEmailText.split('{{br}}');

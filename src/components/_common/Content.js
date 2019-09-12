@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const Content = ({ children }) => (
-  <div style={{ padding: 24 }}>
+  <div style={{ padding: 24, maxWidth: 1000 }}>
     {children}
   </div>
 );

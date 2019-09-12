@@ -55,7 +55,7 @@ const AssignmentsPage = ({ firebase }) => {
         </Typography>
       )}
       <CreateButton linkTo={routes.ASSIGNMENTS_CREATE} />
-      <AssignmentsList buildings={buildings} users={users} />
+      <AssignmentsList buildings={buildings} users={users} skill />
     </Content>
   );
 };

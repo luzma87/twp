@@ -31,8 +31,8 @@ const AssignmentFormPage = ({ firebase }) => {
   useEffect(() => {
     setLoadingPlaces(true);
     setLoadingUsers(true);
-    firebase.users().on('value', (snapshot) => {
-      const usersObject = snapshot.val();
+    firebase.users().on('value', (snapshotUsers) => {
+      const usersObject = snapshotUsers.val();
       const availableUsers = {};
       const takenPlaces = [];
       if (usersObject) {
@@ -42,7 +42,7 @@ const AssignmentFormPage = ({ firebase }) => {
           if (user.place === undefined) {
             availableUsers[user.uid] = {
               value: user,
-              label: user.name,
+              label: `${user.name} (${user.parkingMeteors}*)`,
             };
           } else {
             takenPlaces.push(`${user.place.building}_${user.place.place}`);
@@ -51,8 +51,8 @@ const AssignmentFormPage = ({ firebase }) => {
       }
       setUsers(availableUsers);
       setLoadingUsers(false);
-      firebase.buildings().on('value', (snapshot2) => {
-        const buildingsObject = snapshot2.val();
+      firebase.buildings().on('value', (snapshotBuildings) => {
+        const buildingsObject = snapshotBuildings.val();
         const availablePlaces = {};
         if (buildingsObject) {
           const allBuildings = Object.values(buildingsObject);
@@ -69,7 +69,7 @@ const AssignmentFormPage = ({ firebase }) => {
                     building: newBuilding,
                     place,
                   },
-                  label: `${building.name} #${place.number}`,
+                  label: `${building.name} #${place.number} (${place.difficulty}*)`,
                 };
               }
             });

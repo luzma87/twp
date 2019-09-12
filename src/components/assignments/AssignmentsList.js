@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,7 +9,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import shapes from '../../constants/shapes';
 
-const AssignmentsList = ({ buildings, users }) => (
+const AssignmentsList = ({ buildings, users, skill }) => (
   <Paper>
     <Table>
       <TableHead>
@@ -28,12 +29,28 @@ const AssignmentsList = ({ buildings, users }) => (
                 <TableRow key={user.uid}>
                   <TableCell>
                     {user.name}
+                    {skill ? (
+                      <>
+                        <span className="full-meteor" style={{ marginLeft: 8 }}>
+                          {`${user.parkingMeteors} `}
+                        </span>
+                        <FontAwesomeIcon icon={['fas', 'meteor']} className="full-meteor" />
+                      </>
+                    ) : ''}
                   </TableCell>
                   <TableCell>
                     {`${user.car.brand} ${user.car.model} [${user.car.plate}]`}
                   </TableCell>
                   <TableCell>
                     {`${building.name} #${place.number}`}
+                    {skill ? (
+                      <>
+                        <span className="full-meteor" style={{ marginLeft: 8 }}>
+                          {`${place.difficulty} `}
+                        </span>
+                        <FontAwesomeIcon icon={['fas', 'meteor']} className="full-meteor" />
+                      </>
+                    ) : ''}
                   </TableCell>
                 </TableRow>
               );
@@ -49,11 +66,13 @@ const AssignmentsList = ({ buildings, users }) => (
 AssignmentsList.propTypes = {
   buildings: PropTypes.shape({}),
   users: PropTypes.arrayOf(PropTypes.shape(shapes.user)),
+  skill: PropTypes.bool,
 };
 
 AssignmentsList.defaultProps = {
   buildings: {},
   users: [],
+  skill: false,
 };
 
 export default AssignmentsList;
