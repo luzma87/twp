@@ -5,9 +5,9 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import React from 'react';
 import PropTypes from 'prop-types';
-import MeteorRating from '../_common/meteorRating/MeteorRating';
+import React from 'react';
+import shapes from '../../constants/shapes';
 
 const BuildingsList = ({ buildings }) => (
   <Paper>
@@ -22,49 +22,53 @@ const BuildingsList = ({ buildings }) => (
       </TableHead>
       <TableBody>
         {
-            Object.values(buildings).map((building) => {
-              const places = Object.values(building.places);
-              return (
-                <TableRow key={building.id}>
-                  <TableCell>
-                    <FontAwesomeIcon
-                      icon={['far', 'warehouse']}
-                      style={{ marginRight: 8, color: building.isActive ? '#2E7D32' : '#B71C1C' }}
-                    />
-                    {building.name}
-                  </TableCell>
-                  <TableCell>
-                    {building.address}
-                  </TableCell>
-                  <TableCell>
-                    {building.observations}
-                  </TableCell>
-                  <TableCell>
-                    {places.map((place) => (
-                      <div key={place.number}>
-                        <FontAwesomeIcon
-                          icon={['far', 'draw-square']}
-                          style={{ marginRight: 8, color: place.isActive ? '#2E7D32' : '#B71C1C' }}
-                        />
-                        {`#${place.number}, ${place.size.label}, $${place.price}, `}
-                        <span className="full-meteor">
-                          {`${place.difficulty} `}
-                        </span>
-                        <FontAwesomeIcon icon={['fas', 'meteor']} className="full-meteor" />
-                      </div>
-                    ))}
-                  </TableCell>
-                </TableRow>
-              );
-            })
-          }
+          Object.values(buildings).map((building) => {
+            const places = Object.values(building.places);
+            return (
+              <TableRow key={building.id}>
+                <TableCell>
+                  <FontAwesomeIcon
+                    icon={['far', 'warehouse']}
+                    style={{ marginRight: 8, color: building.isActive ? '#2E7D32' : '#B71C1C' }}
+                  />
+                  {building.name}
+                </TableCell>
+                <TableCell>
+                  {building.address}
+                </TableCell>
+                <TableCell>
+                  {building.observations}
+                </TableCell>
+                <TableCell>
+                  {places.map((place) => (
+                    <div key={place.number}>
+                      <FontAwesomeIcon
+                        icon={['far', 'draw-square']}
+                        style={{ marginRight: 8, color: place.isActive ? '#2E7D32' : '#B71C1C' }}
+                      />
+                      {`#${place.number}, ${place.size.label}, $${place.price}, `}
+                      <span className="full-meteor">
+                        {`${place.difficulty} `}
+                      </span>
+                      <FontAwesomeIcon icon={['fas', 'meteor']} className="full-meteor" />
+                    </div>
+                  ))}
+                </TableCell>
+              </TableRow>
+            );
+          })
+        }
       </TableBody>
     </Table>
   </Paper>
 );
 
-BuildingsList.propTypes = {};
+BuildingsList.propTypes = {
+  buildings: PropTypes.arrayOf(PropTypes.shape(shapes.building)),
+};
 
-BuildingsList.defaultProps = {};
+BuildingsList.defaultProps = {
+  buildings: [],
+};
 
 export default BuildingsList;

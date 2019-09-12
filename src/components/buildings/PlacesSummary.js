@@ -1,9 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Box } from "@material-ui/core";
+import { Box } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
-import Paper from '@material-ui/core/Paper';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import shapes from '../../constants/shapes';
 import PlaceForm from './PlaceForm';
 
@@ -20,7 +19,14 @@ const PlacesSummary = (props) => {
       />
 
       {allPlaces ? Object.values(allPlaces).map((place) => (
-        <Box bgcolor="text.hint" color="background.paper" key={place.number} style={{ padding: 16, marginTop: 8, border: 'solid 1px #333', borderRadius: 5 }}>
+        <Box
+          bgcolor="text.hint"
+          color="background.paper"
+          key={place.number}
+          style={{
+            padding: 16, marginTop: 8, border: 'solid 1px #333', borderRadius: 5,
+          }}
+        >
           {`#${place.number}, ${place.difficulty}*, ${place.size.label}, ${place.owner}, $${place.price}`}
           <IconButton
             color="secondary"
