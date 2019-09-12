@@ -4,7 +4,8 @@ const routes = {
   SIGN_IN: '/signin',
   ACCOUNT: '/account',
   PASSWORD_FORGET: '/pw-forget',
-  ADMIN: '/admin',
+  PARAMS: '/params',
+  EMAIL: '/email',
 
   USERS: '/users',
   USERS_CREATE: '/users/create',

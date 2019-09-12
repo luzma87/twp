@@ -28,7 +28,8 @@ const NavigationAuth = ({ authUser }) => {
       <NavBarIconLink title="Personas" icon="user-astronaut" to={routes.USERS} />
       <NavBarIconLink title="Puestos" icon="warehouse" to={routes.BUILDINGS} />
       <NavBarIconLink title="Asignaciones" icon="rocket" to={routes.ASSIGNMENTS} />
-      <NavBarIconLink title="Params" icon="alicorn" to={routes.ADMIN} />
+      <NavBarIconLink title="Email" icon="envelope-open-dollar" to={routes.EMAIL} />
+      <NavBarIconLink title="Params" icon="alicorn" to={routes.PARAMS} />
     </>
   ) : null;
 

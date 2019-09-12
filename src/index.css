@@ -16,3 +16,19 @@ code {
   display: flex;
   align-items: center;
 }
+
+.email-table {
+  border: solid 1px #666 !important;
+  color: #333 !important;
+}
+
+table.email-table {
+  width: auto !important;
+  margin-top: 16px;
+}
+
+.email-table.header {
+  color: #666 !important;
+  font-weight: bold;
+  font-size: large;
+}

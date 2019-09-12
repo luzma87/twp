@@ -18,7 +18,7 @@ const INITIAL_STATE = {
   emailText: '',
 };
 
-const AdminPage = ({ firebase }) => {
+const ParamsPage = ({ firebase }) => {
   const [params, setParams] = useState(INITIAL_STATE);
   const [loading, setLoading] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
@@ -78,7 +78,7 @@ const AdminPage = ({ firebase }) => {
       <form
         style={{
           display: 'grid',
-          gridTemplateColumns: '400px 300px',
+          gridTemplateColumns: '500px',
           gridColumnGap: 72,
         }}
         onSubmit={(event) => onSubmit(event)}
@@ -130,11 +130,11 @@ const AdminPage = ({ firebase }) => {
   );
 };
 
-AdminPage.propTypes = {
+ParamsPage.propTypes = {
   firebase: PropTypes.any.isRequired,
 };
 
 export default compose(
   withAuthorization(conditions.isAdminUser),
   withFirebase,
-)(AdminPage);
+)(ParamsPage);

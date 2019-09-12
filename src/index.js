@@ -17,6 +17,7 @@ import {
   faPaperPlane,
   faSpinner,
   faRepeat,
+  faEnvelopeOpenDollar,
 } from '@fortawesome/pro-regular-svg-icons';
 import { faMeteor as fasMeteor } from '@fortawesome/pro-solid-svg-icons';
 import React from 'react';
@@ -31,7 +32,7 @@ library.add(
   faSignInAlt, faSignOutAlt, faUserAstronaut, faRocket,
   faEye, faEyeSlash, faSave, faPlusHexagon, faPaperPlane,
   farMeteor, fasMeteor, faAlicorn, faWarehouse, faSpinner,
-  faDrawSquare, faTrashAlt, faGhost, faRepeat,
+  faDrawSquare, faTrashAlt, faGhost, faRepeat, faEnvelopeOpenDollar,
 );
 
 ReactDOM.render(
