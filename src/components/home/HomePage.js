@@ -20,7 +20,7 @@ const HomePage = ({ firebase }) => {
   const [buildings, setBuildings] = useState({});
   const [filteredBuildings, setFilteredBuildings] = useState({});
   const [buildingsForFilter, setBuildingsForFilter] = useState({});
-  const [filter, setFilter] = useState(ALL_BUILDINGS);
+  const [filter, setFilter] = useState(ALL_BUILDINGS.value);
   const [users, setUsers] = useState([]);
   const [loadingBuildings, setLoadingBuildings] = useState(false);
   const [loadingUsers, setLoadingUsers] = useState(false);
@@ -78,11 +78,11 @@ const HomePage = ({ firebase }) => {
     const selectedValue = event.target.value;
     setFilter(selectedValue);
     let newBuildings = {};
-    if (selectedValue === ALL_BUILDINGS) {
+    if (selectedValue === ALL_BUILDINGS.value) {
       newBuildings = buildings;
     } else {
       Object.values(buildings).forEach((building) => {
-        if (building === selectedValue.value) {
+        if (building.uid === selectedValue.uid) {
           newBuildings[building.uid] = building;
         }
       });
