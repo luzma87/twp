@@ -7,6 +7,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import routes from '../../constants/routes';
 import shapes from '../../constants/shapes';
 
 const BuildingsList = ({ buildings }) => (
@@ -31,7 +33,9 @@ const BuildingsList = ({ buildings }) => (
                     icon={['far', 'warehouse']}
                     style={{ marginRight: 8, color: building.isActive ? '#2E7D32' : '#B71C1C' }}
                   />
-                  {building.name}
+                  <Link to={`${routes.BUILDINGS_EDIT_ID}${building.uid}`} style={{ color: 'black' }}>
+                    {building.name}
+                  </Link>
                 </TableCell>
                 <TableCell>
                   {building.address}

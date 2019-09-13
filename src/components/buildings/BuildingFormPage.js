@@ -4,7 +4,8 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { omit } from 'lodash';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import constants from '../../constants/constants';
@@ -35,11 +36,27 @@ const INITIAL_BUILDING = {
   isActive: true,
 };
 
-const BuildingFormPage = ({ firebase }) => {
+const BuildingFormPage = ({ firebase, match }) => {
+  const editId = match.params.id;
   const [buildingValues, setBuildingValues] = React.useState(INITIAL_BUILDING);
   const [placeValues, setPlaceValues] = React.useState(INITIAL_PLACE);
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = React.useState(null);
+  const [isEditing, setEditing] = useState(false);
+
+  useEffect(() => {
+    if (editId !== undefined) {
+      firebase.building(editId).on('value', (snapshot) => {
+        const editUser = snapshot.val();
+        setBuildingValues({ ...INITIAL_BUILDING, ...editUser });
+        setEditing(true);
+      });
+    }
+
+    return function cleanup() {
+      firebase.users().off();
+    };
+  }, [firebase, editId]);
 
   const onBuildingChange = (event) => {
     setBuildingValues({ ...buildingValues, [event.target.name]: event.target.value });
@@ -69,23 +86,32 @@ const BuildingFormPage = ({ firebase }) => {
   const onSubmit = (event) => {
     setLoading(true);
 
-    const newRef = firebase.buildings().push();
     const newBuilding = { ...buildingValues };
-    newBuilding.id = newRef.key;
-    newBuilding.uid = newRef.key;
+    if (isEditing) {
+      firebase
+        .building(editId)
+        .set(newBuilding)
+        .then(() => {
+          setLoading(false);
+        });
+    } else {
+      const newRef = firebase.buildings().push();
+      newBuilding.id = newRef.key;
+      newBuilding.uid = newRef.key;
 
-    firebase
-      .building(newBuilding.id)
-      .set(newBuilding)
-      .then(() => {
-        setBuildingValues(INITIAL_BUILDING);
-        setPlaceValues(INITIAL_PLACE);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setErrorMessage(error);
-        setLoading(false);
-      });
+      firebase
+        .building(newBuilding.id)
+        .set(newBuilding)
+        .then(() => {
+          setBuildingValues(INITIAL_BUILDING);
+          setPlaceValues(INITIAL_PLACE);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setErrorMessage(error);
+          setLoading(false);
+        });
+    }
     event.preventDefault();
   };
 
@@ -149,9 +175,11 @@ const BuildingFormPage = ({ firebase }) => {
 
 BuildingFormPage.propTypes = {
   firebase: PropTypes.any.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 export default compose(
   withAuthorization(conditions.isAdminUser),
   withFirebase,
+  withRouter,
 )(BuildingFormPage);

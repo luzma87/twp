@@ -13,6 +13,8 @@ const routes = {
 
   BUILDINGS: '/buildings',
   BUILDINGS_CREATE: '/buildings/create',
+  BUILDINGS_EDIT: '/buildings/edit/:id',
+  BUILDINGS_EDIT_ID: '/buildings/edit/',
 
   ASSIGNMENTS: '/assignments',
   ASSIGNMENTS_CREATE: '/assignments/create',
