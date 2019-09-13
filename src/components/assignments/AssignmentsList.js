@@ -8,6 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import React from 'react';
 import shapes from '../../constants/shapes';
+import MeteorRating from '../_common/meteorRating/MeteorRating';
 
 const AssignmentsList = ({ buildings, users, skill }) => (
   <Paper>
@@ -31,12 +32,7 @@ const AssignmentsList = ({ buildings, users, skill }) => (
                     <TableCell>
                       {user.name}
                       {skill ? (
-                        <>
-                          <span className="full-meteor" style={{ marginLeft: 8 }}>
-                            {`${user.parkingMeteors} `}
-                          </span>
-                          <FontAwesomeIcon icon={['fas', 'meteor']} className="full-meteor" />
-                        </>
+                        <MeteorRating id="userSkill" compact value={user.parkingMeteors} />
                       ) : ''}
                     </TableCell>
                     <TableCell>
@@ -45,12 +41,7 @@ const AssignmentsList = ({ buildings, users, skill }) => (
                     <TableCell>
                       {`${building.name} #${place.number}`}
                       {skill ? (
-                        <>
-                          <span className="full-meteor" style={{ marginLeft: 8 }}>
-                            {`${place.difficulty} `}
-                          </span>
-                          <FontAwesomeIcon icon={['fas', 'meteor']} className="full-meteor" />
-                        </>
+                        <MeteorRating id="placeDifficulty" compact value={place.difficulty} />
                       ) : ''}
                     </TableCell>
                   </TableRow>

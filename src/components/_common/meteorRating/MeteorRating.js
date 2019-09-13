@@ -9,8 +9,18 @@ const total = 5;
 
 const MeteorRating = (props) => {
   const {
-    id, value, onChange, readonly, size,
+    id, value, onChange, readonly, size, compact,
   } = props;
+  if (compact) {
+    return (
+      <>
+        <span className="full-meteor" style={{ marginLeft: 8 }}>
+          {value}
+        </span>
+        <FontAwesomeIcon icon={['fas', 'meteor']} className="full-meteor" style={{ marginLeft: 2 }} />
+      </>
+    );
+  }
   return (
     <div>
       {range(total).map((s) => {
@@ -66,6 +76,7 @@ MeteorRating.propTypes = {
   onChange: PropTypes.func,
   readonly: PropTypes.bool,
   size: PropTypes.string,
+  compact: PropTypes.bool,
 };
 
 MeteorRating.defaultProps = {
@@ -73,6 +84,7 @@ MeteorRating.defaultProps = {
   readonly: false,
   size: '2x',
   onChange: null,
+  compact: false,
 };
 
 export default MeteorRating;

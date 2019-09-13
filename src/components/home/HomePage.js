@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
+import constants from '../../constants/constants';
 import Content from '../_common/Content';
 import CustomSelect from '../_common/CustomSelect';
 import AssignmentsList from '../assignments/AssignmentsList';
@@ -32,7 +33,8 @@ const HomePage = ({ firebase }) => {
       const usedBuildings = [];
 
       if (usersObject) {
-        const usersList = Object.values(usersObject).filter((u) => u.isActive);
+        let usersList = Object.values(usersObject).filter((u) => u.isActive);
+        usersList = usersList.sort(constants.userSort);
         setUsers(usersList);
         usersList.forEach((u) => {
           if (u.place && usedBuildings.indexOf(u.place.building) === -1) {

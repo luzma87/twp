@@ -50,7 +50,7 @@ const UsersList = ({ users }) => (
                 {person.id}
               </TableCell>
               <TableCell>
-                <MeteorRating id="parkingMeteors" value={person.parkingMeteors} size="lg" readonly />
+                <MeteorRating id="parkingMeteors" value={person.parkingMeteors} size="lg" compact />
               </TableCell>
               <TableCell>
                 {person.car ? `${person.car.brand} ${person.car.model}` : ''}

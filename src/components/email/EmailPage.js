@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
+import constants from '../../constants/constants';
 import Content from '../_common/Content';
 import AssignmentsForEmailList from '../assignments/AssignmentsForEmailList';
 import withFirebase from '../firebase/withFirebase';
@@ -32,15 +33,7 @@ const EmailPage = ({ firebase }) => {
 
       if (usersObject) {
         usersList = Object.values(usersObject).filter((u) => u.isActive);
-        usersList = usersList.sort((a, b) => {
-          if (a.name < b.name) {
-            return -1;
-          }
-          if (a.name > b.name) {
-            return 1;
-          }
-          return 0;
-        });
+        usersList = usersList.sort(constants.userSort);
         setUsers(usersList);
       }
       setLoadingUsers(false);

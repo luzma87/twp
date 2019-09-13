@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
+import constants from "../../constants/constants";
 import routes from '../../constants/routes';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
@@ -24,7 +25,8 @@ const UsersPage = ({ firebase }) => {
       const usersObject = snapshot.val();
 
       if (usersObject) {
-        const usersList = Object.values(usersObject);
+        let usersList = Object.values(usersObject);
+        usersList = usersList.sort(constants.userSort);
         setUsers(usersList);
         const activeUsers = usersList.filter((u) => u.isActive);
         setFilteredUsers(activeUsers);

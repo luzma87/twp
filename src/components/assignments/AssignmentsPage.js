@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Typography } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
+import constants from '../../constants/constants';
 import routes from '../../constants/routes';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
@@ -31,7 +32,8 @@ const AssignmentsPage = ({ firebase }) => {
       const usersObject = snapshot.val();
 
       if (usersObject) {
-        const usersList = Object.values(usersObject).filter((u) => u.isActive);
+        let usersList = Object.values(usersObject).filter((u) => u.isActive);
+        usersList = usersList.sort(constants.userSort);
         setUsers(usersList);
       }
       setLoadingUsers(false);
