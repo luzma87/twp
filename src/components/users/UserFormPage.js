@@ -3,7 +3,8 @@ import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { omit } from 'lodash';
 import conditions from '../../constants/conditions';
@@ -35,17 +36,38 @@ const INITIAL_STATE = {
   },
 };
 
-const UserFormPage = ({ firebase }) => {
-  const [personValues, setValues] = React.useState(INITIAL_STATE);
+const UserFormPage = ({ firebase, match }) => {
+  const editId = match.params.id;
+  const [personValues, setValues] = useState(INITIAL_STATE);
   const [isLoading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = React.useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isEditing, setEditing] = useState(false);
+
+  useEffect(() => {
+    if (editId !== undefined) {
+      firebase.user(editId).on('value', (snapshot) => {
+        const editUser = snapshot.val();
+        setValues({ ...INITIAL_STATE, ...editUser });
+        setEditing(true);
+      });
+    }
+
+    return function cleanup() {
+      firebase.users().off();
+    };
+  }, [firebase, editId]);
 
   const onPersonChange = (event) => {
     setValues({ ...personValues, [event.target.name]: event.target.value });
   };
 
   const onCarChange = (event) => {
-    const newCar = { ...personValues.car, [event.target.name]: event.target.value };
+    const { name } = event.target;
+    let { value } = event.target;
+    if (name === 'plate') {
+      value = value.toUpperCase();
+    }
+    const newCar = { ...personValues.car, [name]: value };
     setValues({ ...personValues, car: newCar });
   };
 
@@ -62,23 +84,31 @@ const UserFormPage = ({ firebase }) => {
     const newUser = omit(personValues, ['passwordOne', 'passwordTwo']);
     newUser.roles = userRoles;
 
-    firebase
-      .doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then((authUser) => {
-        const { uid } = authUser.user;
-        newUser.uid = uid;
-        firebase
-          .user(uid)
-          .set(newUser);
-      })
-      .then(() => {
-        setValues(INITIAL_STATE);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setErrorMessage(error);
-        setLoading(false);
-      });
+    if (isEditing) {
+      firebase
+        .user(editId)
+        .set(newUser).then(() => {
+          setLoading(false);
+        });
+    } else {
+      firebase
+        .doCreateUserWithEmailAndPassword(email, passwordOne)
+        .then((authUser) => {
+          const { uid } = authUser.user;
+          newUser.uid = uid;
+          firebase
+            .user(uid)
+            .set(newUser);
+        })
+        .then(() => {
+          setValues(INITIAL_STATE);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setErrorMessage(error);
+          setLoading(false);
+        });
+    }
     event.preventDefault();
   };
 
@@ -91,7 +121,7 @@ const UserFormPage = ({ firebase }) => {
     car,
   } = personValues;
 
-  const isInvalid = passwordOne !== passwordTwo
+  let isInvalid = passwordOne !== passwordTwo
     || passwordOne === ''
     || email === ''
     || id === ''
@@ -99,6 +129,14 @@ const UserFormPage = ({ firebase }) => {
     || car.brand === ''
     || car.model === ''
     || car.plate === '';
+  if (isEditing) {
+    isInvalid = email === ''
+      || id === ''
+      || name === ''
+      || car.brand === ''
+      || car.model === ''
+      || car.plate === '';
+  }
   const icon = isLoading ? 'spinner' : 'save';
 
   return (
@@ -113,6 +151,7 @@ const UserFormPage = ({ firebase }) => {
           <PersonForm
             onPersonChange={(event) => onPersonChange(event)}
             personValues={personValues}
+            isEditing={isEditing}
           />
         </Paper>
         <Paper style={{ padding: 32 }}>
@@ -146,9 +185,11 @@ const UserFormPage = ({ firebase }) => {
 
 UserFormPage.propTypes = {
   firebase: PropTypes.any.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 export default compose(
   withAuthorization(conditions.isAdminUser),
   withFirebase,
+  withRouter,
 )(UserFormPage);

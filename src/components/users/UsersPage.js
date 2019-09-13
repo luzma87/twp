@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
-import constants from "../../constants/constants";
+import constants from '../../constants/constants';
 import routes from '../../constants/routes';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';

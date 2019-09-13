@@ -9,7 +9,7 @@ import CustomTextField from '../_common/CustomTextField';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 
 const PersonForm = (props) => {
-  const { personValues, onPersonChange } = props;
+  const { personValues, onPersonChange, isEditing } = props;
   const {
     name,
     email,
@@ -41,20 +41,26 @@ const PersonForm = (props) => {
         value={email}
         onChange={(event) => onPersonChange(event)}
       />
-      <CustomTextField
-        type="password"
-        id="passwordOne"
-        label="Password"
-        value={passwordOne}
-        onChange={(event) => onPersonChange(event)}
-      />
-      <CustomTextField
-        type="password"
-        id="passwordTwo"
-        label="Confirmar password"
-        value={passwordTwo}
-        onChange={(event) => onPersonChange(event)}
-      />
+      {isEditing ? null : (
+        <CustomTextField
+          type="password"
+          id="passwordOne"
+          label="Password"
+          autoComplete="new-password"
+          value={passwordOne}
+          onChange={(event) => onPersonChange(event)}
+        />
+      )}
+      {isEditing ? null : (
+        <CustomTextField
+          type="password"
+          id="passwordTwo"
+          label="Confirmar password"
+          autoComplete="new-password"
+          value={passwordTwo}
+          onChange={(event) => onPersonChange(event)}
+        />
+      )}
       <CustomSelect
         id="bank"
         value={bank}
@@ -95,11 +101,13 @@ const PersonForm = (props) => {
 
 PersonForm.propTypes = {
   personValues: PropTypes.shape(shapes.user),
+  isEditing: PropTypes.bool,
   onPersonChange: PropTypes.func.isRequired,
 };
 
 PersonForm.defaultProps = {
   personValues: {},
+  isEditing: false,
 };
 
 export default PersonForm;

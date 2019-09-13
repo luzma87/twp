@@ -27,7 +27,7 @@ const CarForm = (props) => {
       <CustomTextField
         id="plate"
         label="Placa"
-        value={plate}
+        value={plate.toUpperCase()}
         onChange={(event) => onCarChange(event)}
       />
       <CustomSelect

@@ -8,6 +8,8 @@ const routes = {
 
   USERS: '/users',
   USERS_CREATE: '/users/create',
+  USERS_EDIT: '/users/edit/:id',
+  USERS_EDIT_ID: '/users/edit/',
 
   BUILDINGS: '/buildings',
   BUILDINGS_CREATE: '/buildings/create',

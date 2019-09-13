@@ -29,6 +29,7 @@ const App = () => (
 
       <Route exact path={routes.USERS} component={UsersPage} />
       <Route path={routes.USERS_CREATE} component={UserFormPage} />
+      <Route path={routes.USERS_EDIT} component={UserFormPage} />
 
       <Route exact path={routes.BUILDINGS} component={BuildingsPage} />
       <Route path={routes.BUILDINGS_CREATE} component={BuildingFormPage} />

@@ -8,6 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import routes from "../../constants/routes";
 import shapes from '../../constants/shapes';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 
@@ -33,7 +35,9 @@ const UsersList = ({ users }) => (
                   icon={['far', 'user-astronaut']}
                   style={{ marginRight: 8, color: person.isActive ? '#2E7D32' : '#B71C1C' }}
                 />
-                {person.name}
+                <Link to={`${routes.USERS_EDIT_ID}${person.uid}`} style={{color: 'black'}}>
+                  {person.name}
+                </Link>
               </TableCell>
               <TableCell>
                 {person.email}
@@ -53,7 +57,7 @@ const UsersList = ({ users }) => (
                 <MeteorRating id="parkingMeteors" value={person.parkingMeteors} size="lg" compact />
               </TableCell>
               <TableCell>
-                {person.car ? `${person.car.brand} ${person.car.model}` : ''}
+                {person.car ? `${person.car.brand} ${person.car.model} [${person.car.plate.toUpperCase()}]` : ''}
               </TableCell>
             </TableRow>
           ))
