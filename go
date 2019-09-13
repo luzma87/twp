@@ -72,10 +72,10 @@ function task_clean {
 }
 
 function task_build {
-  echo "${deploy_fg}Copying prod firebase config${normal_fg}"
-  cp src/config/firebase/firebase.prod.config src/config/firebase/firebaseConfig.js
-  echo "${deploy_fg}Copying prod analytics config${normal_fg}"
-  cp src/config/analytics/analytics.prod.config src/config/analytics/analyticsConfig.js
+#  echo "${deploy_fg}Copying prod firebase config${normal_fg}"
+#  cp src/config/firebase/firebase.prod.config src/config/firebase/firebaseConfig.js
+#  echo "${deploy_fg}Copying prod analytics config${normal_fg}"
+#  cp src/config/analytics/analytics.prod.config src/config/analytics/analyticsConfig.js
   echo "${deploy_fg}Building project${normal_fg}"
   yarn build
 }
