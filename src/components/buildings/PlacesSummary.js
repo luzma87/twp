@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Box } from '@material-ui/core';
+import { Box, Tooltip } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -8,7 +8,7 @@ import PlaceForm from './PlaceForm';
 
 const PlacesSummary = (props) => {
   const {
-    placeValues, onPlaceChange, onAddPlace, onDeletePlace, allPlaces,
+    placeValues, onPlaceChange, onAddPlace, onDeletePlace, onEditPlace, allPlaces,
   } = props;
   return (
     <>
@@ -28,12 +28,22 @@ const PlacesSummary = (props) => {
           }}
         >
           {`#${place.number}, ${place.difficulty}*, ${place.size.label}, ${place.owner}, $${place.price}`}
-          <IconButton
-            color="secondary"
-            onClick={() => onDeletePlace(place.number)}
-          >
-            <FontAwesomeIcon icon={['far', 'trash-alt']} />
-          </IconButton>
+          <Tooltip title="Editar">
+            <IconButton
+              color="secondary"
+              onClick={() => onEditPlace(place.number)}
+            >
+              <FontAwesomeIcon icon={['far', 'pencil-alt']} />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Eliminar">
+            <IconButton
+              color="secondary"
+              onClick={() => onDeletePlace(place.number)}
+            >
+              <FontAwesomeIcon icon={['far', 'trash-alt']} />
+            </IconButton>
+          </Tooltip>
         </Box>
       )) : null}
     </>
@@ -45,6 +55,7 @@ PlacesSummary.propTypes = {
   onPlaceChange: PropTypes.func.isRequired,
   onAddPlace: PropTypes.func.isRequired,
   onDeletePlace: PropTypes.func.isRequired,
+  onEditPlace: PropTypes.func.isRequired,
   allPlaces: PropTypes.shape({}).isRequired,
 };
 

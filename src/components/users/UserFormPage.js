@@ -58,12 +58,13 @@ const UserFormPage = ({ firebase, match }) => {
   }, [firebase, editId]);
 
   const onPersonChange = (event) => {
-    setValues({ ...personValues, [event.target.name]: event.target.value });
+    setValues({ ...personValues, [event.target.name]: event.target.value.trim() });
   };
 
   const onCarChange = (event) => {
     const { name } = event.target;
     let { value } = event.target;
+    value = value.trim();
     if (name === 'plate') {
       value = value.toUpperCase();
     }

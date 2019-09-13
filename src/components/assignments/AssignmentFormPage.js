@@ -92,7 +92,7 @@ const AssignmentFormPage = ({ firebase }) => {
   }, [firebase]);
 
   const onAssignmentChange = (event) => {
-    setValues({ ...assignmentValues, [event.target.name]: event.target.value });
+    setValues({ ...assignmentValues, [event.target.name]: event.target.value.trim() });
   };
 
   const onSubmit = (event) => {

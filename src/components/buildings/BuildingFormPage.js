@@ -59,12 +59,13 @@ const BuildingFormPage = ({ firebase, match }) => {
   }, [firebase, editId]);
 
   const onBuildingChange = (event) => {
-    setBuildingValues({ ...buildingValues, [event.target.name]: event.target.value });
+    setBuildingValues({ ...buildingValues, [event.target.name]: event.target.value.trim() });
   };
 
   const onPlaceChange = (event) => {
     let { value } = event.target;
     const { name } = event.target;
+    value = value.trim();
     if (name === 'price') {
       value = parseFloat(value);
     }
@@ -81,6 +82,10 @@ const BuildingFormPage = ({ firebase, match }) => {
   const onDeletePlace = (id) => {
     const newPlaces = omit(buildingValues.places, id);
     setBuildingValues({ ...buildingValues, places: newPlaces });
+  };
+
+  const onEditPlace = (id) => {
+    setPlaceValues({ ...INITIAL_PLACE, ...buildingValues.places[id] });
   };
 
   const onSubmit = (event) => {
@@ -150,6 +155,7 @@ const BuildingFormPage = ({ firebase, match }) => {
             onPlaceChange={(event) => onPlaceChange(event)}
             onAddPlace={() => onAddPlace()}
             onDeletePlace={(id) => onDeletePlace(id)}
+            onEditPlace={(id) => onEditPlace(id)}
             allPlaces={buildingValues.places}
             placeValues={placeValues}
           />
