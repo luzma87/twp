@@ -35,12 +35,7 @@ const SignInFormBase = ({ firebase, history }) => {
   };
 
   const onChange = (event) => {
-    const { name } = event.target;
-    let { value } = event.target;
-    if (name === 'email') {
-      value = value.trim();
-    }
-    setValues({ ...values, [name]: value });
+    setValues({ ...values, [event.target.name]: event.target.value });
   };
 
   const { email, password, error } = values;

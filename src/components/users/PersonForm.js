@@ -9,7 +9,9 @@ import CustomTextField from '../_common/CustomTextField';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 
 const PersonForm = (props) => {
-  const { personValues, onPersonChange, isEditing } = props;
+  const {
+    personValues, onPersonChange, isEditing, restricted,
+  } = props;
   const {
     name,
     email,
@@ -27,6 +29,7 @@ const PersonForm = (props) => {
         id="id"
         label="Cédula"
         value={id}
+        disabled={restricted}
         onChange={(event) => onPersonChange(event)}
       />
       <CustomTextField
@@ -39,6 +42,7 @@ const PersonForm = (props) => {
         id="email"
         label="E-mail"
         value={email}
+        disabled={restricted}
         onChange={(event) => onPersonChange(event)}
       />
       {isEditing ? null : (
@@ -68,20 +72,22 @@ const PersonForm = (props) => {
         values={constants.banks}
         onChange={(event) => onPersonChange(event)}
       />
-      <div style={{ marginTop: 16 }}>
-        <CustomSwitch
-          checked={isAdmin}
-          handleSwitchChange={(event) => onPersonChange(event)}
-          id="isAdmin"
-          label="Admin"
-        />
-        <CustomSwitch
-          checked={isActive}
-          handleSwitchChange={(event) => onPersonChange(event)}
-          id="isActive"
-          label="Activo"
-        />
-      </div>
+      {restricted ? null : (
+        <div style={{ marginTop: 16 }}>
+          <CustomSwitch
+            checked={isAdmin}
+            handleSwitchChange={(event) => onPersonChange(event)}
+            id="isAdmin"
+            label="Admin"
+          />
+          <CustomSwitch
+            checked={isActive}
+            handleSwitchChange={(event) => onPersonChange(event)}
+            id="isActive"
+            label="Activo"
+          />
+        </div>
+      )}
       <FormControlLabel
         value="top"
         control={(
@@ -102,12 +108,14 @@ const PersonForm = (props) => {
 PersonForm.propTypes = {
   personValues: PropTypes.shape(shapes.user),
   isEditing: PropTypes.bool,
+  restricted: PropTypes.bool,
   onPersonChange: PropTypes.func.isRequired,
 };
 
 PersonForm.defaultProps = {
   personValues: {},
   isEditing: false,
+  restricted: false,
 };
 
 export default PersonForm;

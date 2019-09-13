@@ -59,13 +59,12 @@ const BuildingFormPage = ({ firebase, match }) => {
   }, [firebase, editId]);
 
   const onBuildingChange = (event) => {
-    setBuildingValues({ ...buildingValues, [event.target.name]: event.target.value.trim() });
+    setBuildingValues({ ...buildingValues, [event.target.name]: event.target.value });
   };
 
   const onPlaceChange = (event) => {
     let { value } = event.target;
     const { name } = event.target;
-    value = value.trim();
     if (name === 'price') {
       value = parseFloat(value);
     }

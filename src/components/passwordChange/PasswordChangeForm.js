@@ -2,10 +2,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import CustomError from '../_common/CustomError';
+import CustomTextField from '../_common/CustomTextField';
 import withFirebase from '../firebase/withFirebase';
 
 const INITIAL_STATE = {
@@ -46,42 +46,44 @@ const PasswordChangeForm = ({ firebase }) => {
 
   return (
     <form onSubmit={(event) => onSubmit(event)}>
-      <div>
-        <TextField
+      <div style={{
+        display: 'grid',
+        gridColumnGap: 48,
+        gridTemplateColumns: '300px 300px',
+      }}
+      >
+        <CustomTextField
           id="passwordOne"
           label="Nuevo password"
           onChange={(event) => onChange(event)}
-          margin="normal"
-          variant="outlined"
           type="password"
-          name="passwordOne"
+          autoComplete="new-password"
           value={passwordOne}
         />
-      </div>
-      <div>
-        <TextField
+        <CustomTextField
           id="passwordTwo"
           label="Confirmar password"
           onChange={(event) => onChange(event)}
-          margin="normal"
-          variant="outlined"
           type="password"
-          name="passwordTwo"
+          autoComplete="new-password"
           value={passwordTwo}
         />
-      </div>
 
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        style={{ margin: '24px 0' }}
-        disabled={isInvalid || isLoading}
-        onClick={(event) => onSubmit(event)}
-      >
-        Cambiar
-        <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginLeft: 16 }} />
-      </Button>
+        <div />
+        <div style={{ marginTop: 24, textAlign: 'right' }}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            style={{ margin: '24px 0' }}
+            disabled={isInvalid || isLoading}
+            onClick={(event) => onSubmit(event)}
+          >
+            Cambiar
+            <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginLeft: 16 }} />
+          </Button>
+        </div>
+      </div>
       <CustomError error={error} />
       {!error && isDone ? (
         <Box

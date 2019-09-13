@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
@@ -27,8 +28,9 @@ const withAuthorization = (condition) => (Component) => {
     render() {
       return (
         <AuthUserContext.Consumer>
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-          {(authUser) => (condition(authUser) ? <Component {...this.props} /> : null)}
+          {(authUser) => (condition(authUser)
+            ? (<Component authUser={authUser} {...this.props} />)
+            : null)}
         </AuthUserContext.Consumer>
       );
     }

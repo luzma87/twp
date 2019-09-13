@@ -36,7 +36,7 @@ const PasswordForgetFormBase = ({ firebase }) => {
   };
 
   const onChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value.trim() });
+    setValues({ ...values, [event.target.name]: event.target.value });
   };
 
   const { email, error } = values;

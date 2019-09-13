@@ -41,7 +41,7 @@ const ParamsPage = ({ firebase }) => {
   }, [firebase]);
 
   const onParamChange = (event) => {
-    setParams({ ...params, [event.target.name]: event.target.value.trim() });
+    setParams({ ...params, [event.target.name]: event.target.value });
   };
 
   const onSubmit = (event) => {
