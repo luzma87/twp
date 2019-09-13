@@ -1,3 +1,9 @@
+React-firebase tutorial (1st part) from [https://www.robinwieruch.de](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial)
+
+React-firebase tutorial (2nd part) from [https://www.robinwieruch.de](https://www.robinwieruch.de/react-firebase-realtime-database)
+
+------------------------------
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
