@@ -26,25 +26,29 @@ const AssignmentsList = ({ buildings, users, skill }) => (
               const building = buildings[user.place.building];
               if (building) {
                 const place = building.places[user.place.place];
-                return (
-                  <TableRow key={user.uid}>
-                    <TableCell>
-                      {user.name}
-                      {skill ? (
-                        <MeteorRating id="userSkill" compact value={user.parkingMeteors} />
-                      ) : ''}
-                    </TableCell>
-                    <TableCell>
-                      {`${user.car.brand} ${user.car.model} [${user.car.plate}]`}
-                    </TableCell>
-                    <TableCell>
-                      {`${building.name} #${place.number}`}
-                      {skill ? (
-                        <MeteorRating id="placeDifficulty" compact value={place.difficulty} />
-                      ) : ''}
-                    </TableCell>
-                  </TableRow>
-                );
+                if (place) {
+                  return (
+                    <TableRow key={user.uid}>
+                      <TableCell>
+                        {user.name}
+                        {skill ? (
+                          <MeteorRating id="userSkill" compact value={user.parkingMeteors} />
+                        ) : ''}
+                      </TableCell>
+                      <TableCell>
+                        {`${user.car.brand} ${user.car.model} [${user.car.plate}]`}
+                      </TableCell>
+                      <TableCell>
+                        {`${building.name} #${place.number}`}
+                        {skill ? (
+                          <MeteorRating id="placeDifficulty" compact value={place.difficulty} />
+                        ) : ''}
+                      </TableCell>
+                    </TableRow>
+                  );
+                } else {
+                  console.log(user.place, building, place);
+                }
               }
             }
             return null;

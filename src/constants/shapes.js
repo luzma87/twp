@@ -1,15 +1,10 @@
 import PropTypes from 'prop-types';
 
-const constantProp = {
-  value: PropTypes.string,
-  label: PropTypes.string,
-};
-
 const car = {
   brand: PropTypes.string,
   model: PropTypes.string,
   plate: PropTypes.string,
-  size: PropTypes.shape(constantProp),
+  size: PropTypes.string,
 };
 
 const user = {
@@ -20,7 +15,7 @@ const user = {
   passwordTwo: PropTypes.string,
   isAdmin: PropTypes.bool,
   id: PropTypes.string,
-  bank: PropTypes.shape(constantProp),
+  bank: PropTypes.string,
   isActive: PropTypes.bool,
   parkingMeteors: PropTypes.number,
   roles: PropTypes.shape({}),
@@ -28,7 +23,7 @@ const user = {
 };
 
 const place = {
-  size: PropTypes.shape(constantProp),
+  size: PropTypes.string,
   number: PropTypes.string,
   price: PropTypes.number,
   active: PropTypes.bool,

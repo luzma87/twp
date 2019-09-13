@@ -50,7 +50,7 @@ const BuildingsList = ({ buildings }) => (
                         icon={['far', 'draw-square']}
                         style={{ marginRight: 8, color: place.isActive ? '#2E7D32' : '#B71C1C' }}
                       />
-                      {`#${place.number}, ${place.size.label}, $${place.price}, `}
+                      {`#${place.number}, ${place.size}, $${place.price}, `}
                       <span className="full-meteor">
                         {`${place.difficulty} `}
                       </span>

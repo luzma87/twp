@@ -48,7 +48,6 @@ const BuildingsPage = ({ firebase }) => {
     }
     setFilteredBuildings(newBuildingsList);
   };
-
   return (
     <Content>
       {loading && (

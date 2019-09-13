@@ -18,7 +18,7 @@ import BuildingForm from './BuildingForm';
 import PlacesSummary from './PlacesSummary';
 
 const INITIAL_PLACE = {
-  size: constants.carSizes.medium,
+  size: constants.carSizes.medium.value,
   number: '',
   price: 0,
   isActive: true,

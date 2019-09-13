@@ -24,7 +24,7 @@ const INITIAL_STATE = {
   email: '',
   passwordOne: '',
   passwordTwo: '',
-  bank: constants.banks.pichincha,
+  bank: constants.banks.pichincha.value,
   isAdmin: false,
   isActive: true,
   parkingMeteors: 1,
@@ -32,7 +32,7 @@ const INITIAL_STATE = {
     brand: '',
     model: '',
     plate: '',
-    size: constants.carSizes.medium,
+    size: constants.carSizes.medium.value,
   },
 };
 
