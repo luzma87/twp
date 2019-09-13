@@ -8,8 +8,10 @@ import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import constants from "../../constants/constants";
 import routes from '../../constants/routes';
 import shapes from '../../constants/shapes';
+import MeteorRating from '../_common/meteorRating/MeteorRating';
 
 const BuildingsList = ({ buildings }) => (
   <Paper>
@@ -50,11 +52,8 @@ const BuildingsList = ({ buildings }) => (
                         icon={['far', 'draw-square']}
                         style={{ marginRight: 8, color: place.isActive ? '#2E7D32' : '#B71C1C' }}
                       />
-                      {`#${place.number}, ${place.size}, $${place.price}, `}
-                      <span className="full-meteor">
-                        {`${place.difficulty} `}
-                      </span>
-                      <FontAwesomeIcon icon={['fas', 'meteor']} className="full-meteor" />
+                      {`#${place.number}, ${constants.carSizes[place.size].label}, $${place.price}, `}
+                      <MeteorRating id="placeDifficulty" value={place.difficulty} compact />
                     </div>
                   ))}
                 </TableCell>
