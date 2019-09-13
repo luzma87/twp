@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Typography } from '@material-ui/core';
-import { round, startsWith } from 'lodash';
+import { ceil, startsWith } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
@@ -32,6 +32,15 @@ const EmailPage = ({ firebase }) => {
 
       if (usersObject) {
         usersList = Object.values(usersObject).filter((u) => u.isActive);
+        usersList = usersList.sort((a, b) => {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        });
         setUsers(usersList);
       }
       setLoadingUsers(false);
@@ -57,8 +66,8 @@ const EmailPage = ({ firebase }) => {
               }
             });
 
-            const totalValue = placePriceTotal + otherBanks + paramsObject.hosting;
-            const valuePerPerson = round(totalValue / assignedUsers, 2);
+            const totalValue = placePriceTotal + otherBanks + parseFloat(paramsObject.hosting);
+            const valuePerPerson = ceil(totalValue / assignedUsers, 2);
 
             let paramEmailText = paramsObject.emailText.replace('{{cuota}}', `$${valuePerPerson}`);
             paramEmailText = paramEmailText.split('{{br}}');

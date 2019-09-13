@@ -30,6 +30,5 @@ yarn-error.log*
 package-lock.json
 
 .firebase
-src_old/config/firebase/firebase.dev.config
-src_old/config/firebase/firebase.prod.config
-src_old/config/firebase/firebaseConfig.js
+
+db.json
