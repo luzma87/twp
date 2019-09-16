@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Typography } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
@@ -15,6 +16,7 @@ const PaymentsPage = ({ firebase }) => {
   const [loadingBuildings, setLoadingBuildings] = useState(false);
   const [loadingUsers, setLoadingUsers] = useState(false);
   const [assignments, setAssignments] = useState([]);
+  const [positiveOnly, setPositiveOnly] = useState(true);
 
   useEffect(() => {
     setLoadingBuildings(true);
@@ -47,7 +49,17 @@ const PaymentsPage = ({ firebase }) => {
   return (
     <Content>
       <CustomLoader isLoading={loadingBuildings || loadingUsers} />
-      <PaymentsList payments={list} />
+      <div>
+        <Button style={{ marginBottom: 16 }} onClick={() => setPositiveOnly(true)}>
+          <FontAwesomeIcon icon={['far', 'money-check-edit-alt']} style={{ marginRight: 8 }} color="#2E7D32" />
+          Mostrar solo &gt;0
+        </Button>
+        <Button style={{ marginBottom: 16 }} onClick={() => setPositiveOnly(false)}>
+          <FontAwesomeIcon icon={['far', 'money-check-edit-alt']} style={{ marginRight: 8 }} color="#B71C1C" />
+          Mostrar todos
+        </Button>
+      </div>
+      <PaymentsList payments={list} positiveOnly={positiveOnly}/>
     </Content>
   );
 };
