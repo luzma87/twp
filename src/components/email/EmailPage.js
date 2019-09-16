@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import { Typography } from '@material-ui/core';
 import { ceil, startsWith } from 'lodash';
+import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
@@ -62,7 +63,7 @@ const EmailPage = ({ firebase }) => {
             const totalValue = placePriceTotal + otherBanks + parseFloat(paramsObject.hosting);
             const valuePerPerson = ceil(totalValue / assignedUsers, 2);
 
-            let paramEmailText = paramsObject.emailText.replace('{{cuota}}', `$${valuePerPerson}`);
+            let paramEmailText = paramsObject.emailText.replace('{{cuota}}', `${numeral(valuePerPerson).format('$0,0.00')}`);
             paramEmailText = paramEmailText.split('{{br}}');
             setEmailText(paramEmailText);
           }

@@ -1,3 +1,4 @@
+import numeral from 'numeral';
 import constants from '../constants/constants';
 
 class Building {
@@ -22,7 +23,7 @@ class Building {
 
   // eslint-disable-next-line class-methods-use-this
   getPlaceInfo(place) {
-    return `#${place.number}, ${constants.carSizeLabel(place.size)}, $${place.price}, ${place.owner}`;
+    return `#${place.number}, ${constants.carSizeLabel(place.size)}, ${numeral(place.price).format('$0,0.00')}, ${place.owner}`;
   }
 }
 
