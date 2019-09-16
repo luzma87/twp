@@ -23,6 +23,7 @@ const INITIAL_PLACE = {
   price: 0,
   isActive: true,
   owner: '',
+  otherInfo: '',
   difficulty: 1,
   paymentInformation: '',
 };

@@ -28,6 +28,7 @@ const place = {
   price: PropTypes.number,
   active: PropTypes.bool,
   owner: PropTypes.string,
+  otherInfo: PropTypes.string,
   difficulty: PropTypes.number,
   paymentInformation: PropTypes.string,
 };
