@@ -7,6 +7,7 @@ import conditions from '../../constants/conditions';
 import constants from '../../constants/constants';
 import Assignments from '../../domain/Assignments';
 import Content from '../_common/Content';
+import CustomLoader from '../_common/CustomLoader';
 import CustomSelect from '../_common/CustomSelect';
 import AssignmentsList from '../assignments/AssignmentsList';
 import withFirebase from '../firebase/withFirebase';
@@ -79,15 +80,7 @@ const HomePage = ({ firebase }) => {
 
   return (
     <Content>
-      {(loadingBuildings || loadingUsers) && (
-        <Typography color="secondary">
-          <FontAwesomeIcon
-            icon={['far', 'spinner']}
-            pulse
-            size="4x"
-          />
-        </Typography>
-      )}
+      <CustomLoader isLoading={loadingBuildings || loadingUsers} />
       <CustomSelect
         id="filter"
         value={filter}

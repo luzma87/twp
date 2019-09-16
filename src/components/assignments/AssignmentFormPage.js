@@ -10,6 +10,7 @@ import conditions from '../../constants/conditions';
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
 import CustomForm from '../_common/CustomForm';
+import CustomLoader from '../_common/CustomLoader';
 import CustomSelect from '../_common/CustomSelect';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
@@ -126,15 +127,7 @@ const AssignmentFormPage = ({ firebase }) => {
   return (
     <Content>
       <CustomError error={errorMessage} />
-      {(isLoading) && (
-        <Typography color="secondary">
-          <FontAwesomeIcon
-            icon={['far', 'spinner']}
-            pulse
-            size="4x"
-          />
-        </Typography>
-      )}
+      <CustomLoader isLoading={isLoading} />
       <CustomForm onSubmit={(event) => onSubmit(event)}>
         <Paper style={{ padding: 32 }}>
           <Typography variant="h5">

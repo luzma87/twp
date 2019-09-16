@@ -6,6 +6,7 @@ import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import Assignments from '../../domain/Assignments';
 import Content from '../_common/Content';
+import CustomLoader from '../_common/CustomLoader';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
 import PaymentsList from './PaymentsList';
@@ -45,16 +46,7 @@ const PaymentsPage = ({ firebase }) => {
   }
   return (
     <Content>
-      {(loadingBuildings || loadingUsers) && (
-        <Typography color="secondary">
-          <FontAwesomeIcon
-            icon={['far', 'spinner']}
-            pulse
-            size="4x"
-          />
-        </Typography>
-      )}
-
+      <CustomLoader isLoading={loadingBuildings || loadingUsers} />
       <PaymentsList payments={list} />
     </Content>
   );

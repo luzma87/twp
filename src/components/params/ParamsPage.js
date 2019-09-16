@@ -8,6 +8,7 @@ import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
+import CustomLoader from '../_common/CustomLoader';
 import CustomTextField from '../_common/CustomTextField';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
@@ -21,7 +22,7 @@ const INITIAL_STATE = {
 
 const ParamsPage = ({ firebase }) => {
   const [params, setParams] = useState(INITIAL_STATE);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
   const [errorMessage, setErrorMessage] = React.useState(null);
 
@@ -61,21 +62,13 @@ const ParamsPage = ({ firebase }) => {
     event.preventDefault();
   };
 
-  const icon = loading ? 'spinner' : 'save';
+  const icon = isLoading ? 'spinner' : 'save';
   const isInvalid = params.emailText === '';
 
   return (
     <Content>
       <CustomError error={errorMessage} />
-      {(loading) && (
-        <Typography color="secondary">
-          <FontAwesomeIcon
-            icon={['far', 'spinner']}
-            pulse
-            size="4x"
-          />
-        </Typography>
-      )}
+      <CustomLoader isLoading={isLoading} />
       <form
         style={{
           display: 'grid',
@@ -125,7 +118,7 @@ const ParamsPage = ({ firebase }) => {
             color="primary"
             size="large"
             style={{ margin: '24px 0' }}
-            disabled={isInvalid || loadingSave || loading}
+            disabled={isInvalid || loadingSave || isLoading}
             onClick={(event) => onSubmit(event)}
           >
             <FontAwesomeIcon icon={['far', icon]} pulse={loadingSave} style={{ marginRight: 16 }} />

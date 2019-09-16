@@ -9,12 +9,13 @@ import routes from '../../constants/routes';
 import Users from '../../domain/Users';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
+import CustomLoader from '../_common/CustomLoader';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
 import UsersList from './UsersList';
 
 const UsersPage = ({ firebase }) => {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const [activeOnly, setActiveOnly] = useState(true);
 
@@ -37,15 +38,7 @@ const UsersPage = ({ firebase }) => {
 
   return (
     <Content>
-      {loading && (
-        <Typography color="secondary">
-          <FontAwesomeIcon
-            icon={['far', 'spinner']}
-            pulse
-            size="4x"
-          />
-        </Typography>
-      )}
+      <CustomLoader isLoading={isLoading} />
       <div>
         <CreateButton linkTo={routes.USERS_CREATE} />
         <Button style={{ marginBottom: 16 }} onClick={() => filterActive(true)}>

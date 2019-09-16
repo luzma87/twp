@@ -8,6 +8,7 @@ import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import constants from '../../constants/constants';
 import Content from '../_common/Content';
+import CustomLoader from '../_common/CustomLoader';
 import AssignmentsForEmailList from '../assignments/AssignmentsForEmailList';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
@@ -79,18 +80,10 @@ const EmailPage = ({ firebase }) => {
     };
   }, [firebase]);
 
+  const isLoading = loadingBuildings || loadingUsers || loadingParams;
   return (
     <Content>
-      {(loadingBuildings || loadingUsers || loadingParams) && (
-        <Typography color="secondary">
-          <FontAwesomeIcon
-            icon={['far', 'spinner']}
-            pulse
-            size="4x"
-          />
-        </Typography>
-      )}
-
+      <CustomLoader isLoading={isLoading} />
       {emailText.map((paragraph, index) => {
         const key = `${paragraph}_${index}`;
         if (paragraph === '') {

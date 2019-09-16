@@ -9,12 +9,13 @@ import routes from '../../constants/routes';
 import Buildings from '../../domain/Buildings';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
+import CustomLoader from '../_common/CustomLoader';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
 import BuildingsList from './BuildingsList';
 
 const BuildingsPage = ({ firebase }) => {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [activeOnly, setActiveOnly] = useState(true);
   const [buildings, setBuildings] = useState([]);
 
@@ -37,15 +38,7 @@ const BuildingsPage = ({ firebase }) => {
   };
   return (
     <Content>
-      {loading && (
-        <Typography color="secondary">
-          <FontAwesomeIcon
-            icon={['far', 'spinner']}
-            pulse
-            size="4x"
-          />
-        </Typography>
-      )}
+      <CustomLoader isLoading={isLoading} />
       <div>
         <CreateButton linkTo={routes.BUILDINGS_CREATE} />
         <Button style={{ marginBottom: 16 }} onClick={() => filterActive(true)}>

@@ -8,6 +8,7 @@ import routes from '../../constants/routes';
 import Assignments from '../../domain/Assignments';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
+import CustomLoader from '../_common/CustomLoader';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
 import AssignmentsList from './AssignmentsList';
@@ -43,15 +44,7 @@ const AssignmentsPage = ({ firebase }) => {
 
   return (
     <Content>
-      {(loadingBuildings || loadingUsers) && (
-        <Typography color="secondary">
-          <FontAwesomeIcon
-            icon={['far', 'spinner']}
-            pulse
-            size="4x"
-          />
-        </Typography>
-      )}
+      <CustomLoader isLoading={loadingBuildings || loadingUsers} />
       <CreateButton linkTo={routes.ASSIGNMENTS_CREATE} />
       <AssignmentsList assignments={assignments} skill />
     </Content>
