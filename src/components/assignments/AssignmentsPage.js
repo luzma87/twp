@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
-import constants from '../../constants/constants';
 import routes from '../../constants/routes';
+import Assignments from '../../domain/Assignments';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
 import withFirebase from '../firebase/withFirebase';
@@ -13,28 +13,24 @@ import withAuthorization from '../session/withAuthorization';
 import AssignmentsList from './AssignmentsList';
 
 const AssignmentsPage = ({ firebase }) => {
-  const [buildings, setBuildings] = useState({});
-  const [users, setUsers] = useState([]);
   const [loadingBuildings, setLoadingBuildings] = useState(false);
   const [loadingUsers, setLoadingUsers] = useState(false);
+  const [assignments, setAssignments] = useState([]);
 
   useEffect(() => {
     setLoadingBuildings(true);
     setLoadingUsers(true);
+    let buildingsObject;
     firebase.buildings().on('value', (snapshot) => {
-      const buildingsObject = snapshot.val();
-      if (buildingsObject) {
-        setBuildings(buildingsObject);
-      }
+      buildingsObject = snapshot.val();
       setLoadingBuildings(false);
     });
     firebase.users().on('value', (snapshot) => {
       const usersObject = snapshot.val();
 
       if (usersObject) {
-        let usersList = Object.values(usersObject).filter((u) => u.isActive);
-        usersList = usersList.sort(constants.userSort);
-        setUsers(usersList);
+        const usersList = Object.values(usersObject).filter((u) => u.isActive);
+        setAssignments(new Assignments(usersList, buildingsObject));
       }
       setLoadingUsers(false);
     });
@@ -57,7 +53,7 @@ const AssignmentsPage = ({ firebase }) => {
         </Typography>
       )}
       <CreateButton linkTo={routes.ASSIGNMENTS_CREATE} />
-      <AssignmentsList buildings={buildings} users={users} skill />
+      <AssignmentsList assignments={assignments} skill />
     </Content>
   );
 };

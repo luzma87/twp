@@ -13,6 +13,18 @@ const banks = {
   otro: { value: 'otro', label: 'Otro' },
 };
 
+const assignmentSortByUser = (a, b) => {
+  if (a.user.name < b.user.name) {
+    return -1;
+  }
+  if (a.user.name > b.user.name) {
+    return 1;
+  }
+  return 0;
+};
+
+const sortAssignmentsByUser = (assignmentsList) => assignmentsList.sort(assignmentSortByUser);
+
 const userSort = (a, b) => {
   if (a.name < b.name) {
     return -1;
@@ -28,6 +40,8 @@ const constants = {
   banks,
   userSort,
   carSizeLabel,
+  sortAssignmentsByUser,
+  assignmentSortByUser,
 };
 
 export default constants;

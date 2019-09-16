@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import constants from '../../constants/constants';
+import Assignments from '../../domain/Assignments';
 import Content from '../_common/Content';
 import CustomSelect from '../_common/CustomSelect';
 import AssignmentsList from '../assignments/AssignmentsList';
@@ -17,13 +18,12 @@ const ALL_BUILDINGS = {
 };
 
 const HomePage = ({ firebase }) => {
-  const [buildings, setBuildings] = useState({});
-  const [filteredBuildings, setFilteredBuildings] = useState({});
   const [buildingsForFilter, setBuildingsForFilter] = useState({});
   const [filter, setFilter] = useState(ALL_BUILDINGS.value);
-  const [users, setUsers] = useState([]);
   const [loadingBuildings, setLoadingBuildings] = useState(false);
   const [loadingUsers, setLoadingUsers] = useState(false);
+
+  const [assignments, setAssignments] = useState([]);
 
   useEffect(() => {
     setLoadingBuildings(true);
@@ -31,11 +31,10 @@ const HomePage = ({ firebase }) => {
     firebase.users().on('value', (snapshotUsers) => {
       const usersObject = snapshotUsers.val();
       const usedBuildings = [];
-
+      let usersList;
       if (usersObject) {
-        let usersList = Object.values(usersObject).filter((u) => u.isActive);
+        usersList = Object.values(usersObject).filter((u) => u.isActive);
         usersList = usersList.sort(constants.userSort);
-        setUsers(usersList);
         usersList.forEach((u) => {
           if (u.place && usedBuildings.indexOf(u.place.building) === -1) {
             usedBuildings.push(u.place.building);
@@ -47,8 +46,7 @@ const HomePage = ({ firebase }) => {
       firebase.buildings().on('value', (snapshotBuildings) => {
         const buildingsObject = snapshotBuildings.val();
         if (buildingsObject) {
-          setBuildings(buildingsObject);
-          setFilteredBuildings(buildingsObject);
+          setAssignments(new Assignments(usersList, buildingsObject));
 
           const availableBuildings = {};
           const allBuildings = Object.values(buildingsObject);
@@ -57,7 +55,7 @@ const HomePage = ({ firebase }) => {
           activeBuildings.forEach((building) => {
             if (usedBuildings.indexOf(building.uid) !== -1) {
               availableBuildings[building.uid] = {
-                value: building,
+                value: building.uid,
                 label: building.name,
               };
             }
@@ -77,17 +75,6 @@ const HomePage = ({ firebase }) => {
   const onFilterChange = (event) => {
     const selectedValue = event.target.value;
     setFilter(selectedValue);
-    let newBuildings = {};
-    if (selectedValue === ALL_BUILDINGS.value) {
-      newBuildings = buildings;
-    } else {
-      Object.values(buildings).forEach((building) => {
-        if (building.uid === selectedValue.uid) {
-          newBuildings[building.uid] = building;
-        }
-      });
-    }
-    setFilteredBuildings(newBuildings);
   };
 
   return (
@@ -110,7 +97,7 @@ const HomePage = ({ firebase }) => {
       />
       <br />
       <br />
-      <AssignmentsList buildings={filteredBuildings} users={users} />
+      <AssignmentsList assignments={assignments} buildingFilter={filter} />
     </Content>
   );
 };
