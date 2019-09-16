@@ -9,7 +9,7 @@ import AuthUserContext from '../session/context';
 import SignOutButton from '../signOut/SignOutButton';
 import NavBarHybridButton from './NavBarHybridButton';
 import NavBarIconButton from './NavBarIconButton';
-import NavBarTextButton from "./NavBarTextButton";
+import NavBarTextButton from './NavBarTextButton';
 import NavBarTextLink from './NavBarTextLink';
 
 const Navigation = () => (

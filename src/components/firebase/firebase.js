@@ -70,7 +70,7 @@ class Firebase {
     });
   }
 
-  // *** User API ***
+  // *** user API ***
   user(uid) {
     return this.db.ref(`users/${uid}`);
   }
@@ -79,7 +79,7 @@ class Firebase {
     return this.db.ref('users');
   }
 
-  // *** Building API ***
+  // *** building API ***
   building(uid) {
     return this.db.ref(`buildings/${uid}`);
   }
@@ -88,7 +88,7 @@ class Firebase {
     return this.db.ref('buildings');
   }
 
-  // *** Admin API ***
+  // *** params API ***
   params() {
     return this.db.ref('params');
   }

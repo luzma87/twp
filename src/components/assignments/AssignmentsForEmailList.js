@@ -5,9 +5,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import React from 'react';
-import shapes from '../../constants/shapes';
 
-const AssignmentsForEmailList = ({ buildings, users }) => {
+const AssignmentsForEmailList = ({ assignments }) => {
   let index = 0;
   return (
     <Table size="small" className="email-table">
@@ -20,28 +19,23 @@ const AssignmentsForEmailList = ({ buildings, users }) => {
       </TableHead>
       <TableBody>
         {
-          Object.values(users).map((user) => {
-            if (user.place) {
-              const building = buildings[user.place.building];
-              if (building) {
-                const place = building.places[user.place.place];
-                index += 1;
-                return (
-                  <TableRow key={user.uid}>
-                    <TableCell className="email-table" align="center">
-                      {index}
-                    </TableCell>
-                    <TableCell className="email-table">
-                      {user.name}
-                    </TableCell>
-                    <TableCell className="email-table">
-                      {`${building.name} #${place.number}`}
-                    </TableCell>
-                  </TableRow>
-                );
-              }
-            }
-            return null;
+          assignments.map((assignment) => {
+            const { user, building, placeId } = assignment;
+            const place = building.places[placeId];
+            index += 1;
+            return (
+              <TableRow key={user.uid}>
+                <TableCell className="email-table" align="center">
+                  {index}
+                </TableCell>
+                <TableCell className="email-table">
+                  {user.name}
+                </TableCell>
+                <TableCell className="email-table">
+                  {`${building.name} #${place.number}`}
+                </TableCell>
+              </TableRow>
+            );
           })
         }
       </TableBody>
@@ -50,13 +44,11 @@ const AssignmentsForEmailList = ({ buildings, users }) => {
 };
 
 AssignmentsForEmailList.propTypes = {
-  buildings: PropTypes.shape({}),
-  users: PropTypes.arrayOf(PropTypes.shape(shapes.user)),
+  assignments: PropTypes.any,
 };
 
 AssignmentsForEmailList.defaultProps = {
-  buildings: {},
-  users: [],
+  assignments: [],
 };
 
 export default AssignmentsForEmailList;

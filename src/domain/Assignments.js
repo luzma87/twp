@@ -1,4 +1,4 @@
-import { flatten } from 'lodash';
+import { ceil, flatten } from 'lodash';
 import constants from '../constants/constants';
 import Assignment from './Assignment';
 
@@ -69,6 +69,32 @@ class Assignments {
       return 0;
     });
     return sortedOwnersList;
+  }
+
+  getListForEmail(paramsObject) {
+    let otherBanks = 0;
+    let placePriceTotal = 0;
+    let assignedUsers = 0;
+
+    this.users.forEach((user) => {
+      if (user.place) {
+        assignedUsers += 1;
+        if (user.bank.value !== paramsObject.defaultBank) {
+          otherBanks += parseFloat(paramsObject.differentBank);
+        }
+        const userBuilding = this.buildings[user.place.building];
+        const userPlace = userBuilding.places[user.place.place];
+        placePriceTotal += parseFloat(userPlace.price);
+      }
+    });
+
+    const totalValue = placePriceTotal + otherBanks + parseFloat(paramsObject.hosting);
+    const valuePerPerson = ceil(totalValue / assignedUsers, 2);
+
+    return {
+      list: this.assignments.sort(constants.assignmentSortByUser),
+      valuePerPerson,
+    };
   }
 }
 
