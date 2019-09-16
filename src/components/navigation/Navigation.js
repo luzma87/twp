@@ -7,7 +7,9 @@ import routes from '../../constants/routes';
 import shapes from '../../constants/shapes';
 import AuthUserContext from '../session/context';
 import SignOutButton from '../signOut/SignOutButton';
-import NavBarIconLink from './NavBarIconLink';
+import NavBarHybridButton from './NavBarHybridButton';
+import NavBarIconButton from './NavBarIconButton';
+import NavBarTextButton from "./NavBarTextButton";
 import NavBarTextLink from './NavBarTextLink';
 
 const Navigation = () => (
@@ -25,12 +27,12 @@ const NavigationAuth = ({ authUser }) => {
 
   const adminNav = userRoles[roles.ADMIN] ? (
     <>
-      <NavBarIconLink title="Personas" icon="user-astronaut" to={routes.USERS} />
-      <NavBarIconLink title="Puestos" icon="warehouse" to={routes.BUILDINGS} />
-      <NavBarIconLink title="Asignaciones" icon="rocket" to={routes.ASSIGNMENTS} />
-      <NavBarIconLink title="Email" icon="envelope-open-dollar" to={routes.EMAIL} />
-      <NavBarIconLink title="Pagos" icon="money-check-edit-alt" to={routes.PAYMENTS} />
-      <NavBarIconLink title="Params" icon="alicorn" to={routes.PARAMS} />
+      <NavBarIconButton title="Personas" icon="user-astronaut" to={routes.USERS} />
+      <NavBarIconButton title="Puestos" icon="warehouse" to={routes.BUILDINGS} />
+      <NavBarIconButton title="Asignaciones" icon="rocket" to={routes.ASSIGNMENTS} />
+      <NavBarIconButton title="Email" icon="envelope-open-dollar" to={routes.EMAIL} />
+      <NavBarIconButton title="Pagos" icon="money-check-edit-alt" to={routes.PAYMENTS} />
+      <NavBarIconButton title="Params" icon="alicorn" to={routes.PARAMS} />
     </>
   ) : null;
 
@@ -39,11 +41,12 @@ const NavigationAuth = ({ authUser }) => {
       <Toolbar style={{ justifyContent: 'space-between' }}>
         <div className="navbar-part">
           <NavBarTextLink to={routes.HOME} text="TWP" title="Inicio" />
+          <NavBarHybridButton title="Asignaciones" icon="rocket" to={routes.HOME} />
           {adminNav}
         </div>
 
         <div className="navbar-part">
-          <NavBarTextLink to={routes.ACCOUNT} text={name || email} title="Mi cuenta" />
+          <NavBarTextButton to={routes.ACCOUNT} text={name || email} title="Mi cuenta" />
           <SignOutButton />
         </div>
       </Toolbar>
