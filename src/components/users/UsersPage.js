@@ -32,20 +32,16 @@ const UsersPage = ({ firebase }) => {
     };
   }, [firebase]);
 
-  const filterActive = (flag) => {
-    setActiveOnly(flag);
-  };
-
   return (
     <Content>
       <CustomLoader isLoading={isLoading} />
       <div>
         <CreateButton linkTo={routes.USERS_CREATE} />
-        <Button style={{ marginBottom: 16 }} onClick={() => filterActive(true)}>
+        <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(true)}>
           <FontAwesomeIcon icon={['far', 'user-astronaut']} style={{ marginRight: 8 }} color="#2E7D32" />
           Mostrar solo activos
         </Button>
-        <Button style={{ marginBottom: 16 }} onClick={() => filterActive(false)}>
+        <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(false)}>
           <FontAwesomeIcon icon={['far', 'user-astronaut']} style={{ marginRight: 8 }} color="#B71C1C" />
           Mostrar todos
         </Button>
