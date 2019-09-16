@@ -17,9 +17,11 @@ const routes = {
   BUILDINGS_EDIT_ID: '/buildings/edit/',
 
   ASSIGNMENTS: '/assignments',
+  USER_ASSIGNMENTS: '/userAssignments',
   ASSIGNMENTS_CREATE: '/assignments/create',
 
   PAYMENTS: '/payments',
+  USER_PAYMENT: '/myPayments',
 };
 
 export default routes;

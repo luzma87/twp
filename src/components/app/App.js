@@ -14,6 +14,7 @@ import PasswordForgetPage from '../passwordForget/PasswordForgetPage';
 import PaymentsPage from '../payments/PaymentsPage';
 import withAuthentication from '../session/withAuthentication';
 import SignInPage from '../signIn/SignInPage';
+import UserPaymentPage from '../userPayments/UserPaymentPage';
 import UserFormPage from '../users/UserFormPage';
 import UsersPage from '../users/UsersPage';
 
@@ -21,7 +22,7 @@ const App = () => (
   <BrowserRouter>
     <div>
       <Navigation />
-      <Route exact path={routes.HOME} component={HomePage} />
+      <Route exact path={routes.HOME} component={UserPaymentPage} />
       <Route path={routes.SIGN_IN} component={SignInPage} />
       <Route path={routes.PASSWORD_FORGET} component={PasswordForgetPage} />
       <Route path={routes.ACCOUNT} component={AccountPage} />
@@ -38,8 +39,11 @@ const App = () => (
 
       <Route exact path={routes.ASSIGNMENTS} component={AssignmentsPage} />
       <Route path={routes.ASSIGNMENTS_CREATE} component={AssignmentFormPage} />
+      <Route path={routes.USER_ASSIGNMENTS} component={HomePage} />
 
       <Route exact path={routes.PAYMENTS} component={PaymentsPage} />
+
+      <Route path={routes.USER_PAYMENT} component={UserPaymentPage} />
     </div>
   </BrowserRouter>
 );

@@ -52,7 +52,6 @@ const ParamsPage = ({ firebase }) => {
       .params()
       .set(params)
       .then(() => {
-        setParams(INITIAL_STATE);
         setLoadingSave(false);
       })
       .catch((error) => {

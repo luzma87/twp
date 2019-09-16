@@ -20,19 +20,18 @@ const AssignmentsForEmailList = ({ assignments }) => {
       <TableBody>
         {
           assignments.map((assignment) => {
-            const { user, building, placeId } = assignment;
-            const place = building.places[placeId];
+            const { user, place } = assignment;
             index += 1;
             return (
-              <TableRow key={user.uid}>
+              <TableRow key={user}>
                 <TableCell className="email-table" align="center">
                   {index}
                 </TableCell>
                 <TableCell className="email-table">
-                  {user.name}
+                  {user}
                 </TableCell>
                 <TableCell className="email-table">
-                  {`${building.name} #${place.number}`}
+                  {place}
                 </TableCell>
               </TableRow>
             );

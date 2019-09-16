@@ -92,6 +92,15 @@ class Firebase {
   params() {
     return this.db.ref('params');
   }
+
+  // *** userPayment API ***
+  userPayment(uid) {
+    return this.db.ref(`userPayments/${uid}`);
+  }
+
+  userPayments() {
+    return this.db.ref('userPayments');
+  }
 }
 
 export default Firebase;
