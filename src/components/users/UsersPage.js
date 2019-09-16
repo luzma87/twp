@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
-import constants from '../../constants/constants';
 import routes from '../../constants/routes';
+import Users from '../../domain/Users';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
 import withFirebase from '../firebase/withFirebase';
@@ -14,23 +14,15 @@ import withAuthorization from '../session/withAuthorization';
 import UsersList from './UsersList';
 
 const UsersPage = ({ firebase }) => {
-  const [users, setUsers] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('Mostrando solo usuarios activos');
+  const [users, setUsers] = useState([]);
+  const [activeOnly, setActiveOnly] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     firebase.users().on('value', (snapshot) => {
       const usersObject = snapshot.val();
-
-      if (usersObject) {
-        let usersList = Object.values(usersObject);
-        usersList = usersList.sort(constants.userSort);
-        setUsers(usersList);
-        const activeUsers = usersList.filter((u) => u.isActive);
-        setFilteredUsers(activeUsers);
-      }
+      setUsers(new Users(usersObject));
       setLoading(false);
     });
 
@@ -40,15 +32,7 @@ const UsersPage = ({ firebase }) => {
   }, [firebase]);
 
   const filterActive = (flag) => {
-    let newUserList;
-    if (flag) {
-      newUserList = users.filter((u) => u.isActive);
-      setMessage('Mostrando solo usuarios activos');
-    } else {
-      newUserList = users;
-      setMessage('Mostrando todos los usuarios');
-    }
-    setFilteredUsers(newUserList);
+    setActiveOnly(flag);
   };
 
   return (
@@ -73,10 +57,7 @@ const UsersPage = ({ firebase }) => {
           Mostrar todos
         </Button>
       </div>
-      <Typography>
-        {message}
-      </Typography>
-      <UsersList users={filteredUsers} />
+      <UsersList users={users} activeOnly={activeOnly} />
     </Content>
   );
 };

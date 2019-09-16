@@ -1,3 +1,5 @@
+import roles from '../constants/roles';
+
 class User {
   constructor(userObj) {
     this.uid = userObj.uid;
@@ -12,13 +14,19 @@ class User {
     this.car = userObj.car;
   }
 
-  static fromDbList(list) {
-    return list.map((u) => new User(u));
-  }
-
   getCarString() {
     const { car } = this;
-    return `${car.brand} ${car.model} [${car.plate}]`;
+    if (car) {
+      return `${car.brand} ${car.model} [${car.plate.toUpperCase()}]`;
+    }
+    return '';
+  }
+
+  getIsAdmin() {
+    if (this.roles) {
+      return this.roles[roles.ADMIN] === roles.ADMIN;
+    }
+    return this.isAdmin;
   }
 }
 
