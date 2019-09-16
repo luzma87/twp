@@ -164,7 +164,7 @@ const EmailPage = ({ firebase }) => {
           </Typography>
         );
       })}
-      <AssignmentsForEmailList assignments={assignments.list} />
+      <AssignmentsForEmailList assignments={assignments.people} />
     </Content>
   );
 };

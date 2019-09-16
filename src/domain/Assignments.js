@@ -91,14 +91,16 @@ class Assignments {
     const totalValue = placePriceTotal + otherBanks + parseFloat(paramsObject.hosting);
     const valuePerPerson = ceil(totalValue / assignedUsers, 2);
 
-    const list = this.assignments.sort(constants.assignmentSortByUser).map((element) => ({
-      user: element.user.name,
-      userUid: element.user.uid,
-      place: element.building.getPlaceString(element.placeId),
-    }));
+    const map = {};
+    this.assignments.sort(constants.assignmentSortByUser).forEach((element) => {
+      map[element.user.uid] = {
+        user: element.user.name,
+        place: element.building.getPlaceString(element.placeId),
+      };
+    });
 
     return {
-      list,
+      people: map,
       valuePerPerson,
     };
   }

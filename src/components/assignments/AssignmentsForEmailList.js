@@ -19,7 +19,7 @@ const AssignmentsForEmailList = ({ assignments }) => {
       </TableHead>
       <TableBody>
         {
-          assignments.map((assignment) => {
+          Object.values(assignments).map((assignment) => {
             const { user, place } = assignment;
             index += 1;
             return (
@@ -47,7 +47,7 @@ AssignmentsForEmailList.propTypes = {
 };
 
 AssignmentsForEmailList.defaultProps = {
-  assignments: [],
+  assignments: {},
 };
 
 export default AssignmentsForEmailList;
