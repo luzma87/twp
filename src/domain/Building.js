@@ -20,6 +20,7 @@ class Building {
     return `${this.name} #${place.number}`;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   getPlaceInfo(place) {
     return `#${place.number}, ${constants.carSizeLabel(place.size)}, $${place.price}, ${place.owner}`;
   }

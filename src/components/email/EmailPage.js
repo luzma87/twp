@@ -1,5 +1,4 @@
 /* eslint-disable react/no-array-index-key */
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Typography } from '@material-ui/core';
 import { ceil, startsWith } from 'lodash';
 import PropTypes from 'prop-types';
