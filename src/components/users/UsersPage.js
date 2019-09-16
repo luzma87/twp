@@ -16,7 +16,7 @@ import UsersList from './UsersList';
 const UsersPage = ({ firebase }) => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
-  const [activeOnly, setActiveOnly] = useState(false);
+  const [activeOnly, setActiveOnly] = useState(true);
 
   useEffect(() => {
     setLoading(true);

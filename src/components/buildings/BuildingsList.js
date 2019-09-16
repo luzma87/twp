@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,70 +9,83 @@ import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import constants from '../../constants/constants';
 import routes from '../../constants/routes';
-import shapes from '../../constants/shapes';
+import Buildings from '../../domain/Buildings';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 
-const BuildingsList = ({ buildings }) => (
-  <Paper>
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>Nombre</TableCell>
-          <TableCell>Dirección</TableCell>
-          <TableCell>Observaciones</TableCell>
-          <TableCell>Puestos</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {
-          Object.values(buildings).map((building) => {
-            const places = Object.values(building.places);
-            return (
-              <TableRow key={building.uid}>
-                <TableCell>
-                  <FontAwesomeIcon
-                    icon={['far', 'warehouse']}
-                    style={{ marginRight: 8, color: building.isActive ? '#2E7D32' : '#B71C1C' }}
-                  />
-                  <Link to={`${routes.BUILDINGS_EDIT_ID}${building.uid}`} style={{ color: 'black' }}>
-                    {building.name}
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  {building.address}
-                </TableCell>
-                <TableCell>
-                  {building.observations}
-                </TableCell>
-                <TableCell>
-                  {places.map((place) => (
-                    <div key={place.number}>
+const BuildingsList = ({ buildings, activeOnly }) => {
+  if (!(buildings instanceof Buildings)) {
+    return null;
+  }
+  const list = buildings.getSorted(activeOnly);
+  const activeMessage = activeOnly ? 'sólo activos' : 'todos';
+  return (
+    <>
+      <Typography style={{ marginBottom: 16 }}>
+        {`Mostrando ${list.length} edificios (${activeMessage})`}
+      </Typography>
+      <Paper>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Nombre</TableCell>
+              <TableCell>Dirección</TableCell>
+              <TableCell>Observaciones</TableCell>
+              <TableCell>Puestos</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {
+              list.map((building) => {
+                const places = Object.values(building.places);
+                return (
+                  <TableRow key={building.id}>
+                    <TableCell>
                       <FontAwesomeIcon
-                        icon={['far', 'draw-square']}
-                        style={{ marginRight: 8, color: place.isActive ? '#2E7D32' : '#B71C1C' }}
+                        icon={['far', 'warehouse']}
+                        style={{ marginRight: 8, color: building.isActive ? '#2E7D32' : '#B71C1C' }}
                       />
-                      {`#${place.number}, ${constants.carSizeLabel(place.size)}, $${place.price}, ${place.owner}, `}
-                      <MeteorRating id="placeDifficulty" value={place.difficulty} compact />
-                    </div>
-                  ))}
-                </TableCell>
-              </TableRow>
-            );
-          })
-        }
-      </TableBody>
-    </Table>
-  </Paper>
-);
+                      <Link to={`${routes.BUILDINGS_EDIT_ID}${building.id}`} style={{ color: 'black' }}>
+                        {building.name}
+                      </Link>
+                    </TableCell>
+                    <TableCell>
+                      {building.address}
+                    </TableCell>
+                    <TableCell>
+                      {building.observations}
+                    </TableCell>
+                    <TableCell>
+                      {places.map((place) => (
+                        <div key={place.number}>
+                          <FontAwesomeIcon
+                            icon={['far', 'draw-square']}
+                            style={{ marginRight: 8, color: place.isActive ? '#2E7D32' : '#B71C1C' }}
+                          />
+                          {`${building.getPlaceInfo(place)}, `}
+                          <MeteorRating id="placeDifficulty" value={place.difficulty} compact />
+                        </div>
+                      ))}
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            }
+          </TableBody>
+        </Table>
+      </Paper>
+    </>
+  );
+};
 
 BuildingsList.propTypes = {
-  buildings: PropTypes.arrayOf(PropTypes.shape(shapes.building)),
+  buildings: PropTypes.any,
+  activeOnly: PropTypes.bool,
 };
 
 BuildingsList.defaultProps = {
   buildings: [],
+  activeOnly: true,
 };
 
 export default BuildingsList;

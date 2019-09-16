@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import routes from '../../constants/routes';
+import Buildings from '../../domain/Buildings';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
 import withFirebase from '../firebase/withFirebase';
@@ -13,22 +14,16 @@ import withAuthorization from '../session/withAuthorization';
 import BuildingsList from './BuildingsList';
 
 const BuildingsPage = ({ firebase }) => {
-  const [buildings, setBuildings] = useState([]);
-  const [filteredBuildings, setFilteredBuildings] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('Mostrando solo edificios activos');
+  const [activeOnly, setActiveOnly] = useState(true);
+  const [buildings, setBuildings] = useState([]);
 
 
   useEffect(() => {
     setLoading(true);
     firebase.buildings().on('value', (snapshot) => {
       const buildingsObject = snapshot.val();
-      if (buildingsObject) {
-        const buildingsList = Object.values(buildingsObject);
-        setBuildings(buildingsList);
-        const activeBuildings = buildingsList.filter((b) => b.isActive);
-        setFilteredBuildings(activeBuildings);
-      }
+      setBuildings(new Buildings(buildingsObject));
       setLoading(false);
     });
 
@@ -38,15 +33,7 @@ const BuildingsPage = ({ firebase }) => {
   }, [firebase]);
 
   const filterActive = (flag) => {
-    let newBuildingsList;
-    if (flag) {
-      newBuildingsList = buildings.filter((u) => u.isActive);
-      setMessage('Mostrando solo edificios activos');
-    } else {
-      newBuildingsList = buildings;
-      setMessage('Mostrando todos los edificios');
-    }
-    setFilteredBuildings(newBuildingsList);
+    setActiveOnly(flag);
   };
   return (
     <Content>
@@ -70,10 +57,7 @@ const BuildingsPage = ({ firebase }) => {
           Mostrar todos
         </Button>
       </div>
-      <Typography>
-        {message}
-      </Typography>
-      <BuildingsList buildings={filteredBuildings} />
+      <BuildingsList buildings={buildings} activeOnly={activeOnly} />
     </Content>
   );
 };
