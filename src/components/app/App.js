@@ -11,6 +11,7 @@ import HomePage from '../home/HomePage';
 import Navigation from '../navigation/Navigation';
 import ParamsPage from '../params/ParamsPage';
 import PasswordForgetPage from '../passwordForget/PasswordForgetPage';
+import PaymentsPage from '../payments/PaymentsPage';
 import withAuthentication from '../session/withAuthentication';
 import SignInPage from '../signIn/SignInPage';
 import UserFormPage from '../users/UserFormPage';
@@ -37,6 +38,8 @@ const App = () => (
 
       <Route exact path={routes.ASSIGNMENTS} component={AssignmentsPage} />
       <Route path={routes.ASSIGNMENTS_CREATE} component={AssignmentFormPage} />
+
+      <Route exact path={routes.PAYMENTS} component={PaymentsPage} />
     </div>
   </BrowserRouter>
 );

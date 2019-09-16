@@ -18,6 +18,8 @@ const routes = {
 
   ASSIGNMENTS: '/assignments',
   ASSIGNMENTS_CREATE: '/assignments/create',
+
+  PAYMENTS: '/payments',
 };
 
 export default routes;
