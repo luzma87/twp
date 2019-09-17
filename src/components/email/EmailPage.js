@@ -13,7 +13,7 @@ import CustomLoader from '../_common/CustomLoader';
 import AssignmentsForEmailList from '../assignments/AssignmentsForEmailList';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
-import EmailContent from './EmailContent';
+import AssignmentEmailContent from './AssignmentEmailContent';
 
 const getCurrentMonth = (date) => {
   const monthNames = [
@@ -135,7 +135,7 @@ const EmailPage = ({ firebase }) => {
       <CustomError error={errorMessage} />
 
       <CustomLoader isLoading={isLoading} />
-      <EmailContent
+      <AssignmentEmailContent
         params={params}
         valuePerPerson={assignments.valuePerPerson}
         month={getCurrentMonth(date)}

@@ -10,6 +10,7 @@ import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import shapes from '../../constants/shapes';
 import Content from '../_common/Content';
+import EmailContent from '../email/EmailContent';
 import withAuthorization from '../session/withAuthorization';
 
 const getDisplayMonth = (date) => {
@@ -51,9 +52,9 @@ const UserPaymentPage = ({ authUser, firebase }) => {
       firebase.params().off();
       firebase.users().off();
     };
-  }, [firebase, date]);
+  }, [firebase, date, authUser]);
 
-  const onSubmit = (event) => {
+  const onPay = (event) => {
     setLoadingSave(true);
 
     const newAssignments = { ...assignments };
@@ -70,21 +71,51 @@ const UserPaymentPage = ({ authUser, firebase }) => {
     event.preventDefault();
   };
 
-  const icon = loadingSave ? 'spinner' : 'badge-dollar';
+  const onUndo = (event) => {
+    setLoadingSave(true);
+
+    const newAssignments = { ...assignments };
+    newAssignments.assignments.people[authUser.uid].payed = null;
+    firebase
+      .userPayment(getPaymentsId(date))
+      .set(newAssignments)
+      .then(() => {
+        setLoadingSave(false);
+      })
+      .catch((e) => {
+        console.log('error', e);
+      });
+    event.preventDefault();
+  };
 
   const valuePerPerson = get(assignments, 'assignments.valuePerPerson', 0);
   const payed = get(assignments, `assignments.people.${authUser.uid}.payed`, undefined);
-
+  const accountInfo = get(assignments, 'params.accountInfo', undefined);
 
   const getPaymentElement = () => {
     if (myAssignment === undefined) return null;
     if (payed) {
+      const icon = loadingSave ? 'spinner' : 'undo';
       return (
-        <Typography style={{ marginTop: 24 }} color="textSecondary">
-          {`Pagado el ${moment(payed).format('DD/MM/YYYY HH:mm')}`}
-        </Typography>
+        <>
+          <Typography style={{ marginTop: 24 }} color="textSecondary">
+            {`Pagado el ${moment(payed).format('DD/MM/YYYY HH:mm')}`}
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            style={{ margin: '24px 0' }}
+            disabled={isLoading}
+            onClick={(event) => onUndo(event)}
+          >
+            <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
+            Deshacer pago
+          </Button>
+        </>
       );
     }
+    const icon = loadingSave ? 'spinner' : 'badge-dollar';
     return (
       <Button
         variant="contained"
@@ -92,15 +123,24 @@ const UserPaymentPage = ({ authUser, firebase }) => {
         size="large"
         style={{ margin: '24px 0' }}
         disabled={isLoading}
-        onClick={(event) => onSubmit(event)}
+        onClick={(event) => onPay(event)}
       >
         <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
-        Pagar
+        Ya pagué
       </Button>
     );
   };
 
-  console.log(assignments);
+  if (!myAssignment) {
+    return (
+      <Content>
+        <Typography variant="h5" style={{ marginBottom: 24 }}>
+          Mis pagos
+        </Typography>
+        {`No asignado en ${getDisplayMonth(assignments.date)} `}
+      </Content>
+    );
+  }
 
   return (
     <Content>
@@ -111,8 +151,14 @@ const UserPaymentPage = ({ authUser, firebase }) => {
         {`La cuota de ${getDisplayMonth(assignments.date)} es de ${numeral(valuePerPerson).format('$0,0.00')}`}
       </Typography>
       <Typography>
-        {myAssignment ? `Mi puesto: ${myAssignment.place}` : 'No asignado este mes'}
+        {`Mi puesto: ${myAssignment.place}`}
       </Typography>
+
+      <Typography style={{ marginTop: 24, marginBottom: 16 }}>
+        Información de la cuenta:
+      </Typography>
+      <EmailContent text={accountInfo} />
+
       {getPaymentElement()}
 
     </Content>
