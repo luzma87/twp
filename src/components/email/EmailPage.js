@@ -2,8 +2,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import { startsWith } from 'lodash';
-import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
@@ -15,6 +13,7 @@ import CustomLoader from '../_common/CustomLoader';
 import AssignmentsForEmailList from '../assignments/AssignmentsForEmailList';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
+import EmailContent from './EmailContent';
 
 const getCurrentMonth = (date) => {
   const monthNames = [
@@ -45,8 +44,8 @@ const EmailPage = ({ firebase }) => {
   const [loadingUsers, setLoadingUsers] = useState(false);
   const [loadingParams, setLoadingParams] = useState(false);
   const [loadingUserPayments, setLoadingUserPayments] = useState(false);
-  const [emailText, setEmailText] = useState([]);
   const [assignments, setAssignments] = useState([]);
+  const [params, setParams] = useState({});
   const [date] = useState(new Date());
 
   useEffect(() => {
@@ -64,8 +63,8 @@ const EmailPage = ({ firebase }) => {
         setLoadingParams(false);
         setLoadingUserPayments(false);
         setSaved(true);
+        setParams(savedValues.params);
         setAssignments(savedValues.assignments);
-        setEmailText(savedValues.emailText);
       } else {
         firebase.users().on('value', (snapshotUsers) => {
           const usersObject = snapshotUsers.val();
@@ -79,12 +78,9 @@ const EmailPage = ({ firebase }) => {
 
             firebase.params().on('value', (snapshotParams) => {
               const paramsObject = snapshotParams.val();
+              setParams(paramsObject);
               const a = asg.getListForEmail(paramsObject);
               setAssignments(a);
-              let paramEmailText = paramsObject.emailText.replace('{{cuota}}', `${numeral(a.valuePerPerson).format('$0,0.00')}`);
-              paramEmailText = paramEmailText.replace('{{mes}}', getCurrentMonth(date));
-              paramEmailText = paramEmailText.split('{{br}}');
-              setEmailText(paramEmailText);
               setLoadingParams(false);
             });
           });
@@ -103,7 +99,7 @@ const EmailPage = ({ firebase }) => {
     setLoadingSave(true);
     const dateToSave = getDateToSave(date);
     const payments = {
-      emailText,
+      params,
       assignments,
       payments: {},
       date: dateToSave,
@@ -139,31 +135,11 @@ const EmailPage = ({ firebase }) => {
       <CustomError error={errorMessage} />
 
       <CustomLoader isLoading={isLoading} />
-      {emailText.map((paragraph, index) => {
-        const key = `${paragraph}_${index}`;
-        if (paragraph === '') {
-          return <br key={key} />;
-        }
-        if (paragraph.includes('cuota')) {
-          return (
-            <Typography key={key}>
-              <strong>{paragraph}</strong>
-            </Typography>
-          );
-        }
-        if (startsWith(paragraph, 'http')) {
-          return (
-            <a href={paragraph} target="_blank" rel="noopener noreferrer" key={key}>
-              {paragraph}
-            </a>
-          );
-        }
-        return (
-          <Typography key={key}>
-            {paragraph}
-          </Typography>
-        );
-      })}
+      <EmailContent
+        params={params}
+        valuePerPerson={assignments.valuePerPerson}
+        month={getCurrentMonth(date)}
+      />
       <AssignmentsForEmailList assignments={assignments.people} />
     </Content>
   );

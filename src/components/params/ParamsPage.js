@@ -17,7 +17,9 @@ const INITIAL_STATE = {
   defaultBank: 'pichincha',
   differentBank: 0,
   hosting: 0,
+  accountInfo: '',
   emailText: '',
+  shameEmailText: '',
 };
 
 const ParamsPage = ({ firebase }) => {
@@ -101,11 +103,27 @@ const ParamsPage = ({ firebase }) => {
               onChange={(event) => onParamChange(event)}
             />
             <CustomTextField
+              id="accountInfo"
+              label="Info cuenta"
+              multiline
+              rows={4}
+              value={params.accountInfo}
+              onChange={(event) => onParamChange(event)}
+            />
+            <CustomTextField
               id="emailText"
               label="Texto email"
               multiline
-              rows={8}
+              rows={6}
               value={params.emailText}
+              onChange={(event) => onParamChange(event)}
+            />
+            <CustomTextField
+              id="shameEmailText"
+              label="Texto email recordatorio"
+              multiline
+              rows={6}
+              value={params.shameEmailText}
               onChange={(event) => onParamChange(event)}
             />
           </div>
