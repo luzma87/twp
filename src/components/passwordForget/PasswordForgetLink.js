@@ -1,12 +1,11 @@
-import Button from '@material-ui/core/Button';
 import React from 'react';
 import routes from '../../constants/routes';
-import customLink from '../navigation/customLink';
+import CustomButton from '../_common/CustomButton';
 
 const PasswordForgetLink = () => (
-  <Button component={customLink(routes.PASSWORD_FORGET)}>
+  <CustomButton to={routes.PASSWORD_FORGET}>
     Olvidé mi password
-  </Button>
+  </CustomButton>
 );
 
 export default PasswordForgetLink;

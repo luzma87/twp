@@ -45,7 +45,9 @@ const UserPayment = ({ assignments, uid, past }) => {
 };
 
 UserPayment.propTypes = {
-  assignments: PropTypes.shape({}),
+  assignments: PropTypes.shape({
+    date: PropTypes.string,
+  }),
   uid: PropTypes.string,
   past: PropTypes.bool,
 };

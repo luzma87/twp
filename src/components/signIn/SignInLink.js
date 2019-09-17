@@ -1,12 +1,11 @@
-import Button from '@material-ui/core/Button';
 import React from 'react';
 import routes from '../../constants/routes';
-import customLink from '../navigation/customLink';
+import CustomButton from '../_common/CustomButton';
 
 const SignInLink = () => (
-  <Button component={customLink(routes.SIGN_IN)}>
+  <CustomButton to={routes.SIGN_IN}>
     Entrar
-  </Button>
+  </CustomButton>
 );
 
 export default SignInLink;

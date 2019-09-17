@@ -1,14 +1,13 @@
 import { Tooltip } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import React from 'react';
-import customLink from './customLink';
+import CustomButton from '../_common/CustomButton';
 
 const NavBarTextButton = ({ title, text, to }) => (
   <Tooltip title={title}>
-    <Button color="inherit" component={customLink(to)}>
+    <CustomButton color="inherit" to={to}>
       {text}
-    </Button>
+    </CustomButton>
   </Tooltip>
 );
 

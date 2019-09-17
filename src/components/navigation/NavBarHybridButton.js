@@ -1,17 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Button from '@material-ui/core/Button';
-import Tooltip from '@material-ui/core/Tooltip';
 import PropTypes from 'prop-types';
 import React from 'react';
-import customLink from './customLink';
+import CustomButton from '../_common/CustomButton';
 
 const NavBarHybridButton = ({ title, icon, to }) => (
-  <Tooltip title={title}>
-      <Button color="inherit" component={customLink(to)}>
-        <FontAwesomeIcon icon={['far', icon]} style={{ marginRight: 8 }} />
-        {title}
-      </Button>
-  </Tooltip>
+  <CustomButton color="inherit" to={to}>
+    <FontAwesomeIcon icon={['far', icon]} style={{ marginRight: 8 }} />
+    {title}
+  </CustomButton>
 );
 
 NavBarHybridButton.propTypes = {

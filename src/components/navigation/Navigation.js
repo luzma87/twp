@@ -42,7 +42,6 @@ const NavigationAuth = ({ authUser }) => {
       <Toolbar style={{ justifyContent: 'space-between' }}>
         <div className="navbar-part">
           <NavBarTextLink to={routes.HOME} text="TWP" title="Inicio" />
-          <NavBarHybridButton title="Asignaciones" icon="rocket" to={routes.USER_ASSIGNMENTS} />
           <NavBarHybridButton title="Mis pagos" icon="hand-holding-usd" to={routes.USER_PAYMENT} />
           {adminNav}
         </div>
