@@ -21,6 +21,7 @@ import {
   faPencilAlt,
   faMoneyCheckEditAlt,
   faHandHoldingUsd,
+  faBadgeDollar,
 } from '@fortawesome/pro-regular-svg-icons';
 import { faMeteor as fasMeteor } from '@fortawesome/pro-solid-svg-icons';
 import React from 'react';
@@ -36,7 +37,7 @@ library.add(
   faEye, faEyeSlash, faSave, faPlusHexagon, faPaperPlane,
   farMeteor, fasMeteor, faAlicorn, faWarehouse, faSpinner,
   faDrawSquare, faTrashAlt, faGhost, faRepeat, faEnvelopeOpenDollar,
-  faPencilAlt, faMoneyCheckEditAlt, faHandHoldingUsd,
+  faPencilAlt, faMoneyCheckEditAlt, faHandHoldingUsd, faBadgeDollar,
 );
 
 ReactDOM.render(

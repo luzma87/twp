@@ -98,14 +98,14 @@ const AssignmentFormPage = ({ firebase }) => {
 
   const onSubmit = (event) => {
     setLoading(true);
-    const newUser = assignmentValues.user.value;
+    const newUser = assignmentValues.user;
     newUser.place = {
-      building: assignmentValues.place.value.building.uid,
-      place: assignmentValues.place.value.place.number,
+      building: assignmentValues.place.building.id,
+      place: assignmentValues.place.place.number,
     };
 
     firebase
-      .user(assignmentValues.user.value.uid)
+      .user(assignmentValues.user.uid)
       .set(newUser)
       .then(() => {
         setValues(INITIAL_STATE);
@@ -121,7 +121,7 @@ const AssignmentFormPage = ({ firebase }) => {
   const isInvalid = Object.keys(assignmentValues.place).length === 0
     || Object.keys(assignmentValues.user).length === 0;
 
-  const isLoading = loadingPlaces || loadingUsers;
+  const isLoading = loadingPlaces || loadingUsers || loading;
   const icon = isLoading ? 'spinner' : 'save';
 
   return (
