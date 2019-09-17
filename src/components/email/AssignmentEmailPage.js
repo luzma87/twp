@@ -31,12 +31,9 @@ const getDateToSave = (date) => ({
   year: date.getFullYear(),
 });
 
-const getPaymentsId = (date) => {
-  const dateToSave = getDateToSave(date);
-  return `payment_${dateToSave.month}_${dateToSave.year}`;
-};
+const getPaymentsId = (date) => `payment_${date.getMonth()}_${date.getFullYear()}`;
 
-const EmailPage = ({ firebase }) => {
+const AssignmentEmailPage = ({ firebase }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isSaved, setSaved] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
@@ -92,6 +89,7 @@ const EmailPage = ({ firebase }) => {
       firebase.buildings().off();
       firebase.params().off();
       firebase.users().off();
+      firebase.userPayment().off();
     };
   }, [firebase, date]);
 
@@ -145,11 +143,11 @@ const EmailPage = ({ firebase }) => {
   );
 };
 
-EmailPage.propTypes = {
+AssignmentEmailPage.propTypes = {
   firebase: PropTypes.any.isRequired,
 };
 
 export default compose(
   withAuthorization(conditions.isAdminUser),
   withFirebase,
-)(EmailPage);
+)(AssignmentEmailPage);

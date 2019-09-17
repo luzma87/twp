@@ -4,7 +4,8 @@ const routes = {
   ACCOUNT: '/account',
   PASSWORD_FORGET: '/pw-forget',
   PARAMS: '/params',
-  EMAIL: '/email',
+  ASSIGNMENT_EMAIL: '/email',
+  SHAME_EMAIL: '/reminderEmail',
 
   USERS: '/users',
   USERS_CREATE: '/users/create',
@@ -21,7 +22,9 @@ const routes = {
   ASSIGNMENTS_CREATE: '/assignments/create',
 
   PAYMENTS: '/payments',
+
   USER_PAYMENT: '/myPayments',
+  ALL_USERS_PAYMENTS: '/userPayments',
 };
 
 export default routes;

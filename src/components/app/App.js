@@ -6,7 +6,8 @@ import AssignmentFormPage from '../assignments/AssignmentFormPage';
 import AssignmentsPage from '../assignments/AssignmentsPage';
 import BuildingFormPage from '../buildings/BuildingFormPage';
 import BuildingsPage from '../buildings/BuildingsPage';
-import EmailPage from '../email/EmailPage';
+import AssignmentEmailPage from '../email/AssignmentEmailPage';
+import ShameEmailPage from '../email/ShameEmailPage';
 import HomePage from '../home/HomePage';
 import Navigation from '../navigation/Navigation';
 import ParamsPage from '../params/ParamsPage';
@@ -15,6 +16,7 @@ import PaymentsPage from '../payments/PaymentsPage';
 import withAuthentication from '../session/withAuthentication';
 import SignInPage from '../signIn/SignInPage';
 import UserPaymentPage from '../userPayments/UserPaymentPage';
+import UsersPaymentsPage from '../userPayments/UsersPaymentsPage';
 import UserFormPage from '../users/UserFormPage';
 import UsersPage from '../users/UsersPage';
 
@@ -27,7 +29,8 @@ const App = () => (
       <Route path={routes.PASSWORD_FORGET} component={PasswordForgetPage} />
       <Route path={routes.ACCOUNT} component={AccountPage} />
       <Route path={routes.PARAMS} component={ParamsPage} />
-      <Route path={routes.EMAIL} component={EmailPage} />
+      <Route path={routes.ASSIGNMENT_EMAIL} component={AssignmentEmailPage} />
+      <Route path={routes.SHAME_EMAIL} component={ShameEmailPage} />
 
       <Route exact path={routes.USERS} component={UsersPage} />
       <Route path={routes.USERS_CREATE} component={UserFormPage} />
@@ -44,6 +47,7 @@ const App = () => (
       <Route exact path={routes.PAYMENTS} component={PaymentsPage} />
 
       <Route path={routes.USER_PAYMENT} component={UserPaymentPage} />
+      <Route path={routes.ALL_USERS_PAYMENTS} component={UsersPaymentsPage} />
     </div>
   </BrowserRouter>
 );
