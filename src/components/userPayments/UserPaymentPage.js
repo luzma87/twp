@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { get } from 'lodash';
 import moment from 'moment';
-import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
@@ -12,6 +11,7 @@ import shapes from '../../constants/shapes';
 import Content from '../_common/Content';
 import EmailContent from '../email/EmailContent';
 import withAuthorization from '../session/withAuthorization';
+import UserPayment from './UserPayment';
 
 const getDisplayMonth = (date) => {
   if (date === undefined) return '';
@@ -27,24 +27,37 @@ const getDisplayMonth = (date) => {
 
 const getPaymentDate = (date) => moment(date).format();
 
-const getPaymentsId = (date) => `payment_${date.getMonth()}_${date.getFullYear()}`;
+const getPaymentsId = (date, month) => `payment_${date.getMonth() - month}_${date.getFullYear()}`;
 
 const UserPaymentPage = ({ authUser, firebase }) => {
   const [assignments, setAssignments] = useState({});
-  const [myAssignment, setMyAssignment] = useState({});
+  const [prevAssignments, setPrevAssignments] = useState({});
+  const [prevAssignments2, setPrevAssignments2] = useState({});
   const [date] = useState(new Date());
   const [isLoading, setLoading] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    firebase.userPayment(getPaymentsId(date)).on('value', (snapshotUserPayments) => {
+    firebase.userPayment(getPaymentsId(date, 0)).on('value', (snapshotUserPayments) => {
       const savedValues = snapshotUserPayments.val();
       if (savedValues) {
         setAssignments(savedValues);
-        setMyAssignment(savedValues.assignments.people[authUser.uid]);
       }
-      setLoading(false);
+      firebase.userPayment(getPaymentsId(date, 1)).on('value', (snapshotPrevUserPayments) => {
+        const savedPrevValues = snapshotPrevUserPayments.val();
+        if (savedPrevValues) {
+          setPrevAssignments(savedPrevValues);
+        }
+
+        firebase.userPayment(getPaymentsId(date, 2)).on('value', (snapshotPrevUserPayments2) => {
+          const savedPrevValues2 = snapshotPrevUserPayments2.val();
+          if (savedPrevValues2) {
+            setPrevAssignments2(savedPrevValues2);
+          }
+          setLoading(false);
+        });
+      });
     });
 
     return function cleanup() {
@@ -54,42 +67,32 @@ const UserPaymentPage = ({ authUser, firebase }) => {
     };
   }, [firebase, date, authUser]);
 
-  const onPay = (event) => {
+  const updatePayment = (value) => {
     setLoadingSave(true);
 
-    const newAssignments = { ...assignments };
-    newAssignments.assignments.people[authUser.uid].payed = getPaymentDate(date);
-    firebase
-      .userPayment(getPaymentsId(date))
-      .set(newAssignments)
+    const updates = {};
+    updates[`userPayments/${getPaymentsId(date, 0)}/assignments/people/${authUser.uid}/payed`] = value;
+
+    firebase.databaseRef()
+      .update(updates)
       .then(() => {
         setLoadingSave(false);
-      })
-      .catch((e) => {
-        console.log('error', e);
       });
+  };
+
+  const onPay = (event) => {
+    updatePayment(getPaymentDate(date));
     event.preventDefault();
   };
 
   const onUndo = (event) => {
-    setLoadingSave(true);
-
-    const newAssignments = { ...assignments };
-    newAssignments.assignments.people[authUser.uid].payed = null;
-    firebase
-      .userPayment(getPaymentsId(date))
-      .set(newAssignments)
-      .then(() => {
-        setLoadingSave(false);
-      })
-      .catch((e) => {
-        console.log('error', e);
-      });
+    updatePayment(null);
     event.preventDefault();
   };
 
-  const valuePerPerson = get(assignments, 'assignments.valuePerPerson', 0);
-  const payed = get(assignments, `assignments.people.${authUser.uid}.payed`, undefined);
+  const myAssignment = get(assignments, `assignments.people.${authUser.uid}`, undefined);
+  const payed = get(myAssignment, 'payed', undefined);
+
   const accountInfo = get(assignments, 'params.accountInfo', undefined);
 
   const getPaymentElement = () => {
@@ -147,19 +150,18 @@ const UserPaymentPage = ({ authUser, firebase }) => {
       <Typography variant="h5" style={{ marginBottom: 24 }}>
         Mis pagos
       </Typography>
-      <Typography>
-        {`La cuota de ${getDisplayMonth(assignments.date)} es de ${numeral(valuePerPerson).format('$0,0.00')}`}
-      </Typography>
-      <Typography>
-        {`Mi puesto: ${myAssignment.place}`}
-      </Typography>
+
+      <UserPayment assignments={assignments} uid={authUser.uid} />
+      {getPaymentElement()}
 
       <Typography style={{ marginTop: 24, marginBottom: 16 }}>
         Información de la cuenta:
       </Typography>
       <EmailContent text={accountInfo} />
-
-      {getPaymentElement()}
+      <div style={{ display: 'flex', marginTop: 32 }}>
+        <UserPayment assignments={prevAssignments} uid={authUser.uid} past />
+        <UserPayment assignments={prevAssignments2} uid={authUser.uid} past />
+      </div>
 
     </Content>
   );

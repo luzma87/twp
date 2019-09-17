@@ -70,6 +70,10 @@ class Firebase {
     });
   }
 
+  databaseRef() {
+    return this.db.ref();
+  }
+
   // *** user API ***
   user(uid) {
     return this.db.ref(`users/${uid}`);
