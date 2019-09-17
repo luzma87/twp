@@ -53,6 +53,7 @@ const SignInFormBase = ({ firebase, history }) => {
           type="email"
           name="email"
           value={email}
+          autoComplete="username email"
         />
       </div>
       <div>
@@ -65,6 +66,7 @@ const SignInFormBase = ({ firebase, history }) => {
           type="password"
           name="password"
           value={password}
+          autoComplete="current-password"
         />
       </div>
       <Button
