@@ -11,16 +11,19 @@ import monthsHelper from '../../constants/monthsHelper';
 import routes from '../../constants/routes';
 import Content from '../_common/Content';
 import CustomLoader from '../_common/CustomLoader';
+import MonthsSelect from '../_common/MonthsSelect';
 import AssignmentsForEmailList from '../assignments/AssignmentsForEmailList';
 import customLink from '../navigation/customLink';
 import withAuthorization from '../session/withAuthorization';
 
 const getPaymentsId = (date) => `payment_${date.getMonth()}_${date.getFullYear()}`;
+const getSelectedPaymentsId = (selectedMonth) => `payment_${selectedMonth}`;
 
 const UsersPaymentsPage = ({ firebase }) => {
   const [assignments, setAssignments] = useState({});
   const [date] = useState(new Date());
   const [isLoading, setLoading] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState({});
 
   useEffect(() => {
     setLoading(true);
@@ -28,6 +31,8 @@ const UsersPaymentsPage = ({ firebase }) => {
       const savedValues = snapshotUserPayments.val();
       if (savedValues) {
         setAssignments(savedValues);
+        const startingDate = savedValues.date;
+        setSelectedMonth(`${startingDate.month}_${startingDate.year}`);
       }
       setLoading(false);
     });
@@ -39,6 +44,16 @@ const UsersPaymentsPage = ({ firebase }) => {
       firebase.userPayment().off();
     };
   }, [firebase, date]);
+
+  const onSelectMonth = (event) => {
+    const { value } = event.target;
+    setSelectedMonth(value);
+    firebase.userPayment(getSelectedPaymentsId(value)).on('value', (snapshotUserPayments) => {
+      const savedValues = snapshotUserPayments.val();
+      setAssignments(savedValues);
+      setLoading(false);
+    });
+  };
 
   const valuePerPerson = get(assignments, 'assignments.valuePerPerson', 0);
   const people = get(assignments, 'assignments.people', 0);
@@ -52,10 +67,23 @@ const UsersPaymentsPage = ({ firebase }) => {
         Shame Email
       </Button>
 
-      <Typography>
-        {`La cuota de ${monthsHelper.getDisplayMonthWithYear(assignments.date)} es de ${numeral(valuePerPerson).format('$0,0.00')}`}
-      </Typography>
-      <AssignmentsForEmailList assignments={people} check />
+      <div style={{ marginBottom: 32 }}>
+        <MonthsSelect
+          date={date}
+          value={selectedMonth}
+          onChange={(event) => onSelectMonth(event)}
+        />
+      </div>
+
+      {assignments ? (
+        <>
+          <Typography>
+            {`La cuota de ${monthsHelper.getDisplayMonthWithYear(assignments.date)} es de ${numeral(valuePerPerson).format('$0,0.00')}`}
+          </Typography>
+          <AssignmentsForEmailList assignments={people} check />
+        </>
+      ) : null}
+
     </Content>
   );
 };

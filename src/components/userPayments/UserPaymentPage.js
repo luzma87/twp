@@ -117,7 +117,6 @@ const UserPaymentPage = ({ authUser, firebase }) => {
       </Button>
     );
   };
-
   const monthsSelect = (
     <div style={{ marginBottom: 32 }}>
       <MonthsSelect
@@ -134,7 +133,6 @@ const UserPaymentPage = ({ authUser, firebase }) => {
         <Typography variant="h5" style={{ marginBottom: 24 }}>
           Mis pagos
         </Typography>
-
         {monthsSelect}
         <Typography>
           {assignments
