@@ -44,6 +44,7 @@ const PersonForm = (props) => {
         value={email}
         disabled={restricted}
         onChange={(event) => onPersonChange(event)}
+        autoComplete="username"
       />
       {isEditing ? null : (
         <CustomTextField

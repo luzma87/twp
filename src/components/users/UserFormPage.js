@@ -10,6 +10,7 @@ import { omit } from 'lodash';
 import conditions from '../../constants/conditions';
 import constants from '../../constants/constants';
 import roles from '../../constants/roles';
+import routes from "../../constants/routes";
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
 import CustomForm from '../_common/CustomForm';
@@ -36,7 +37,7 @@ const INITIAL_STATE = {
   },
 };
 
-const UserFormPage = ({ firebase, match }) => {
+const UserFormPage = ({ firebase, history, match }) => {
   const editId = match.params.id;
   const [personValues, setValues] = useState(INITIAL_STATE);
   const [isLoading, setLoading] = useState(false);
@@ -90,6 +91,7 @@ const UserFormPage = ({ firebase, match }) => {
         .set(newUser).then(() => {
           setLoading(false);
         });
+      history.push(routes.USERS);
     } else {
       firebase
         .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -103,6 +105,7 @@ const UserFormPage = ({ firebase, match }) => {
         .then(() => {
           setValues(INITIAL_STATE);
           setLoading(false);
+          history.push(routes.USERS);
         })
         .catch((error) => {
           setErrorMessage(error);
@@ -185,6 +188,7 @@ const UserFormPage = ({ firebase, match }) => {
 
 UserFormPage.propTypes = {
   firebase: PropTypes.any.isRequired,
+  history: PropTypes.any.isRequired,
   match: PropTypes.object.isRequired,
 };
 

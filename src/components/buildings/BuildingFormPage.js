@@ -9,6 +9,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import constants from '../../constants/constants';
+import routes from "../../constants/routes";
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
 import CustomForm from '../_common/CustomForm';
@@ -37,7 +38,7 @@ const INITIAL_BUILDING = {
   isActive: true,
 };
 
-const BuildingFormPage = ({ firebase, match }) => {
+const BuildingFormPage = ({ firebase, history, match }) => {
   const editId = match.params.id;
   const [buildingValues, setBuildingValues] = React.useState(INITIAL_BUILDING);
   const [placeValues, setPlaceValues] = React.useState(INITIAL_PLACE);
@@ -98,6 +99,7 @@ const BuildingFormPage = ({ firebase, match }) => {
         .set(newBuilding)
         .then(() => {
           setLoading(false);
+          history.push(routes.BUILDINGS);
         });
     } else {
       const newRef = firebase.buildings().push();
@@ -111,6 +113,7 @@ const BuildingFormPage = ({ firebase, match }) => {
           setBuildingValues(INITIAL_BUILDING);
           setPlaceValues(INITIAL_PLACE);
           setLoading(false);
+          history.push(routes.BUILDINGS);
         })
         .catch((error) => {
           setErrorMessage(error);
@@ -181,6 +184,7 @@ const BuildingFormPage = ({ firebase, match }) => {
 
 BuildingFormPage.propTypes = {
   firebase: PropTypes.any.isRequired,
+  history: PropTypes.any.isRequired,
   match: PropTypes.object.isRequired,
 };
 
