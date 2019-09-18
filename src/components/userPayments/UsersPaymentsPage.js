@@ -15,6 +15,7 @@ import MonthsSelect from '../_common/MonthsSelect';
 import AssignmentsForEmailList from '../assignments/AssignmentsForEmailList';
 import customLink from '../navigation/customLink';
 import withAuthorization from '../session/withAuthorization';
+import PaymentsSummary from './PaymentsSummary';
 
 const getPaymentsId = (date) => `payment_${date.getMonth()}_${date.getFullYear()}`;
 const getSelectedPaymentsId = (selectedMonth) => `payment_${selectedMonth}`;
@@ -56,7 +57,7 @@ const UsersPaymentsPage = ({ firebase }) => {
   };
 
   const valuePerPerson = get(assignments, 'assignments.valuePerPerson', 0);
-  const people = get(assignments, 'assignments.people', 0);
+  const people = get(assignments, 'assignments.people', {});
 
   return (
     <Content>
@@ -74,12 +75,12 @@ const UsersPaymentsPage = ({ firebase }) => {
           onChange={(event) => onSelectMonth(event)}
         />
       </div>
-
       {assignments ? (
         <>
           <Typography>
             {`La cuota de ${monthsHelper.getDisplayMonthWithYear(assignments.date)} es de ${numeral(valuePerPerson).format('$0,0.00')}`}
           </Typography>
+          <PaymentsSummary assignments={assignments} />
           <AssignmentsForEmailList assignments={people} check />
         </>
       ) : null}

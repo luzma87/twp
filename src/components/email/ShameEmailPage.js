@@ -8,13 +8,14 @@ import CustomLoader from '../_common/CustomLoader';
 import AssignmentsForEmailList from '../assignments/AssignmentsForEmailList';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
+import PaymentsSummary from '../userPayments/PaymentsSummary';
 import ShameEmailContent from './ShameEmailContent';
 
 const getPaymentsId = (date) => `payment_${date.getMonth()}_${date.getFullYear()}`;
 
 const ShameEmailPage = ({ firebase }) => {
   const [loadingUserPayments, setLoadingUserPayments] = useState(false);
-  const [assignments, setAssignments] = useState([]);
+  const [assignments, setAssignments] = useState({});
   const [params, setParams] = useState({});
   const [date] = useState(new Date());
 
@@ -47,6 +48,7 @@ const ShameEmailPage = ({ firebase }) => {
         valuePerPerson={assignments.valuePerPerson}
         month={monthsHelper.getMonthFromDate(date)}
       />
+      <PaymentsSummary assignments={{ assignments }} />
       <AssignmentsForEmailList assignments={assignments.people} shame />
     </Content>
   );
