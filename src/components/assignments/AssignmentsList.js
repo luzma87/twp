@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,7 +11,9 @@ import React from 'react';
 import Assignments from '../../domain/Assignments';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 
-const AssignmentsList = ({ assignments, skill, buildingFilter }) => {
+const AssignmentsList = ({
+  assignments, skill, buildingFilter, onDelete,
+}) => {
   if (!(assignments instanceof Assignments)) {
     return null;
   }
@@ -22,6 +26,7 @@ const AssignmentsList = ({ assignments, skill, buildingFilter }) => {
             <TableCell>Persona</TableCell>
             <TableCell>Auto</TableCell>
             <TableCell>Puesto</TableCell>
+            <TableCell>Eliminar</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -43,6 +48,11 @@ const AssignmentsList = ({ assignments, skill, buildingFilter }) => {
                   {`${building.getPlaceString(placeId)}`}
                   <MeteorRating id="placeDifficulty" compact value={place.difficulty} />
                 </TableCell>
+                <TableCell>
+                  <IconButton onClick={() => onDelete(user.uid)}>
+                    <FontAwesomeIcon icon={['far', 'trash-alt']} />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             );
           })}
@@ -56,6 +66,7 @@ AssignmentsList.propTypes = {
   assignments: PropTypes.any,
   buildingFilter: PropTypes.any,
   skill: PropTypes.bool,
+  onDelete: PropTypes.func.isRequired,
 };
 
 AssignmentsList.defaultProps = {

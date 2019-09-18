@@ -77,6 +77,12 @@ const AssignmentsPage = ({ firebase }) => {
     setFilter(selectedValue);
   };
 
+  const onDelete = (uid) => {
+    const updates = {};
+    updates[`users/${uid}/place/`] = null;
+    firebase.databaseRef().update(updates);
+  };
+
   return (
     <Content>
       <CustomLoader isLoading={loadingBuildings || loadingUsers} />
@@ -92,7 +98,12 @@ const AssignmentsPage = ({ firebase }) => {
         />
       </div>
 
-      <AssignmentsList assignments={assignments} buildingFilter={filter} skill />
+      <AssignmentsList
+        assignments={assignments}
+        buildingFilter={filter}
+        skill
+        onDelete={(uid) => onDelete(uid)}
+      />
     </Content>
   );
 };
