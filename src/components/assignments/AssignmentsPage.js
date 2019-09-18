@@ -1,4 +1,3 @@
-import { omit } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
@@ -30,7 +29,7 @@ const createUserForSelect = (user) => ({
 });
 
 const createPlaceForSelect = (building, place) => ({
-  value: `${building.id}&&${place.number}`,
+  value: `${building.id}&&${place.id}`,
   label: `${building.name} #${place.number} (${place.difficulty}*)`,
 });
 
@@ -49,61 +48,70 @@ const AssignmentsPage = ({ firebase }) => {
   useEffect(() => {
     setLoadingBuildings(true);
     setLoadingUsers(true);
-    const availableUsersEdit = {};
-    const takenPlaces = [];
+    const buildingsForFilterEdit = {};
+    let availableUsersEdit = {};
     const availablePlacesEdit = {};
-    firebase.users().on('value', (snapshot) => {
-      const usersObject = snapshot.val();
-      const usedBuildings = [];
-      let usersList;
+
+    firebase.users().on('value', (snapshotUsers) => {
+      const usersObject = snapshotUsers.val();
+      let usersList = [];
       if (usersObject) {
         usersList = Object.values(usersObject).filter((u) => u.isActive);
         usersList = usersList.sort(constants.userSort);
-        usersList.forEach((u) => {
-          if (u.place && usedBuildings.indexOf(u.place.building) === -1) {
-            usedBuildings.push(u.place.building);
-          }
-          if (u.place === undefined) {
-            availableUsersEdit[u.uid] = createUserForSelect(u);
-          } else {
-            takenPlaces.push(`${u.place.building}_${u.place.place}`);
-          }
-        });
+
+        const filteredAvailableUsers = usersList.filter((u) => u.place === undefined);
+        availableUsersEdit = filteredAvailableUsers.reduce((acc, user, index) => {
+          acc[`${index}_${user.uid}`] = createUserForSelect(user);
+          return acc;
+        }, {});
         setAvailableUsers(availableUsersEdit);
       }
-
+      setLoadingUsers(false);
       firebase.buildings().on('value', (snapshotBuildings) => {
         const buildingsObject = snapshotBuildings.val();
         if (buildingsObject) {
           setAssignments(new Assignments(usersList, buildingsObject));
+          const buildingsList = Object.values(buildingsObject).filter((u) => u.isActive);
+          buildingsForFilterEdit['-1'] = ALL_BUILDINGS;
+          const usedBuildings = buildingsList.filter((building) => {
+            const places = Object.values(building.places);
+            const occupiedPlaces = places.filter((p) => p.user !== undefined).length;
+            return occupiedPlaces > 0;
+          });
+          usedBuildings.forEach((building) => {
+            buildingsForFilterEdit[building.uid] = {
+              value: building.uid,
+              label: building.name,
+            };
+          });
+          setBuildingsForFilter(buildingsForFilterEdit);
 
-          const availableBuildings = {};
-          const allBuildings = Object.values(buildingsObject);
-          const activeBuildings = allBuildings.filter((b) => b.isActive);
-          availableBuildings['-1'] = ALL_BUILDINGS;
-          activeBuildings.forEach((building) => {
-            if (usedBuildings.indexOf(building.uid) !== -1) {
-              availableBuildings[building.uid] = {
-                value: building.uid,
-                label: building.name,
-              };
-            }
-            const allPlaces = Object.values(building.places);
-            const activePlaces = allPlaces.filter((p) => p.isActive);
-            activePlaces.forEach((place) => {
-              const placeKey = `${building.uid}_${place.number}`;
-              if (takenPlaces.indexOf(placeKey) === -1) {
-                const newBuilding = omit(building, 'places');
-                availablePlacesEdit[placeKey] = createPlaceForSelect(newBuilding, place);
-              }
+          let freePlacesList = [];
+          buildingsList.forEach((building) => {
+            const places = Object.values(building.places);
+            const freePlaces = places.filter((p) => p.user === undefined);
+            freePlaces.forEach((place) => {
+              const placeKey = `${building.uid}_${place.id}`;
+              freePlacesList.push({ select: createPlaceForSelect(building, place), placeKey });
             });
           });
-          setAvailablePlaces(availablePlacesEdit);
-          setBuildingsForFilter(availableBuildings);
+          freePlacesList = freePlacesList.sort((a, b) => {
+            if (a.select.label < b.select.label) {
+              return -1;
+            }
+            if (a.select.label > b.select.label) {
+              return 1;
+            }
+            return 0;
+          });
+          freePlacesList.reduce((acc, place) => {
+            acc[place.placeKey] = place.select;
+            return acc;
+          }, availablePlacesEdit);
         }
+        setAvailablePlaces(availablePlacesEdit);
         setLoadingBuildings(false);
       });
-      setLoadingUsers(false);
     });
 
     return function cleanup() {

@@ -19,6 +19,7 @@ import BuildingForm from './BuildingForm';
 import PlacesSummary from './PlacesSummary';
 
 const INITIAL_PLACE = {
+  id: '',
   size: constants.carSizes.medium.value,
   number: '',
   price: 0,
@@ -46,6 +47,7 @@ const BuildingFormPage = ({ firebase, history, match }) => {
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = React.useState(null);
   const [isEditing, setEditing] = useState(false);
+  const [editingPlaceId, setEditingPlaceId] = useState(null);
 
   useEffect(() => {
     if (editId !== undefined) {
@@ -75,8 +77,13 @@ const BuildingFormPage = ({ firebase, history, match }) => {
   };
 
   const onAddPlace = () => {
-    const placeId = placeValues.number;
-    const newPlaces = { ...buildingValues.places, [placeId]: { ...placeValues } };
+    let placeId = new Date().getTime();
+    if (editingPlaceId !== null) {
+      placeId = editingPlaceId;
+      setEditingPlaceId(null);
+    }
+    const newPlaceValues = { ...placeValues, id: placeId };
+    const newPlaces = { ...buildingValues.places, [placeId]: newPlaceValues };
     setBuildingValues({ ...buildingValues, places: newPlaces });
     setPlaceValues(INITIAL_PLACE);
   };
@@ -87,10 +94,11 @@ const BuildingFormPage = ({ firebase, history, match }) => {
   };
 
   const onEditPlace = (id) => {
+    setEditingPlaceId(id);
     setPlaceValues({ ...INITIAL_PLACE, ...buildingValues.places[id] });
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = (event, redirect) => {
     setLoading(true);
 
     const newBuilding = { ...buildingValues };
@@ -114,7 +122,9 @@ const BuildingFormPage = ({ firebase, history, match }) => {
           setBuildingValues(INITIAL_BUILDING);
           setPlaceValues(INITIAL_PLACE);
           setLoading(false);
-          history.push(routes.BUILDINGS);
+          if (redirect) {
+            history.push(routes.BUILDINGS);
+          }
         })
         .catch((error) => {
           setErrorMessage(error);
@@ -172,10 +182,21 @@ const BuildingFormPage = ({ firebase, history, match }) => {
             size="large"
             style={{ margin: '24px 0' }}
             disabled={isInvalid || isLoading}
-            onClick={(event) => onSubmit(event)}
+            onClick={(event) => onSubmit(event, true)}
           >
             <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
             Guardar
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            style={{ margin: '24px 0' }}
+            disabled={isInvalid || isLoading}
+            onClick={(event) => onSubmit(event, false)}
+          >
+            <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
+            Guardar y agregar otro
           </Button>
         </div>
       </CustomForm>

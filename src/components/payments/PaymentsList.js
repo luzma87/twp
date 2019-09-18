@@ -58,7 +58,7 @@ const PaymentsList = ({ payments, positiveOnly, onPay }) => {
                   <TableCell>{ownerInfo}</TableCell>
                   <TableCell align="right">
                     {places.map((place) => (
-                      <div key={`${ownerKey}_${place.number}`} style={{ display: 'flex' }}>
+                      <div key={`${ownerKey}_${place.id}`} style={{ display: 'flex' }}>
                         <div>
                           {place.number}
                         </div>

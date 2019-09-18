@@ -23,7 +23,7 @@ const PlacesSummary = (props) => {
         <Box
           bgcolor="text.hint"
           color="background.paper"
-          key={place.number}
+          key={place.id}
           style={{
             padding: 16, marginTop: 8, border: 'solid 1px #333', borderRadius: 5,
           }}
@@ -32,7 +32,7 @@ const PlacesSummary = (props) => {
           <Tooltip title="Editar">
             <IconButton
               color="secondary"
-              onClick={() => onEditPlace(place.number)}
+              onClick={() => onEditPlace(place.id)}
             >
               <FontAwesomeIcon icon={['far', 'pencil-alt']} />
             </IconButton>
@@ -40,7 +40,7 @@ const PlacesSummary = (props) => {
           <Tooltip title="Eliminar">
             <IconButton
               color="secondary"
-              onClick={() => onDeletePlace(place.number)}
+              onClick={() => onDeletePlace(place.id)}
             >
               <FontAwesomeIcon icon={['far', 'trash-alt']} />
             </IconButton>

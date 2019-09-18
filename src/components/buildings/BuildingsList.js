@@ -57,7 +57,7 @@ const BuildingsList = ({ buildings, activeOnly }) => {
                     </TableCell>
                     <TableCell>
                       {places.map((place) => (
-                        <div key={place.number}>
+                        <div key={place.id}>
                           <FontAwesomeIcon
                             icon={['far', 'draw-square']}
                             style={{ marginRight: 8, color: place.isActive ? '#2E7D32' : '#B71C1C' }}
