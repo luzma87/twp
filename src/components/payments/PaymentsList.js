@@ -55,11 +55,11 @@ const PaymentsList = ({ payments, positiveOnly }) => {
                     {places.map((place) => (
                       <div key={`${ownerKey}_${place.number}`} style={{ display: 'flex' }}>
                         <div style={{ width: 50 }}>
-                          {place.number}
-                        </div>
+                           {place.number}
+                         </div>
                         <div>
-                          {numeral(place.price).format('$0,0.00')}
-                        </div>
+                           {numeral(place.price).format('$0,0.00')}
+                         </div>
                       </div>
                     ))}
                   </TableCell>

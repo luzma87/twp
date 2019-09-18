@@ -42,7 +42,7 @@ const UserPaymentPage = ({ authUser, firebase }) => {
     });
 
     return function cleanup() {
-      firebase.userPayment().off();
+      firebase.userPayments().off();
     };
   }, [firebase, date, authUser]);
 

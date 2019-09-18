@@ -82,7 +82,7 @@ const AssignmentEmailPage = ({ firebase }) => {
       firebase.buildings().off();
       firebase.params().off();
       firebase.users().off();
-      firebase.userPayment().off();
+      firebase.userPayments().off();
     };
   }, [firebase, date]);
 
