@@ -50,8 +50,8 @@ class Assignments {
       }
       buildingsOwnersMap[building.id].owners[owner].push(place);
     });
-    const ownersList = [];
-    Object.values(buildingsOwnersMap).forEach((element) => {
+    let ownersList = [];
+    Object.values(buildingsOwnersMap).forEach((element, index) => {
       const { owners, building } = element;
       const x = Object.keys(owners).map((owner) => {
         const places = owners[owner];
@@ -59,22 +59,22 @@ class Assignments {
         let { ownerInfo } = places[0];
         if (!ownerInfo) ownerInfo = '';
         return {
-          owner, ownerInfo, places, building, total: totalOwner,
+          owner,
+          ownerInfo,
+          places,
+          building,
+          total: totalOwner,
+          payed: '',
         };
       });
       ownersList.push(x);
     });
-    let sortedOwnersList = flatten(ownersList);
-    sortedOwnersList = sortedOwnersList.sort((a, b) => {
-      if (a.building.name < b.building.name) {
-        return -1;
-      }
-      if (a.building.name > b.building.name) {
-        return 1;
-      }
-      return 0;
-    });
-    return sortedOwnersList;
+    ownersList = flatten(ownersList);
+    return ownersList.reduce((acc, owner, index) => {
+      const id = `owner_${index}`;
+      acc[id] = { ...owner, id };
+      return acc;
+    }, {});
   }
 
   getListForEmail(paramsObject) {
