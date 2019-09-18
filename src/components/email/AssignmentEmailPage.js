@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
+import monthsHelper from '../../constants/monthsHelper';
 import Assignments from '../../domain/Assignments';
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
@@ -14,17 +15,6 @@ import AssignmentsForEmailList from '../assignments/AssignmentsForEmailList';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
 import AssignmentEmailContent from './AssignmentEmailContent';
-
-const getCurrentMonth = (date) => {
-  const monthNames = [
-    'Enero', 'Febrero', 'Marzo',
-    'Abril', 'Mayo', 'Junio', 'Julio',
-    'Agosto', 'Septiembre', 'Octubre',
-    'Noviembre', 'Diciembre',
-  ];
-  const monthIndex = date.getMonth();
-  return monthNames[monthIndex];
-};
 
 const getDateToSave = (date) => ({
   month: date.getMonth(),
@@ -122,7 +112,7 @@ const AssignmentEmailPage = ({ firebase }) => {
     <Content>
       {isSaved ? (
         <Typography style={{ marginBottom: 32 }} color="textSecondary">
-          {`Ya está guardado para ${getCurrentMonth(date)}`}
+          {`Ya está guardado para ${monthsHelper.getMonthFromDate(date)}`}
         </Typography>
       ) : (
         <Button style={{ marginBottom: 32 }} onClick={(event) => onSave(event)}>
@@ -136,7 +126,7 @@ const AssignmentEmailPage = ({ firebase }) => {
       <AssignmentEmailContent
         params={params}
         valuePerPerson={assignments.valuePerPerson}
-        month={getCurrentMonth(date)}
+        month={monthsHelper.getMonthFromDate(date)}
       />
       <AssignmentsForEmailList assignments={assignments.people} />
     </Content>

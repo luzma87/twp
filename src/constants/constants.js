@@ -35,9 +35,17 @@ const userSort = (a, b) => {
   return 0;
 };
 
+const monthNames = [
+  'Enero', 'Febrero', 'Marzo',
+  'Abril', 'Mayo', 'Junio', 'Julio',
+  'Agosto', 'Septiembre', 'Octubre',
+  'Noviembre', 'Diciembre',
+];
+
 const constants = {
   carSizes,
   banks,
+  monthNames,
   userSort,
   carSizeLabel,
   sortAssignmentsByUser,

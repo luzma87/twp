@@ -8,52 +8,13 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
+import monthsHelper from '../../constants/monthsHelper';
 import shapes from '../../constants/shapes';
 import Content from '../_common/Content';
-import CustomSelect from '../_common/CustomSelect';
+import MonthsSelect from '../_common/MonthsSelect';
 import EmailContent from '../email/EmailContent';
 import withAuthorization from '../session/withAuthorization';
 import UserPayment from './UserPayment';
-
-const monthNames = [
-  'Enero', 'Febrero', 'Marzo',
-  'Abril', 'Mayo', 'Junio', 'Julio',
-  'Agosto', 'Septiembre', 'Octubre',
-  'Noviembre', 'Diciembre',
-];
-
-const getDisplayMonth = (date) => {
-  if (date === undefined) return '';
-  const monthIndex = date.month;
-  return `${monthNames[monthIndex]} ${date.year}`;
-};
-
-const getDisplayMonthForSelect = (monthIndex) => monthNames[monthIndex];
-
-const getDisplayMonthFromSelect = (selectedMonth) => {
-  const [month, year] = selectedMonth.split('_');
-  return `${getDisplayMonthForSelect(parseInt(month, 10))} ${year}`;
-};
-
-const monthsForSelect = (date) => {
-  const currentMonth = date.getMonth();
-  const currentYear = date.getFullYear();
-  const months = {};
-  for (let i = 0; i < 4; i += 1) {
-    let month = currentMonth - i;
-    let year = currentYear;
-    if (month < 0) {
-      month = 12 + month;
-      year = currentYear - 1;
-    }
-    const key = `${i}_${month}_${year}`;
-    months[key] = {
-      label: `${getDisplayMonthForSelect(month)} ${year}`,
-      value: `${month}_${year}`,
-    };
-  }
-  return months;
-};
 
 const getPaymentDate = (date) => moment(date).format();
 
@@ -159,11 +120,9 @@ const UserPaymentPage = ({ authUser, firebase }) => {
 
   const monthsSelect = (
     <div style={{ marginBottom: 32 }}>
-      <CustomSelect
-        id="month"
+      <MonthsSelect
+        date={date}
         value={selectedMonth}
-        label="Mes"
-        values={monthsForSelect(date)}
         onChange={(event) => onSelectMonth(event)}
       />
     </div>
@@ -179,8 +138,8 @@ const UserPaymentPage = ({ authUser, firebase }) => {
         {monthsSelect}
         <Typography>
           {assignments
-            ? `No asignado en ${getDisplayMonth(assignments.date)} `
-            : `No asignado en ${getDisplayMonthFromSelect(selectedMonth)}`}
+            ? `No asignado en ${monthsHelper.getDisplayMonthWithYear(assignments.date)} `
+            : `No asignado en ${monthsHelper.getDisplayMonthFromSelect(selectedMonth)}`}
         </Typography>
       </Content>
     );

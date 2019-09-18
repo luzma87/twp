@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
+import monthsHelper from '../../constants/monthsHelper';
 import routes from '../../constants/routes';
 import Content from '../_common/Content';
 import CustomLoader from '../_common/CustomLoader';
@@ -15,18 +16,6 @@ import customLink from '../navigation/customLink';
 import withAuthorization from '../session/withAuthorization';
 
 const getPaymentsId = (date) => `payment_${date.getMonth()}_${date.getFullYear()}`;
-
-const getDisplayMonth = (date) => {
-  if (date === undefined) return '';
-  const monthNames = [
-    'Enero', 'Febrero', 'Marzo',
-    'Abril', 'Mayo', 'Junio', 'Julio',
-    'Agosto', 'Septiembre', 'Octubre',
-    'Noviembre', 'Diciembre',
-  ];
-  const monthIndex = date.month;
-  return `${monthNames[monthIndex]} ${date.year}`;
-};
 
 const UsersPaymentsPage = ({ firebase }) => {
   const [assignments, setAssignments] = useState({});
@@ -64,7 +53,7 @@ const UsersPaymentsPage = ({ firebase }) => {
       </Button>
 
       <Typography>
-        {`La cuota de ${getDisplayMonth(assignments.date)} es de ${numeral(valuePerPerson).format('$0,0.00')}`}
+        {`La cuota de ${monthsHelper.getDisplayMonthWithYear(assignments.date)} es de ${numeral(valuePerPerson).format('$0,0.00')}`}
       </Typography>
       <AssignmentsForEmailList assignments={people} check />
     </Content>
