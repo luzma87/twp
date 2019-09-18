@@ -32,6 +32,7 @@ const AssignmentEmailPage = ({ firebase }) => {
   const [loadingParams, setLoadingParams] = useState(false);
   const [loadingUserPayments, setLoadingUserPayments] = useState(false);
   const [assignments, setAssignments] = useState([]);
+  const [payments, setPayments] = useState([]);
   const [params, setParams] = useState({});
   const [date] = useState(new Date());
 
@@ -67,6 +68,8 @@ const AssignmentEmailPage = ({ firebase }) => {
               const paramsObject = snapshotParams.val();
               setParams(paramsObject);
               const a = asg.getListForEmail(paramsObject);
+              const b = asg.getListForPayments();
+              setPayments(b);
               setAssignments(a);
               setLoadingParams(false);
             });
@@ -86,16 +89,30 @@ const AssignmentEmailPage = ({ firebase }) => {
   const onSave = (event) => {
     setLoadingSave(true);
     const dateToSave = getDateToSave(date);
-    const payments = {
+    const userPayments = {
       params,
       assignments,
-      payments: {},
+      date: dateToSave,
+    };
+    const ownerPayments = {
+      payments,
       date: dateToSave,
     };
 
     firebase
       .userPayment(getPaymentsId(date))
-      .set(payments)
+      .set(userPayments)
+      .then(() => {
+        setLoadingSave(false);
+      })
+      .catch((error) => {
+        setErrorMessage(error);
+        setLoadingSave(false);
+      });
+
+    firebase
+      .ownerPayment(getPaymentsId(date))
+      .set(ownerPayments)
       .then(() => {
         setLoadingSave(false);
       })

@@ -37,7 +37,11 @@ class Assignments {
       const { owner } = place;
       if (!buildingsOwnersMap[building.id]) {
         buildingsOwnersMap[building.id] = {
-          building,
+          building: {
+            id: building.id,
+            name: building.name,
+            address: building.address,
+          },
           owners: {},
         };
       }
@@ -52,7 +56,8 @@ class Assignments {
       const x = Object.keys(owners).map((owner) => {
         const places = owners[owner];
         const totalOwner = places.reduce((total, place) => total + place.price, 0);
-        const { ownerInfo } = places[0];
+        let { ownerInfo } = places[0];
+        if (!ownerInfo) ownerInfo = '';
         return {
           owner, ownerInfo, places, building, total: totalOwner,
         };

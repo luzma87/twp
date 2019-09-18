@@ -105,6 +105,15 @@ class Firebase {
   userPayments() {
     return this.db.ref('userPayments');
   }
+
+  // *** ownerPayment API ***
+  ownerPayment(uid) {
+    return this.db.ref(`ownerPayments/${uid}`);
+  }
+
+  ownerPayments() {
+    return this.db.ref('ownerPayments');
+  }
 }
 
 export default Firebase;
