@@ -45,11 +45,15 @@ const AssignmentsList = ({
                   {`${user.getCarString()}`}
                 </TableCell>
                 <TableCell>
-                  {`${building.getPlaceString(placeId)}`}
-                  <MeteorRating id="placeDifficulty" compact value={place.difficulty} />
+                  {place ? (
+                    <>
+                      {`${building.getPlaceString(placeId)}`}
+                      <MeteorRating id="placeDifficulty" compact value={place.difficulty} />
+                    </>
+                  ) : null}
                 </TableCell>
                 <TableCell>
-                  <IconButton onClick={() => onDelete(user.uid)}>
+                  <IconButton onClick={() => onDelete(user.uid, building.id, placeId)}>
                     <FontAwesomeIcon icon={['far', 'trash-alt']} />
                   </IconButton>
                 </TableCell>

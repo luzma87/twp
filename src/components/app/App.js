@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import routes from '../../constants/routes';
 import AccountPage from '../account/AccountPage';
-import AssignmentFormPage from '../assignments/AssignmentFormPage';
 import AssignmentsPage from '../assignments/AssignmentsPage';
 import BuildingFormPage from '../buildings/BuildingFormPage';
 import BuildingsPage from '../buildings/BuildingsPage';
@@ -40,7 +39,6 @@ const App = () => (
       <Route path={routes.BUILDINGS_EDIT} component={BuildingFormPage} />
 
       <Route exact path={routes.ASSIGNMENTS} component={AssignmentsPage} />
-      <Route path={routes.ASSIGNMENTS_CREATE} component={AssignmentFormPage} />
 
       <Route exact path={routes.PAYMENTS} component={PaymentsPage} />
 
