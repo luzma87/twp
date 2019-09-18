@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import constants from '../../constants/constants';
-import routes from "../../constants/routes";
+import routes from '../../constants/routes';
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
 import CustomForm from '../_common/CustomForm';
@@ -24,6 +24,7 @@ const INITIAL_PLACE = {
   price: 0,
   isActive: true,
   owner: '',
+  ownerInfo: '',
   otherInfo: '',
   difficulty: 1,
   paymentInformation: '',

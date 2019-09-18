@@ -52,8 +52,9 @@ class Assignments {
       const x = Object.keys(owners).map((owner) => {
         const places = owners[owner];
         const totalOwner = places.reduce((total, place) => total + place.price, 0);
+        const { ownerInfo } = places[0];
         return {
-          owner, places, building, total: totalOwner,
+          owner, ownerInfo, places, building, total: totalOwner,
         };
       });
       ownersList.push(x);
