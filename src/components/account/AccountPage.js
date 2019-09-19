@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Paper, Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
@@ -63,63 +64,72 @@ const AccountPage = ({ authUser, firebase }) => {
 
   const icon = isLoading ? 'spinner' : 'save';
   const isInvalid = personValues.name === ''
-  || personValues.car.brand === ''
-  || personValues.car.model === ''
-  || personValues.car.plate === '';
+    || personValues.car.brand === ''
+    || personValues.car.model === ''
+    || personValues.car.plate === '';
 
   return (
     <Content>
-      <Typography variant="h4">
-        Mi cuenta
-      </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant="h4">
+            Mi cuenta
+          </Typography>
+        </Grid>
 
-      <div style={{ marginBottom: 32, marginTop: 24, width: 680 }}>
-        <Paper style={{
-          padding: 16,
-          display: 'grid',
-          gridColumnGap: 48,
-          gridTemplateColumns: '300px 300px',
-        }}
-        >
-          <div>
-            <Typography variant="h5">Actualizar mis datos</Typography>
-            <PersonForm
-              onPersonChange={(event) => onPersonChange(event)}
-              personValues={personValues}
-              isEditing
-              restricted
-            />
-          </div>
+        <Grid item xs={12} sm={10} md={11} lg={8} xl={6}>
+          <Paper style={{ padding: 16 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6}>
+                <Typography variant="h5">Actualizar mis datos</Typography>
+                <PersonForm
+                  onPersonChange={(event) => onPersonChange(event)}
+                  personValues={personValues}
+                  isEditing
+                  restricted
+                />
+              </Grid>
 
-          <div>
-            <Typography variant="h5">Actualizar mi auto</Typography>
-            <CarForm
-              onCarChange={(event) => onCarChange(event)}
-              carValues={personValues.car}
-            />
-          </div>
+              <Grid item xs={12} md={6}>
+                <Typography variant="h5">Actualizar mi auto</Typography>
+                <CarForm
+                  onCarChange={(event) => onCarChange(event)}
+                  carValues={personValues.car}
+                />
+              </Grid>
 
-          <div />
-          <div style={{ marginTop: 24, textAlign: 'right' }}>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              disabled={isInvalid}
-              style={{ margin: '24px 0' }}
-              onClick={(event) => onSubmit(event)}
-            >
-              <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
-              Guardar
-            </Button>
-          </div>
-        </Paper>
-      </div>
+              <Grid item container xs={12} justify="flex-end">
+                <Grid item xs={12} md={6}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    disabled={isInvalid}
+                    style={{ marginTop: 24, width: '100%' }}
+                    onClick={(event) => onSubmit(event)}
+                  >
+                    <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
+                  Guardar
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
 
-      <Paper style={{ padding: 16, width: 648 }}>
-        <Typography variant="h5">Cambiar Password</Typography>
-        <PasswordChangeForm />
-      </Paper>
+        <Grid item xs={12} sm={10} md={11} lg={8} xl={6}>
+          <Paper style={{ padding: 16 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Typography variant="h5">Cambiar Password</Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <PasswordChangeForm />
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+      </Grid>
     </Content>
   );
 };

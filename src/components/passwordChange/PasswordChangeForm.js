@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import CustomError from '../_common/CustomError';
@@ -44,58 +45,64 @@ const PasswordChangeForm = ({ firebase }) => {
   const isInvalid = passwordOne !== passwordTwo || passwordOne === '';
   const icon = isLoading ? 'spinner' : 'repeat';
 
+  const style = {
+    display: 'flex', flexWrap: 'wrap', flexDirection: 'column',
+  };
+
   return (
     <form onSubmit={(event) => onSubmit(event)}>
-      <div style={{
-        display: 'grid',
-        gridColumnGap: 48,
-        gridTemplateColumns: '300px 300px',
-      }}
-      >
-        <CustomTextField
-          id="passwordOne"
-          label="Nuevo password"
-          onChange={(event) => onChange(event)}
-          type="password"
-          autoComplete="new-password"
-          value={passwordOne}
-        />
-        <CustomTextField
-          id="passwordTwo"
-          label="Confirmar password"
-          onChange={(event) => onChange(event)}
-          type="password"
-          autoComplete="new-password"
-          value={passwordTwo}
-        />
-
-        <div />
-        <div style={{ marginTop: 24, textAlign: 'right' }}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{ margin: '24px 0' }}
-            disabled={isInvalid || isLoading}
-            onClick={(event) => onSubmit(event)}
-          >
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6} style={style}>
+          <CustomTextField
+            id="passwordOne"
+            label="Nuevo password"
+            onChange={(event) => onChange(event)}
+            type="password"
+            autoComplete="new-password"
+            value={passwordOne}
+          />
+        </Grid>
+        <Grid item xs={12} md={6} style={style}>
+          <CustomTextField
+            id="passwordTwo"
+            label="Confirmar password"
+            onChange={(event) => onChange(event)}
+            type="password"
+            autoComplete="new-password"
+            value={passwordTwo}
+          />
+        </Grid>
+        <Grid item container xs={12} justify="flex-end">
+          <Grid item xs={12} md={6}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              style={{ marginTop: 24, width: '100%' }}
+              disabled={isInvalid || isLoading}
+              onClick={(event) => onSubmit(event)}
+            >
             Cambiar
-            <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginLeft: 16 }} />
-          </Button>
-        </div>
-      </div>
-      <CustomError error={error} />
-      {!error && isDone ? (
-        <Box
-          bgcolor="secondary.main"
-          color="secondary.contrastText"
-          style={{ padding: 8, borderRadius: 8, marginTop: 16 }}
-        >
-          <Typography>
+              <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginLeft: 16 }} />
+            </Button>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12}>
+          <CustomError error={error} />
+          {!error && isDone ? (
+            <Box
+              bgcolor="secondary.main"
+              color="secondary.contrastText"
+              style={{ padding: 8, borderRadius: 8, marginTop: 16 }}
+            >
+              <Typography>
             Password cambiado :)
-          </Typography>
-        </Box>
-      ) : null}
+              </Typography>
+            </Box>
+          ) : null}
+        </Grid>
+      </Grid>
     </form>
   );
 };
