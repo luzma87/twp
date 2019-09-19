@@ -1,8 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import {
+  Button, Grid, Paper, Typography,
+} from '@material-ui/core';
 import { get } from 'lodash';
 import moment from 'moment';
 import PropTypes from 'prop-types';

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import TextField from '@material-ui/core/TextField';
+import { TextField } from '@material-ui/core';
 import React from 'react';
 import PropTypes from 'prop-types';
 

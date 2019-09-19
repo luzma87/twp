@@ -1,4 +1,4 @@
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { FormControlLabel } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import constants from '../../constants/constants';

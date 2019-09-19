@@ -1,4 +1,4 @@
-import Typography from '@material-ui/core/Typography';
+import { Typography } from '@material-ui/core';
 import { get } from 'lodash';
 import numeral from 'numeral';
 import React from 'react';

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading,no-unused-vars */
-import Button from '@material-ui/core/Button';
+import { Button } from '@material-ui/core';
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import customLink from '../navigation/customLink';

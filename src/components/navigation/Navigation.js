@@ -1,5 +1,4 @@
-import AppBar from '@material-ui/core/AppBar/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import { AppBar, Toolbar } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import roles from '../../constants/roles';

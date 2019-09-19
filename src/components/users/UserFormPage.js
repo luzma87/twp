@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
+import { Button, Paper } from '@material-ui/core';
 import { omit } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';

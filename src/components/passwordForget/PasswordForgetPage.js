@@ -1,6 +1,4 @@
-import { Paper } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { Grid, Paper, Typography } from '@material-ui/core';
 import React from 'react';
 import SignInLink from '../signIn/SignInLink';
 import PasswordForgetForm from './PasswordForgetForm';

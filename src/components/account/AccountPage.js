@@ -1,7 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Paper } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
+import { Paper, Button, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';

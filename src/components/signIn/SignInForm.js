@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Button from '@material-ui/core/Button';
+import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';

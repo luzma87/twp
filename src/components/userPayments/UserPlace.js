@@ -1,5 +1,4 @@
-import { Paper } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
+import { Paper, Typography } from '@material-ui/core';
 import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';

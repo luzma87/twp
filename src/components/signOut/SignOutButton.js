@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
+import { IconButton, Tooltip } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import withFirebase from '../firebase/withFirebase';

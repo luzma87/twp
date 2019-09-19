@@ -1,5 +1,4 @@
-import { Tooltip } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
+import { Tooltip, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
