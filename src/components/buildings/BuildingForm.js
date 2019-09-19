@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import shapes from '../../constants/shapes';
 import CustomSwitch from '../_common/CustomSwitch';
 import CustomTextField from '../_common/CustomTextField';

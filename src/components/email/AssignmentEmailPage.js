@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Typography, Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';

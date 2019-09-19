@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import './meteorRating.css';
 import { range } from 'lodash';
 
 import PropTypes from 'prop-types';
+import React from 'react';
+import './meteorRating.css';
 
 const total = 5;
 

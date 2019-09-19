@@ -1,8 +1,8 @@
 import { Typography } from '@material-ui/core';
 import { get } from 'lodash';
 import numeral from 'numeral';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 const PaymentsSummary = ({ assignments }) => {
   const valuePerPerson = get(assignments, 'assignments.valuePerPerson', 0);

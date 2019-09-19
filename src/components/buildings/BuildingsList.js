@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  Typography, Paper, Table, TableBody, TableCell, TableHead, TableRow,
+  Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';

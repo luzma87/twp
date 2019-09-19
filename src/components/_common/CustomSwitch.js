@@ -1,6 +1,6 @@
 import { FormControlLabel, Switch } from '@material-ui/core';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 const CustomSwitch = (props) => {
   const {

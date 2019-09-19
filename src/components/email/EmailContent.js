@@ -1,7 +1,7 @@
 import { Typography } from '@material-ui/core';
 import { startsWith } from 'lodash';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 const splitContent = (startingText) => startingText.split('{{br}}');
 

@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import constants from '../../constants/constants';
 import shapes from '../../constants/shapes';
 import CustomSelect from '../_common/CustomSelect';
