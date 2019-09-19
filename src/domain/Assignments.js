@@ -98,7 +98,8 @@ class Assignments {
       }
     });
 
-    const totalValue = placePriceTotal + otherBanks + parseFloat(paramsObject.hosting);
+    const extraCosts = parseFloat(paramsObject.hosting) + parseFloat(paramsObject.oneTimeExtra);
+    const totalValue = placePriceTotal + otherBanks + extraCosts;
     const valuePerPerson = ceil(totalValue / assignedUsers, 1);
 
     const map = {};

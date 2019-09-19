@@ -20,6 +20,7 @@ const INITIAL_STATE = {
   accountInfo: '',
   emailText: '',
   shameEmailText: '',
+  oneTimeExtra: 0,
 };
 
 const ParamsPage = ({ firebase }) => {
@@ -100,6 +101,12 @@ const ParamsPage = ({ firebase }) => {
               id="hosting"
               label="Costo hosting"
               value={params.hosting.toString(10)}
+              onChange={(event) => onParamChange(event)}
+            />
+            <CustomTextField
+              id="oneTimeExtra"
+              label="Costo adicional (ej. compra controles)"
+              value={params.oneTimeExtra.toString(10)}
               onChange={(event) => onParamChange(event)}
             />
             <CustomTextField
