@@ -17,7 +17,7 @@ const UserPlace = ({
 
   if (!myAssignment) {
     return (
-      <Paper style={{ padding: 16, width: 350, marginRight: 16 }}>
+      <Paper style={{ padding: 16 }}>
         <Typography variant="h6" style={{ marginBottom: 16 }}>Mi puesto</Typography>
         <Typography>
           {`No asignado en ${monthsHelper.getDisplayMonthWithYear(assignments.date)}` }
@@ -27,11 +27,11 @@ const UserPlace = ({
   }
 
   return (
-    <Paper style={{ padding: 16, width: 350, marginRight: 16 }}>
+    <Paper style={{ padding: 16 }}>
       <Typography variant="h6" style={{ marginBottom: 16 }}>Mi puesto</Typography>
-      <Typography>{`Edificio ${building.name}, en la ${building.address} [de ${myPlace.owner}]`}</Typography>
+      <Typography>{`Edificio ${building.name}, en la ${building.address}`}</Typography>
       <Typography>
-        {`Puesto ${myPlace.number}`}
+        {`Puesto ${myPlace.number} [de ${myPlace.owner}]`}
         <MeteorRating id="puesto" value={myPlace.difficulty} compact />
       </Typography>
       <Typography>{myPlace.otherInfo ? `(${myPlace.otherInfo})` : ''}</Typography>

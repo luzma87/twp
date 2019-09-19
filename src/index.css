@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+.root {
+  flex-grow: 1;
+}
+
 .navbar-part {
   display: flex;
   align-items: center;

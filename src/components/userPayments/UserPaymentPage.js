@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { get } from 'lodash';
@@ -43,9 +44,11 @@ const UserPaymentPage = ({ authUser, firebase }) => {
       setLoading(false);
     });
 
-    firebase.building(authUser.place.building).on('value', (snapshotBuilding) => {
-      setBuilding(snapshotBuilding.val());
-    });
+    if (authUser.place) {
+      firebase.building(authUser.place.building).on('value', (snapshotBuilding) => {
+        setBuilding(snapshotBuilding.val());
+      });
+    }
 
     return function cleanup() {
       firebase.userPayments().off();
@@ -94,39 +97,30 @@ const UserPaymentPage = ({ authUser, firebase }) => {
     setSelectedMonth(monthsHelper.getCurrentMonthForSelect());
   }
 
-  const getPaymentElement = () => {
-    if (myAssignment === undefined) return null;
-    if (payed) {
-      const icon = loadingSave ? 'spinner' : 'undo';
-      return (
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          style={{ margin: '24px 0' }}
-          disabled={isLoading}
-          onClick={(event) => onUndo(event)}
-        >
-          <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
-            Deshacer pago
-        </Button>
-      );
-    }
-    const icon = loadingSave ? 'spinner' : 'badge-dollar';
-    return (
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        style={{ margin: '24px 0' }}
-        disabled={isLoading}
-        onClick={(event) => onPay(event)}
-      >
-        <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
-        Marcar como pagado
-      </Button>
-    );
+  const getIcon = () => {
+    if (loadingSave) return 'spinner';
+    if (payed) return 'undo';
+    return 'badge-dollar';
   };
+
+  const getLabel = () => (payed ? 'Deshacer pago' : 'Marcar como pagado');
+
+  const getCallback = () => (payed ? onUndo : onPay);
+
+  const getButton = () => (
+    <Button
+      variant="contained"
+      color="primary"
+      size="large"
+      style={{ margin: '24px 0', width: '100%' }}
+      disabled={isLoading}
+      onClick={(event) => getCallback()(event)}
+    >
+      <FontAwesomeIcon icon={['far', getIcon()]} pulse={isLoading} style={{ marginRight: 16 }} />
+      {getLabel()}
+    </Button>
+  );
+
   const monthsSelect = (
     <div style={{ marginBottom: 32 }}>
       <MonthsSelect
@@ -144,45 +138,60 @@ const UserPaymentPage = ({ authUser, firebase }) => {
   if (assignments !== undefined && Object.keys(assignments).length > 0) {
     notAssignedMessage = `No asignado en ${monthsHelper.getDisplayMonthWithYear(assignments.date)}`;
   }
+  let content = (
+    <Typography>
+      {notAssignedMessage}
+    </Typography>
+  );
 
-  if (!myAssignment) {
-    return (
-      <Content>
-        <Typography variant="h5" style={{ marginBottom: 24 }}>
-          Mis pagos
-        </Typography>
-        {monthsSelect}
-        <Typography>
-          {notAssignedMessage}
-        </Typography>
-      </Content>
+  if (myAssignment) {
+    content = (
+      <>
+        <Grid item xs={12} sm={9} md={6} lg={5} xl={4}>
+          <UserPayment assignments={assignments} uid={authUser.uid} />
+        </Grid>
+        <Grid item xs={12} sm={9} md={6} lg={5} xl={4}>
+          <UserPlace
+            assignments={assignments}
+            building={building}
+            uid={authUser.uid}
+            place={authUser.place.place}
+          />
+        </Grid>
+        <Grid item xs={12} container spacing={2}>
+          <Grid item xs={12} sm={9} md={6} lg={5} xl={4}>
+            {getButton()}
+          </Grid>
+        </Grid>
+        <Grid item xs={12} sm={9} md={6} lg={5} xl={4}>
+          <Paper style={{ padding: 16 }}>
+            <Typography style={{ marginBottom: 16 }}>
+              Información de la cuenta para el depósito:
+            </Typography>
+            <EmailContent text={accountInfo} />
+          </Paper>
+        </Grid>
+      </>
     );
   }
 
   return (
     <Content>
-      <Typography variant="h5" style={{ marginBottom: 24 }}>
-        Mis pagos
-      </Typography>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="h5" style={{ marginBottom: 24 }}>
+            Mis pagos
+          </Typography>
+        </Grid>
 
-      {monthsSelect}
-      <div style={{ display: 'flex' }}>
-        <UserPayment assignments={assignments} uid={authUser.uid} />
-        <UserPlace
-          assignments={assignments}
-          building={building}
-          uid={authUser.uid}
-          place={authUser.place.place}
-        />
-      </div>
-      {getPaymentElement()}
+        <Grid item xs={12}>
+          {monthsSelect}
+        </Grid>
 
-      <Paper style={{ padding: 16, width: 350 }}>
-        <Typography style={{ marginBottom: 16 }}>
-        Información de la cuenta para el depósito:
-        </Typography>
-        <EmailContent text={accountInfo} />
-      </Paper>
+        <Grid container justify="flex-start" spacing={2} item xs={12} sm={12} md={11} lg={9} xl={8}>
+          {content}
+        </Grid>
+      </Grid>
     </Content>
   );
 };

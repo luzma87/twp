@@ -15,7 +15,7 @@ const UserPayment = ({ assignments, uid, past }) => {
   const payed = get(myAssignment, 'payed', undefined);
 
   return (
-    <Paper style={{ padding: 16, width: 350, marginRight: 16 }}>
+    <Paper style={{ padding: 16 }}>
       <Typography variant="h6" style={{ marginBottom: 16 }}>Cuota</Typography>
       <Typography>
         {`La cuota de ${monthsHelper.getDisplayMonthWithYear(assignments.date)} ${past ? 'era' : 'es'} de ${numeral(valuePerPerson).format('$0,0.00')}`}
