@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import monthsHelper from '../../constants/monthsHelper';
 import shapes from '../../constants/shapes';
+import MeteorRating from '../_common/meteorRating/MeteorRating';
 
 const UserPlace = ({
   assignments, building, uid, place,
@@ -28,12 +29,12 @@ const UserPlace = ({
   return (
     <Paper style={{ padding: 16, width: 350, marginRight: 16 }}>
       <Typography variant="h6" style={{ marginBottom: 16 }}>Mi puesto</Typography>
-      <Typography>{`Edificio ${building.name}`}</Typography>
-      <Typography>{`Puesto ${myPlace.number}`}</Typography>
-      <br />
-      <Typography>{`Dirección del edificio: ${building.address}`}</Typography>
-      <Typography>{`Dueño del puesto: ${myPlace.owner}`}</Typography>
-      <Typography>{myPlace.otherInfo ? `Más información del puesto: ${myPlace.otherInfo}` : ''}</Typography>
+      <Typography>{`Edificio ${building.name}, en la ${building.address} [de ${myPlace.owner}]`}</Typography>
+      <Typography>
+        {`Puesto ${myPlace.number}`}
+        <MeteorRating id="puesto" value={myPlace.difficulty} compact />
+      </Typography>
+      <Typography>{myPlace.otherInfo ? `(${myPlace.otherInfo})` : ''}</Typography>
     </Paper>
   );
 };
