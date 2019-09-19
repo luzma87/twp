@@ -99,7 +99,7 @@ class Assignments {
     });
 
     const totalValue = placePriceTotal + otherBanks + parseFloat(paramsObject.hosting);
-    const valuePerPerson = ceil(totalValue / assignedUsers, 2);
+    const valuePerPerson = ceil(totalValue / assignedUsers, 1);
 
     const map = {};
     this.assignments.sort(constants.assignmentSortByUser).forEach((element) => {
