@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Paper } from '@material-ui/core';
+import { Button, Grid, Paper } from '@material-ui/core';
 import { omit } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -143,38 +143,47 @@ const UserFormPage = ({ firebase, history, match }) => {
 
   return (
     <Content>
-      <CustomError error={errorMessage} />
-      <CustomForm onSubmit={(event) => onSubmit(event)}>
-        <Paper style={{ padding: 32 }}>
-          <CardTitle label="Persona" icon="user-astronaut" />
-          <PersonForm
-            onPersonChange={(event) => onPersonChange(event)}
-            personValues={personValues}
-            isEditing={isEditing}
-          />
-        </Paper>
-        <Paper style={{ padding: 32 }}>
-          <CardTitle label="Auto" icon="rocket" />
-          <CarForm
-            onCarChange={(event) => onCarChange(event)}
-            carValues={car}
-          />
-        </Paper>
-        <div />
-        <div style={{ marginTop: 24, textAlign: 'right' }}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{ margin: '24px 0' }}
-            disabled={isInvalid || isLoading}
-            onClick={(event) => onSubmit(event)}
-          >
-            <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={9} md={12} lg={10} xl={8}>
+          <Paper style={{ padding: 32 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <CustomError error={errorMessage} />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <CardTitle label="Persona" icon="user-astronaut" />
+                <PersonForm
+                  onPersonChange={(event) => onPersonChange(event)}
+                  personValues={personValues}
+                  isEditing={isEditing}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <CardTitle label="Auto" icon="rocket" />
+                <CarForm
+                  onCarChange={(event) => onCarChange(event)}
+                  carValues={car}
+                />
+              </Grid>
+              <Grid item xs={12} container justify="flex-end">
+                <Grid item xs={12} md={6}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    style={{ marginTop: 24, width: '100%' }}
+                    disabled={isInvalid || isLoading}
+                    onClick={(event) => onSubmit(event)}
+                  >
+                    <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
             Guardar
-          </Button>
-        </div>
-      </CustomForm>
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+      </Grid>
     </Content>
   );
 };
