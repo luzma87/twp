@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { omit } from 'lodash';
@@ -11,6 +10,7 @@ import conditions from '../../constants/conditions';
 import constants from '../../constants/constants';
 import roles from '../../constants/roles';
 import routes from '../../constants/routes';
+import CardTitle from '../_common/CardTitle';
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
 import CustomForm from '../_common/CustomForm';
@@ -147,10 +147,7 @@ const UserFormPage = ({ firebase, history, match }) => {
       <CustomError error={errorMessage} />
       <CustomForm onSubmit={(event) => onSubmit(event)}>
         <Paper style={{ padding: 32 }}>
-          <Typography variant="h5">
-            <FontAwesomeIcon icon={['far', 'user-astronaut']} style={{ marginRight: 16 }} />
-            Persona
-          </Typography>
+          <CardTitle label="Persona" icon="user-astronaut" />
           <PersonForm
             onPersonChange={(event) => onPersonChange(event)}
             personValues={personValues}
@@ -158,10 +155,7 @@ const UserFormPage = ({ firebase, history, match }) => {
           />
         </Paper>
         <Paper style={{ padding: 32 }}>
-          <Typography variant="h5">
-            <FontAwesomeIcon icon={['far', 'rocket']} style={{ marginRight: 16 }} />
-            Auto
-          </Typography>
+          <CardTitle label="Auto" icon="rocket" />
           <CarForm
             onCarChange={(event) => onCarChange(event)}
             carValues={car}

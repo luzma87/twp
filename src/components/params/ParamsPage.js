@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
+import CardTitle from '../_common/CardTitle';
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
 import CustomLoader from '../_common/CustomLoader';
@@ -80,10 +80,7 @@ const ParamsPage = ({ firebase }) => {
         onSubmit={(event) => onSubmit(event)}
       >
         <Paper style={{ padding: 32 }}>
-          <Typography variant="h5">
-            <FontAwesomeIcon icon={['far', 'alicorn']} style={{ marginRight: 16 }} />
-            Params
-          </Typography>
+          <CardTitle label="Params" icon="alicorn" />
           <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}>
             <CustomTextField
               id="defaultBank"

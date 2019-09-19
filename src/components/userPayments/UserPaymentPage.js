@@ -13,6 +13,7 @@ import monthsHelper from '../../constants/monthsHelper';
 import shapes from '../../constants/shapes';
 import Content from '../_common/Content';
 import MonthsSelect from '../_common/MonthsSelect';
+import PageTitle from '../_common/PageTitle';
 import EmailContent from '../email/EmailContent';
 import withAuthorization from '../session/withAuthorization';
 import UserPayment from './UserPayment';
@@ -179,9 +180,7 @@ const UserPaymentPage = ({ authUser, firebase }) => {
     <Content>
       <Grid container>
         <Grid item xs={12}>
-          <Typography variant="h5" style={{ marginBottom: 24 }}>
-            Mis pagos
-          </Typography>
+          <PageTitle label="Mis pagos" />
         </Grid>
 
         <Grid item xs={12}>

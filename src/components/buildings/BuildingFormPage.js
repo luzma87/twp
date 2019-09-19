@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { omit } from 'lodash';
@@ -10,6 +9,7 @@ import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import constants from '../../constants/constants';
 import routes from '../../constants/routes';
+import CardTitle from '../_common/CardTitle';
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
 import CustomForm from '../_common/CustomForm';
@@ -152,20 +152,14 @@ const BuildingFormPage = ({ firebase, history, match }) => {
       <CustomError error={errorMessage} />
       <CustomForm onSubmit={(event) => onSubmit(event)}>
         <Paper style={{ padding: 32 }}>
-          <Typography variant="h5">
-            <FontAwesomeIcon icon={['far', 'warehouse']} style={{ marginRight: 16 }} />
-            Edificio
-          </Typography>
+          <CardTitle label="Edificio" icon="warehouse" />
           <BuildingForm
             onBuildingChange={(event) => onBuildingChange(event)}
             buildingValues={buildingValues}
           />
         </Paper>
         <Paper style={{ padding: 32 }}>
-          <Typography variant="h5">
-            <FontAwesomeIcon icon={['far', 'draw-square']} style={{ marginRight: 16 }} />
-            Puesto
-          </Typography>
+          <CardTitle label="Puesto" icon="draw-square" />
           <PlacesSummary
             onPlaceChange={(event) => onPlaceChange(event)}
             onAddPlace={() => onAddPlace()}

@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Paper, Typography } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
@@ -8,7 +8,9 @@ import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import constants from '../../constants/constants';
 import shapes from '../../constants/shapes';
+import CardTitle from '../_common/CardTitle';
 import Content from '../_common/Content';
+import PageTitle from '../_common/PageTitle';
 import PasswordChangeForm from '../passwordChange/PasswordChangeForm';
 import withAuthorization from '../session/withAuthorization';
 import CarForm from '../users/CarForm';
@@ -72,16 +74,14 @@ const AccountPage = ({ authUser, firebase }) => {
     <Content>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h4">
-            Mi cuenta
-          </Typography>
+          <PageTitle label="Mi cuenta" />
         </Grid>
 
         <Grid item xs={12} sm={10} md={11} lg={8} xl={6}>
           <Paper style={{ padding: 16 }}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
-                <Typography variant="h5">Actualizar mis datos</Typography>
+                <CardTitle label="Actualizar mis datos" icon="user-astronaut" />
                 <PersonForm
                   onPersonChange={(event) => onPersonChange(event)}
                   personValues={personValues}
@@ -91,7 +91,7 @@ const AccountPage = ({ authUser, firebase }) => {
               </Grid>
 
               <Grid item xs={12} md={6}>
-                <Typography variant="h5">Actualizar mi auto</Typography>
+                <CardTitle label="Actualizar mi auto" icon="rocket" />
                 <CarForm
                   onCarChange={(event) => onCarChange(event)}
                   carValues={personValues.car}
@@ -121,7 +121,7 @@ const AccountPage = ({ authUser, firebase }) => {
           <Paper style={{ padding: 16 }}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-                <Typography variant="h5">Cambiar Password</Typography>
+                <CardTitle label="cambiar password" icon="unlock-alt" />
               </Grid>
               <Grid item xs={12}>
                 <PasswordChangeForm />
