@@ -40,7 +40,7 @@ const PaymentsList = ({ payments, positiveOnly, onPay }) => {
           <TableBody>
             {list.map((element, index) => {
               const {
-                owner, ownerInfo, places, building, total, payed, id,
+                owner, ownerInfo, ownerPayment, places, building, total, payed, id,
               } = element;
               const placesCount = places.length;
               const ownerKey = `${building.id}_${owner}`;
@@ -55,7 +55,7 @@ const PaymentsList = ({ payments, positiveOnly, onPay }) => {
                     {building.name}
                   </TableCell>
                   <TableCell>{owner}</TableCell>
-                  <TableCell>{ownerInfo}</TableCell>
+                  <TableCell>{`${ownerInfo} - ${ownerPayment}`}</TableCell>
                   <TableCell align="right">
                     {places.map((place) => (
                       <div key={`${ownerKey}_${place.id}`} style={{ display: 'flex' }}>

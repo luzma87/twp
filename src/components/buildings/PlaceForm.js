@@ -46,6 +46,12 @@ const PlaceForm = (props) => {
         onChange={(event) => onPlaceChange(event)}
       />
       <CustomTextField
+        id="ownerPayment"
+        label="Pago dueño"
+        value={placeValues.ownerPayment}
+        onChange={(event) => onPlaceChange(event)}
+      />
+      <CustomTextField
         id="otherInfo"
         label="Más información"
         multiline

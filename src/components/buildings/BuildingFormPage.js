@@ -26,6 +26,7 @@ const INITIAL_PLACE = {
   isActive: true,
   owner: '',
   ownerInfo: '',
+  ownerPayment: '',
   otherInfo: '',
   difficulty: 1,
   paymentInformation: '',

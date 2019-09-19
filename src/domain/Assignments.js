@@ -51,16 +51,18 @@ class Assignments {
       buildingsOwnersMap[building.id].owners[owner].push(place);
     });
     let ownersList = [];
-    Object.values(buildingsOwnersMap).forEach((element, index) => {
+    Object.values(buildingsOwnersMap).forEach((element) => {
       const { owners, building } = element;
       const x = Object.keys(owners).map((owner) => {
         const places = owners[owner];
         const totalOwner = places.reduce((total, place) => total + place.price, 0);
-        let { ownerInfo } = places[0];
+        let { ownerInfo, ownerPayment } = places[0];
         if (!ownerInfo) ownerInfo = '';
+        if (!ownerPayment) ownerPayment = '';
         return {
           owner,
           ownerInfo,
+          ownerPayment,
           places,
           building,
           total: totalOwner,
@@ -89,8 +91,10 @@ class Assignments {
           otherBanks += parseFloat(paramsObject.differentBank);
         }
         const userBuilding = this.buildings[user.place.building];
-        const userPlace = userBuilding.places[user.place.place];
-        placePriceTotal += parseFloat(userPlace.price);
+        if (userBuilding) {
+          const userPlace = userBuilding.places[user.place.place];
+          placePriceTotal += parseFloat(userPlace.price);
+        }
       }
     });
 
