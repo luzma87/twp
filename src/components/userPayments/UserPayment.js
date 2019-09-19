@@ -8,21 +8,17 @@ import React from 'react';
 import monthsHelper from '../../constants/monthsHelper';
 
 const UserPayment = ({ assignments, uid, past }) => {
+  if (Object.keys(assignments).length === 0) return null;
+
   const valuePerPerson = get(assignments, 'assignments.valuePerPerson', 0);
   const myAssignment = get(assignments, `assignments.people.${uid}`, undefined);
   const payed = get(myAssignment, 'payed', undefined);
 
-  if (Object.keys(assignments).length === 0) return null;
-
   return (
     <Paper style={{ padding: 16, width: 350, marginRight: 16 }}>
+      <Typography variant="h6" style={{ marginBottom: 16 }}>Cuota</Typography>
       <Typography>
         {`La cuota de ${monthsHelper.getDisplayMonthWithYear(assignments.date)} ${past ? 'era' : 'es'} de ${numeral(valuePerPerson).format('$0,0.00')}`}
-      </Typography>
-      <Typography>
-        {myAssignment
-          ? `Mi puesto: ${myAssignment.place}`
-          : `No asignado en ${monthsHelper.getDisplayMonthWithYear(assignments.date)} `}
       </Typography>
       <Typography color={payed ? 'primary' : 'error'}>
         <strong>
@@ -35,7 +31,7 @@ const UserPayment = ({ assignments, uid, past }) => {
 
 UserPayment.propTypes = {
   assignments: PropTypes.shape({
-    date: PropTypes.string,
+    date: PropTypes.any,
   }),
   uid: PropTypes.string,
   past: PropTypes.bool,

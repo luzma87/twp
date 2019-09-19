@@ -38,12 +38,18 @@ const getMonthsForSelect = (date) => {
   return months;
 };
 
+const getCurrentMonthForSelect = () => {
+  const date = new Date();
+  return `${date.getMonth()}_${date.getFullYear()}`;
+};
+
 const monthsHelper = {
   getMonthsForSelect,
   getDisplayMonthForSelect,
   getMonthFromDate,
   getDisplayMonthWithYear,
   getDisplayMonthFromSelect,
+  getCurrentMonthForSelect,
 };
 
 export default monthsHelper;

@@ -15,6 +15,7 @@ import MonthsSelect from '../_common/MonthsSelect';
 import EmailContent from '../email/EmailContent';
 import withAuthorization from '../session/withAuthorization';
 import UserPayment from './UserPayment';
+import UserPlace from './UserPlace';
 
 const getPaymentDate = (date) => moment(date).format();
 
@@ -24,10 +25,11 @@ const getSelectedPaymentsId = (selectedMonth) => `payment_${selectedMonth}`;
 
 const UserPaymentPage = ({ authUser, firebase }) => {
   const [assignments, setAssignments] = useState({});
+  const [building, setBuilding] = useState({});
   const [date] = useState(new Date());
   const [isLoading, setLoading] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
-  const [selectedMonth, setSelectedMonth] = useState({});
+  const [selectedMonth, setSelectedMonth] = useState('');
 
   useEffect(() => {
     setLoading(true);
@@ -39,6 +41,10 @@ const UserPaymentPage = ({ authUser, firebase }) => {
         setSelectedMonth(`${startingDate.month}_${startingDate.year}`);
       }
       setLoading(false);
+    });
+
+    firebase.building(authUser.place.building).on('value', (snapshotBuilding) => {
+      setBuilding(snapshotBuilding.val());
     });
 
     return function cleanup() {
@@ -84,6 +90,10 @@ const UserPaymentPage = ({ authUser, firebase }) => {
 
   const accountInfo = get(assignments, 'params.accountInfo', undefined);
 
+  if (Object.keys(selectedMonth).length === 0) {
+    setSelectedMonth(monthsHelper.getCurrentMonthForSelect());
+  }
+
   const getPaymentElement = () => {
     if (myAssignment === undefined) return null;
     if (payed) {
@@ -127,6 +137,14 @@ const UserPaymentPage = ({ authUser, firebase }) => {
     </div>
   );
 
+  let notAssignedMessage = 'No asignado';
+  if (selectedMonth) {
+    notAssignedMessage = `No asignado en ${monthsHelper.getDisplayMonthFromSelect(selectedMonth)}`;
+  }
+  if (assignments !== undefined && Object.keys(assignments).length > 0) {
+    notAssignedMessage = `No asignado en ${monthsHelper.getDisplayMonthWithYear(assignments.date)}`;
+  }
+
   if (!myAssignment) {
     return (
       <Content>
@@ -135,9 +153,7 @@ const UserPaymentPage = ({ authUser, firebase }) => {
         </Typography>
         {monthsSelect}
         <Typography>
-          {assignments
-            ? `No asignado en ${monthsHelper.getDisplayMonthWithYear(assignments.date)} `
-            : `No asignado en ${monthsHelper.getDisplayMonthFromSelect(selectedMonth)}`}
+          {notAssignedMessage}
         </Typography>
       </Content>
     );
@@ -150,7 +166,10 @@ const UserPaymentPage = ({ authUser, firebase }) => {
       </Typography>
 
       {monthsSelect}
-      <UserPayment assignments={assignments} uid={authUser.uid} />
+      <div style={{ display: 'flex' }}>
+        <UserPayment assignments={assignments} uid={authUser.uid} />
+        <UserPlace assignments={assignments} building={building} uid={authUser.uid} place={authUser.place.place} />
+      </div>
       {getPaymentElement()}
 
       <Paper style={{ padding: 16, width: 350 }}>
