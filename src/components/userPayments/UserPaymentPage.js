@@ -168,7 +168,12 @@ const UserPaymentPage = ({ authUser, firebase }) => {
       {monthsSelect}
       <div style={{ display: 'flex' }}>
         <UserPayment assignments={assignments} uid={authUser.uid} />
-        <UserPlace assignments={assignments} building={building} uid={authUser.uid} place={authUser.place.place} />
+        <UserPlace
+          assignments={assignments}
+          building={building}
+          uid={authUser.uid}
+          place={authUser.place.place}
+        />
       </div>
       {getPaymentElement()}
 
