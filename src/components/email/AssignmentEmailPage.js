@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
@@ -126,25 +126,34 @@ const AssignmentEmailPage = ({ firebase }) => {
   const icon = loadingSave ? 'spinner' : 'save';
   return (
     <Content>
-      {isSaved ? (
-        <Typography style={{ marginBottom: 32 }} color="textSecondary">
-          {`Ya está guardado para ${monthsHelper.getMonthFromDate(date)}`}
-        </Typography>
-      ) : (
-        <Button style={{ marginBottom: 32 }} onClick={(event) => onSave(event)}>
-          <FontAwesomeIcon icon={['far', icon]} style={{ marginRight: 8 }} />
+      <Grid container>
+        <Grid item xs={12}>
+          {isSaved ? (
+            <Typography style={{ marginBottom: 32 }} color="textSecondary">
+              {`Ya está guardado para ${monthsHelper.getMonthFromDate(date)}`}
+            </Typography>
+          ) : (
+            <Button style={{ marginBottom: 32 }} onClick={(event) => onSave(event)}>
+              <FontAwesomeIcon icon={['far', icon]} style={{ marginRight: 8 }} />
           Guardar para registrar pagos
-        </Button>
-      )}
-      <CustomError error={errorMessage} />
-
-      <CustomLoader isLoading={isLoading} />
-      <AssignmentEmailContent
-        params={params}
-        valuePerPerson={assignments.valuePerPerson}
-        month={monthsHelper.getMonthFromDate(date)}
-      />
-      <AssignmentsForEmailList assignments={assignments.people} />
+            </Button>
+          )}
+        </Grid>
+        <Grid item sx={12}>
+          <CustomError error={errorMessage} />
+        </Grid>
+        <Grid item sx={12}>
+          <CustomLoader isLoading={isLoading} />
+        </Grid>
+        <Grid item sx={12}>
+          <AssignmentEmailContent
+            params={params}
+            valuePerPerson={assignments.valuePerPerson}
+            month={monthsHelper.getMonthFromDate(date)}
+          />
+          <AssignmentsForEmailList assignments={assignments.people} />
+        </Grid>
+      </Grid>
     </Content>
   );
 };

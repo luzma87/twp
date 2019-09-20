@@ -16,6 +16,7 @@ import {
   faMoneyCheckEditAlt,
   faPaperPlane,
   faPencilAlt,
+  faPiggyBank,
   faPlusHexagon,
   faRepeat,
   faRocket,
@@ -47,7 +48,7 @@ library.add(
   faDrawSquare, faTrashAlt, faGhost, faRepeat, faEnvelopeOpenDollar,
   faPencilAlt, faMoneyCheckEditAlt, faHandHoldingUsd, faBadgeDollar,
   faUndo, faSackDollar, faUnlockAlt, faAt, faIdCard, faUser,
-  faMapMarkedAlt, faInfoSquare,
+  faMapMarkedAlt, faInfoSquare, faPiggyBank,
 );
 
 ReactDOM.render(
