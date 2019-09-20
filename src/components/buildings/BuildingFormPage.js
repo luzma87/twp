@@ -11,7 +11,6 @@ import routes from '../../constants/routes';
 import CardTitle from '../_common/CardTitle';
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
-import CustomForm from '../_common/CustomForm';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
 import BuildingForm from './BuildingForm';

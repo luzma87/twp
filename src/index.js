@@ -1,6 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faAlicorn,
+  faAt,
   faBadgeDollar,
   faDrawSquare,
   faEnvelopeOpenDollar,
@@ -8,6 +9,7 @@ import {
   faEyeSlash,
   faGhost,
   faHandHoldingUsd,
+  faIdCard,
   faMeteor as farMeteor,
   faMoneyCheckEditAlt,
   faPaperPlane,
@@ -41,7 +43,7 @@ library.add(
   farMeteor, fasMeteor, faAlicorn, faWarehouse, faSpinner,
   faDrawSquare, faTrashAlt, faGhost, faRepeat, faEnvelopeOpenDollar,
   faPencilAlt, faMoneyCheckEditAlt, faHandHoldingUsd, faBadgeDollar,
-  faUndo, faSackDollar, faUnlockAlt,
+  faUndo, faSackDollar, faUnlockAlt, faAt, faIdCard,
 );
 
 ReactDOM.render(

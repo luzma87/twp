@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
@@ -33,19 +33,31 @@ const UsersPage = ({ firebase }) => {
 
   return (
     <Content>
-      <CustomLoader isLoading={isLoading} />
-      <div>
-        <CreateButton linkTo={routes.USERS_CREATE} />
-        <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(true)}>
-          <FontAwesomeIcon icon={['far', 'user-astronaut']} style={{ marginRight: 8 }} color="#2E7D32" />
-          Mostrar solo activos
-        </Button>
-        <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(false)}>
-          <FontAwesomeIcon icon={['far', 'user-astronaut']} style={{ marginRight: 8 }} color="#B71C1C" />
-          Mostrar todos
-        </Button>
-      </div>
-      <UsersList users={users} activeOnly={activeOnly} />
+      <Grid container>
+        <Grid item xs={12}>
+          <CustomLoader isLoading={isLoading} />
+        </Grid>
+        <Grid item container xs={12}>
+          <Grid item>
+            <CreateButton linkTo={routes.USERS_CREATE} />
+          </Grid>
+          <Grid item>
+            <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(true)}>
+              <FontAwesomeIcon icon={['far', 'user-astronaut']} style={{ marginRight: 8 }} color="#2E7D32" />
+              Mostrar solo activos
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(false)}>
+              <FontAwesomeIcon icon={['far', 'user-astronaut']} style={{ marginRight: 8 }} color="#B71C1C" />
+              Mostrar todos
+            </Button>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <UsersList users={users} activeOnly={activeOnly} />
+        </Grid>
+      </Grid>
     </Content>
   );
 };
