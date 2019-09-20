@@ -131,11 +131,15 @@ const UserPaymentPage = ({ authUser, firebase }) => {
     </div>
   );
 
+  const assignmentExists = assignments !== undefined
+    && assignments !== null
+    && Object.keys(assignments).length > 0;
+
   let notAssignedMessage = 'No asignado';
   if (selectedMonth) {
     notAssignedMessage = `No asignado en ${monthsHelper.getDisplayMonthFromSelect(selectedMonth)}`;
   }
-  if (assignments !== undefined && Object.keys(assignments).length > 0) {
+  if (assignmentExists) {
     notAssignedMessage = `No asignado en ${monthsHelper.getDisplayMonthWithYear(assignments.date)}`;
   }
   let content = (
