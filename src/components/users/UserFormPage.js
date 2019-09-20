@@ -12,7 +12,6 @@ import routes from '../../constants/routes';
 import CardTitle from '../_common/CardTitle';
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
-import CustomForm from '../_common/CustomForm';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
 import CarForm from './CarForm';
@@ -143,7 +142,7 @@ const UserFormPage = ({ firebase, history, match }) => {
 
   return (
     <Content>
-      <Grid container spacing={2}>
+      <Grid container>
         <Grid item xs={12} sm={9} md={12} lg={10} xl={8}>
           <Paper style={{ padding: 32 }}>
             <Grid container spacing={2}>
@@ -176,7 +175,7 @@ const UserFormPage = ({ firebase, history, match }) => {
                     onClick={(event) => onSubmit(event)}
                   >
                     <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
-            Guardar
+                    Guardar
                   </Button>
                 </Grid>
               </Grid>
