@@ -154,8 +154,7 @@ const UserPaymentPage = ({ authUser, firebase }) => {
           <UserPlace
             assignments={assignments}
             building={building}
-            uid={authUser.uid}
-            place={authUser.place.place}
+            user={authUser}
           />
         </Grid>
         <Grid item xs={12} container spacing={2}>

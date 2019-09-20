@@ -7,14 +7,15 @@ import shapes from '../../constants/shapes';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 
 const UserPlace = ({
-  assignments, building, uid, place,
+  assignments, building, user,
 }) => {
   if (Object.keys(assignments).length === 0) return null;
 
+  const place = get(user, 'place.place', null);
   const myPlace = get(building, `places.${place}`, {});
-  const myAssignment = get(assignments, `assignments.people.${uid}`, undefined);
+  const myAssignment = get(assignments, `assignments.people.${user.uid}`, null);
 
-  if (!myAssignment) {
+  if (!myAssignment || !place) {
     return (
       <Paper style={{ padding: 16 }}>
         <Typography variant="h6" style={{ marginBottom: 16 }}>Mi puesto</Typography>
@@ -39,17 +40,16 @@ const UserPlace = ({
 };
 
 UserPlace.propTypes = {
-  assignments: PropTypes.shape({
-    date: PropTypes.any,
-  }),
+  assignments: PropTypes.any,
+  user: PropTypes.any,
   building: PropTypes.shape(shapes.building),
   uid: PropTypes.string,
-  place: PropTypes.string,
 };
 
 UserPlace.defaultProps = {
   assignments: {},
   building: {},
+  user: {},
   uid: '',
   place: '',
 };

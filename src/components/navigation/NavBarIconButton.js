@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import customLink from './customLink';
 
-const NavBarIconButton = ({ title, icon, to }) => (
+const NavBarIconButton = ({
+  title, icon, to, color,
+}) => (
   <Tooltip title={title}>
     <IconButton component={customLink(to)}>
-      <FontAwesomeIcon icon={['far', icon]} style={{ color: 'white' }} />
+      <FontAwesomeIcon icon={['far', icon]} style={{ color }} />
     </IconButton>
   </Tooltip>
 );
@@ -16,8 +18,11 @@ NavBarIconButton.propTypes = {
   title: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
+  color: PropTypes.string,
 };
 
-NavBarIconButton.defaultProps = {};
+NavBarIconButton.defaultProps = {
+  color: 'white',
+};
 
 export default NavBarIconButton;
