@@ -6,7 +6,7 @@ import UserCard from './UserCard';
 const UsersCards = ({ list }) => (
   <Grid container spacing={2}>
     {list.map((person) => (
-      <Grid item xs={12} sm={6}>
+      <Grid key={person.uid} item xs={12} sm={6}>
         <UserCard person={person} />
       </Grid>
     ))}

@@ -6,7 +6,7 @@ import AssignmentCard from './AssignmentCard';
 const AssignmentsCards = ({ list, onDelete }) => (
   <Grid container spacing={2}>
     {list.map((assignment) => (
-      <Grid item xs={12} sm={6}>
+      <Grid key={assignment.user.uid} item xs={12} sm={6}>
         <AssignmentCard
           assignment={assignment}
           onDelete={(uid, buildingId, placeId) => onDelete(uid, buildingId, placeId)}
