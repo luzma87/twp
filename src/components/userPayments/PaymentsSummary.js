@@ -15,14 +15,14 @@ const PaymentsSummary = ({ assignments }) => {
   const totalPayed = peoplePayedCount * parseFloat(valuePerPerson);
 
   return (
-    <div style={{ marginTop: 16, marginBottom: 16 }}>
+    <>
       <Typography>
         {`${peoplePayedCount === 1 ? 'Ha' : 'Han'} pagado ${peoplePayedCount} de ${peopleCount} personas`}
       </Typography>
       <Typography>
         {`Han pagado ${numeral(totalPayed).format('$0,0.00')} de ${numeral(totalAmount).format('$0,0.00')}`}
       </Typography>
-    </div>
+    </>
   );
 };
 

@@ -34,30 +34,28 @@ const BuildingsPage = ({ firebase }) => {
 
   return (
     <Content>
-      <Grid container>
-        <Grid item xs={12}>
-          <CustomLoader isLoading={isLoading} />
+      <Grid item xs={12}>
+        <CustomLoader isLoading={isLoading} />
+      </Grid>
+      <Grid item container xs={12}>
+        <Grid item>
+          <CreateButton linkTo={routes.BUILDINGS_CREATE} />
         </Grid>
-        <Grid item container xs={12}>
-          <Grid item>
-            <CreateButton linkTo={routes.BUILDINGS_CREATE} />
-          </Grid>
-          <Grid item>
-            <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(true)}>
-              <FontAwesomeIcon icon={['far', 'warehouse']} style={{ marginRight: 8 }} color="#2E7D32" />
+        <Grid item>
+          <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(true)}>
+            <FontAwesomeIcon icon={['far', 'warehouse']} style={{ marginRight: 8 }} color="#2E7D32" />
           Mostrar solo activos
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(false)}>
-              <FontAwesomeIcon icon={['far', 'warehouse']} style={{ marginRight: 8 }} color="#B71C1C" />
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(false)}>
+            <FontAwesomeIcon icon={['far', 'warehouse']} style={{ marginRight: 8 }} color="#B71C1C" />
           Mostrar todos
-            </Button>
-          </Grid>
+          </Button>
         </Grid>
-        <Grid item xs={12}>
-          <BuildingsList buildings={buildings} activeOnly={activeOnly} />
-        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <BuildingsList buildings={buildings} activeOnly={activeOnly} />
       </Grid>
     </Content>
   );

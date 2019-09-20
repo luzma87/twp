@@ -68,101 +68,99 @@ const ParamsPage = ({ firebase }) => {
 
   return (
     <Content>
-      <Grid container>
-        <Grid item xs={12}>
-          <CustomError error={errorMessage} />
-        </Grid>
-        <Grid item xs={12}>
-          <CustomLoader isLoading={isLoading} />
-        </Grid>
-        <Grid item xs={12} md={10} lg={7} xl={6}>
-          <Paper style={{ padding: 32 }}>
-            <Grid container>
-              <Grid item xs={12}>
-                <CardTitle label="Params" icon="alicorn" />
+      <Grid item xs={12}>
+        <CustomError error={errorMessage} />
+      </Grid>
+      <Grid item xs={12}>
+        <CustomLoader isLoading={isLoading} />
+      </Grid>
+      <Grid item xs={12} md={10} lg={7} xl={6}>
+        <Paper style={{ padding: 32 }}>
+          <Grid container>
+            <Grid item xs={12}>
+              <CardTitle label="Params" icon="alicorn" />
+            </Grid>
+            <Grid item xs={12} container spacing={2}>
+              <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>
+                <CustomTextField
+                  id="defaultBank"
+                  label="Banco default"
+                  value={params.defaultBank}
+                  onChange={(event) => onParamChange(event)}
+                />
               </Grid>
-              <Grid item xs={12} container spacing={2}>
-                <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <CustomTextField
-                    id="defaultBank"
-                    label="Banco default"
-                    value={params.defaultBank}
-                    onChange={(event) => onParamChange(event)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <CustomTextField
-                    id="differentBank"
-                    label="Extra por otro banco"
-                    value={params.differentBank.toString(10)}
-                    onChange={(event) => onParamChange(event)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <CustomTextField
-                    id="hosting"
-                    label="Costo hosting"
-                    value={params.hosting.toString(10)}
-                    onChange={(event) => onParamChange(event)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <CustomTextField
-                    id="oneTimeExtra"
-                    label="Costo adicional (ej. compra controles)"
-                    value={params.oneTimeExtra.toString(10)}
-                    onChange={(event) => onParamChange(event)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <CustomTextField
-                    id="emailText"
-                    label="Texto email"
-                    multiline
-                    rows={6}
-                    value={params.emailText}
-                    onChange={(event) => onParamChange(event)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <CustomTextField
-                    id="shameEmailText"
-                    label="Texto email recordatorio"
-                    multiline
-                    rows={6}
-                    value={params.shameEmailText}
-                    onChange={(event) => onParamChange(event)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <CustomTextField
-                    id="accountInfo"
-                    label="Info cuenta"
-                    multiline
-                    rows={4}
-                    value={params.accountInfo}
-                    onChange={(event) => onParamChange(event)}
-                  />
-                </Grid>
-                <Grid item xs={12} container justify="flex-end">
-                  <Grid item xs={12} sm={6}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="large"
-                      style={{ marginTop: 24, width: '100%' }}
-                      disabled={isInvalid || loadingSave || isLoading}
-                      onClick={(event) => onSubmit(event)}
-                    >
-                      <FontAwesomeIcon icon={['far', icon]} pulse={loadingSave} style={{ marginRight: 16 }} />
+              <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>
+                <CustomTextField
+                  id="differentBank"
+                  label="Extra por otro banco"
+                  value={params.differentBank.toString(10)}
+                  onChange={(event) => onParamChange(event)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>
+                <CustomTextField
+                  id="hosting"
+                  label="Costo hosting"
+                  value={params.hosting.toString(10)}
+                  onChange={(event) => onParamChange(event)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>
+                <CustomTextField
+                  id="oneTimeExtra"
+                  label="Costo adicional (ej. compra controles)"
+                  value={params.oneTimeExtra.toString(10)}
+                  onChange={(event) => onParamChange(event)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>
+                <CustomTextField
+                  id="emailText"
+                  label="Texto email"
+                  multiline
+                  rows={6}
+                  value={params.emailText}
+                  onChange={(event) => onParamChange(event)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>
+                <CustomTextField
+                  id="shameEmailText"
+                  label="Texto email recordatorio"
+                  multiline
+                  rows={6}
+                  value={params.shameEmailText}
+                  onChange={(event) => onParamChange(event)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>
+                <CustomTextField
+                  id="accountInfo"
+                  label="Info cuenta"
+                  multiline
+                  rows={4}
+                  value={params.accountInfo}
+                  onChange={(event) => onParamChange(event)}
+                />
+              </Grid>
+              <Grid item xs={12} container justify="flex-end">
+                <Grid item xs={12} sm={6}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    style={{ marginTop: 24, width: '100%' }}
+                    disabled={isInvalid || loadingSave || isLoading}
+                    onClick={(event) => onSubmit(event)}
+                  >
+                    <FontAwesomeIcon icon={['far', icon]} pulse={loadingSave} style={{ marginRight: 16 }} />
                       Guardar
-                    </Button>
-                  </Grid>
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>
-          </Paper>
-        </Grid>
+          </Grid>
+        </Paper>
       </Grid>
     </Content>
   );

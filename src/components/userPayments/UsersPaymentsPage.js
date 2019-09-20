@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 import { get } from 'lodash';
 import numeral from 'numeral';
 import PropTypes from 'prop-types';
@@ -57,29 +57,41 @@ const UsersPaymentsPage = ({ firebase }) => {
 
   return (
     <Content>
-      <CustomLoader isLoading={isLoading} />
+      <Grid item xs={12}>
+        <CustomLoader isLoading={isLoading} />
+      </Grid>
 
-      <Button color="inherit" component={customLink(routes.SHAME_EMAIL)}>
-        <FontAwesomeIcon icon={['far', 'envelope-open-dollar']} style={{ marginRight: 8 }} />
+      <Grid item xs={12}>
+        <Button color="inherit" component={customLink(routes.SHAME_EMAIL)}>
+          <FontAwesomeIcon icon={['far', 'envelope-open-dollar']} style={{ marginRight: 8 }} />
         Shame Email
-      </Button>
+        </Button>
+      </Grid>
 
-      <div style={{ marginBottom: 32 }}>
+      <Grid item xs={12}>
         <MonthsSelect
           date={date}
           value={selectedMonth}
           onChange={(event) => onSelectMonth(event)}
         />
-      </div>
-      {assignments ? (
-        <>
-          <Typography>
-            {`La cuota de ${monthsHelper.getDisplayMonthWithYear(assignments.date)} es de ${numeral(valuePerPerson).format('$0,0.00')}`}
-          </Typography>
-          <PaymentsSummary assignments={assignments} />
-          <AssignmentsForEmailList assignments={people} check />
-        </>
-      ) : null}
+      </Grid>
+      <Grid item xs={12}>
+        {assignments ? (
+          <Grid item xs={12} container spacing={2}>
+            <Grid item xs={12}>
+              <Typography>
+                {`La cuota de ${monthsHelper.getDisplayMonthWithYear(assignments.date)} es de ${numeral(valuePerPerson).format('$0,0.00')}`}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <PaymentsSummary assignments={assignments} />
+            </Grid>
+            <Grid item xs={12}>
+              <AssignmentsForEmailList assignments={people} check />
+            </Grid>
+          </Grid>
+        ) : null}
+      </Grid>
 
     </Content>
   );

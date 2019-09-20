@@ -160,41 +160,39 @@ const AssignmentsPage = ({ firebase }) => {
 
   return (
     <Content>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <CustomLoader isLoading={loadingBuildings || loadingUsers} />
-        </Grid>
-        <Grid item xs={12}>
-          <CustomError error={errorMessage} />
-        </Grid>
-        <Grid item xs={12}>
-          <AssignmentForm
-            assignmentValues={assignmentValues}
-            places={availablePlaces}
-            users={availableUsers}
-            onChange={(event) => onAssignmentChange(event)}
-            onSubmit={(event) => onSubmit(event)}
-            isLoading={loadingSave}
-          />
-        </Grid>
+      <Grid item xs={12}>
+        <CustomLoader isLoading={loadingBuildings || loadingUsers} />
+      </Grid>
+      <Grid item xs={12}>
+        <CustomError error={errorMessage} />
+      </Grid>
+      <Grid item xs={12}>
+        <AssignmentForm
+          assignmentValues={assignmentValues}
+          places={availablePlaces}
+          users={availableUsers}
+          onChange={(event) => onAssignmentChange(event)}
+          onSubmit={(event) => onSubmit(event)}
+          isLoading={loadingSave}
+        />
+      </Grid>
 
-        <Grid item xs={5} md={3} lg={2}>
-          <CustomSelect
-            id="filter"
-            value={filter}
-            label="Edificio"
-            values={buildingsForFilter}
-            onChange={(event) => onFilterChange(event)}
-          />
-        </Grid>
+      <Grid item xs={5} md={3} lg={2}>
+        <CustomSelect
+          id="filter"
+          value={filter}
+          label="Edificio"
+          values={buildingsForFilter}
+          onChange={(event) => onFilterChange(event)}
+        />
+      </Grid>
 
-        <Grid item xs={12}>
-          <AssignmentsList
-            assignments={assignments}
-            buildingFilter={filter}
-            onDelete={(uid, building, place) => onDelete(uid, building, place)}
-          />
-        </Grid>
+      <Grid item xs={12}>
+        <AssignmentsList
+          assignments={assignments}
+          buildingFilter={filter}
+          onDelete={(uid, building, place) => onDelete(uid, building, place)}
+        />
       </Grid>
     </Content>
   );

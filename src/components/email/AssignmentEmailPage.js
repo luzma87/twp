@@ -126,33 +126,31 @@ const AssignmentEmailPage = ({ firebase }) => {
   const icon = loadingSave ? 'spinner' : 'save';
   return (
     <Content>
-      <Grid container>
-        <Grid item xs={12}>
-          {isSaved ? (
-            <Typography style={{ marginBottom: 32 }} color="textSecondary">
-              {`Ya está guardado para ${monthsHelper.getMonthFromDate(date)}`}
-            </Typography>
-          ) : (
-            <Button style={{ marginBottom: 32 }} onClick={(event) => onSave(event)}>
-              <FontAwesomeIcon icon={['far', icon]} style={{ marginRight: 8 }} />
+      <Grid item xs={12}>
+        {isSaved ? (
+          <Typography style={{ marginBottom: 32 }} color="textSecondary">
+            {`Ya está guardado para ${monthsHelper.getMonthFromDate(date)}`}
+          </Typography>
+        ) : (
+          <Button style={{ marginBottom: 32 }} onClick={(event) => onSave(event)}>
+            <FontAwesomeIcon icon={['far', icon]} style={{ marginRight: 8 }} />
           Guardar para registrar pagos
-            </Button>
-          )}
-        </Grid>
-        <Grid item sx={12}>
-          <CustomError error={errorMessage} />
-        </Grid>
-        <Grid item sx={12}>
-          <CustomLoader isLoading={isLoading} />
-        </Grid>
-        <Grid item sx={12}>
-          <AssignmentEmailContent
-            params={params}
-            valuePerPerson={assignments.valuePerPerson}
-            month={monthsHelper.getMonthFromDate(date)}
-          />
-          <AssignmentsForEmailList assignments={assignments.people} />
-        </Grid>
+          </Button>
+        )}
+      </Grid>
+      <Grid item sx={12}>
+        <CustomError error={errorMessage} />
+      </Grid>
+      <Grid item sx={12}>
+        <CustomLoader isLoading={isLoading} />
+      </Grid>
+      <Grid item sx={12}>
+        <AssignmentEmailContent
+          params={params}
+          valuePerPerson={assignments.valuePerPerson}
+          month={monthsHelper.getMonthFromDate(date)}
+        />
+        <AssignmentsForEmailList assignments={assignments.people} />
       </Grid>
     </Content>
   );

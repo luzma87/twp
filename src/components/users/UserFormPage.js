@@ -142,46 +142,44 @@ const UserFormPage = ({ firebase, history, match }) => {
 
   return (
     <Content>
-      <Grid container>
-        <Grid item xs={12} sm={9} md={12} lg={10} xl={8}>
-          <Paper style={{ padding: 32 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <CustomError error={errorMessage} />
-              </Grid>
+      <Grid item xs={12} sm={9} md={12} lg={10} xl={8}>
+        <Paper style={{ padding: 32 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <CustomError error={errorMessage} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <CardTitle label="Persona" icon="user-astronaut" />
+              <PersonForm
+                onPersonChange={(event) => onPersonChange(event)}
+                personValues={personValues}
+                isEditing={isEditing}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <CardTitle label="Auto" icon="rocket" />
+              <CarForm
+                onCarChange={(event) => onCarChange(event)}
+                carValues={car}
+              />
+            </Grid>
+            <Grid item xs={12} container justify="flex-end">
               <Grid item xs={12} md={6}>
-                <CardTitle label="Persona" icon="user-astronaut" />
-                <PersonForm
-                  onPersonChange={(event) => onPersonChange(event)}
-                  personValues={personValues}
-                  isEditing={isEditing}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <CardTitle label="Auto" icon="rocket" />
-                <CarForm
-                  onCarChange={(event) => onCarChange(event)}
-                  carValues={car}
-                />
-              </Grid>
-              <Grid item xs={12} container justify="flex-end">
-                <Grid item xs={12} md={6}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    style={{ marginTop: 24, width: '100%' }}
-                    disabled={isInvalid || isLoading}
-                    onClick={(event) => onSubmit(event)}
-                  >
-                    <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  style={{ marginTop: 24, width: '100%' }}
+                  disabled={isInvalid || isLoading}
+                  onClick={(event) => onSubmit(event)}
+                >
+                  <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
                     Guardar
-                  </Button>
-                </Grid>
+                </Button>
               </Grid>
             </Grid>
-          </Paper>
-        </Grid>
+          </Grid>
+        </Paper>
       </Grid>
     </Content>
   );

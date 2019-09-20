@@ -180,18 +180,16 @@ const UserPaymentPage = ({ authUser, firebase }) => {
 
   return (
     <Content>
-      <Grid container>
-        <Grid item xs={12}>
-          <PageTitle label="Mis pagos" />
-        </Grid>
+      <Grid item xs={12}>
+        <PageTitle label="Mis pagos" />
+      </Grid>
 
-        <Grid item xs={12}>
-          {monthsSelect}
-        </Grid>
+      <Grid item xs={12}>
+        {monthsSelect}
+      </Grid>
 
-        <Grid container justify="flex-start" spacing={2} item xs={12} sm={12} md={11} lg={9} xl={8}>
-          {content}
-        </Grid>
+      <Grid container justify="flex-start" spacing={2} item xs={12} sm={12} md={11} lg={9} xl={8}>
+        {content}
       </Grid>
     </Content>
   );

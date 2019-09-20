@@ -84,48 +84,46 @@ const PaymentsPage = ({ firebase }) => {
 
   return (
     <Content>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <CustomLoader isLoading={isLoading} />
-        </Grid>
-        <Grid item xs={12} container spacing={2} alignItems="flex-end">
-          <Grid item xs={4}>
-            <MonthsSelect
-              date={date}
-              value={selectedMonth}
-              onChange={(event) => onSelectMonth(event)}
-            />
-          </Grid>
-          <Grid item xs={3}>
-            <Button onClick={(event) => onSave(event)}>
-              <FontAwesomeIcon icon={['far', icon]} style={{ marginRight: 8 }} />
-              Guardar
-            </Button>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <CustomError error={errorMessage} />
-        </Grid>
-        <Grid item xs={12}>
-          <Button style={{ marginBottom: 16 }} onClick={() => setPositiveOnly(true)}>
-            <FontAwesomeIcon icon={['far', 'money-check-edit-alt']} style={{ marginRight: 8 }} color="#2E7D32" />
-              Mostrar solo &gt;0
-          </Button>
-          <Button style={{ marginBottom: 16 }} onClick={() => setPositiveOnly(false)}>
-            <FontAwesomeIcon icon={['far', 'money-check-edit-alt']} style={{ marginRight: 8 }} color="#B71C1C" />
-              Mostrar todos
-          </Button>
-        </Grid>
-        {payments
-          ? (
-            <PaymentsList
-              payments={payments.payments}
-              positiveOnly={positiveOnly}
-              onPay={(event) => onPay(event)}
-            />
-          )
-          : null}
+      <Grid item xs={12}>
+        <CustomLoader isLoading={isLoading} />
       </Grid>
+      <Grid item xs={12} container spacing={2} alignItems="flex-end">
+        <Grid item xs={4}>
+          <MonthsSelect
+            date={date}
+            value={selectedMonth}
+            onChange={(event) => onSelectMonth(event)}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <Button onClick={(event) => onSave(event)}>
+            <FontAwesomeIcon icon={['far', icon]} style={{ marginRight: 8 }} />
+              Guardar
+          </Button>
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <CustomError error={errorMessage} />
+      </Grid>
+      <Grid item xs={12}>
+        <Button style={{ marginBottom: 16 }} onClick={() => setPositiveOnly(true)}>
+          <FontAwesomeIcon icon={['far', 'money-check-edit-alt']} style={{ marginRight: 8 }} color="#2E7D32" />
+              Mostrar solo &gt;0
+        </Button>
+        <Button style={{ marginBottom: 16 }} onClick={() => setPositiveOnly(false)}>
+          <FontAwesomeIcon icon={['far', 'money-check-edit-alt']} style={{ marginRight: 8 }} color="#B71C1C" />
+              Mostrar todos
+        </Button>
+      </Grid>
+      {payments
+        ? (
+          <PaymentsList
+            payments={payments.payments}
+            positiveOnly={positiveOnly}
+            onPay={(event) => onPay(event)}
+          />
+        )
+        : null}
     </Content>
   );
 };

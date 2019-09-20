@@ -1,3 +1,4 @@
+import { Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
@@ -42,14 +43,22 @@ const ShameEmailPage = ({ firebase }) => {
 
   return (
     <Content>
-      <CustomLoader isLoading={loadingUserPayments} />
-      <ShameEmailContent
-        params={params}
-        valuePerPerson={assignments.valuePerPerson}
-        month={monthsHelper.getMonthFromDate(date)}
-      />
-      <PaymentsSummary assignments={{ assignments }} />
-      <AssignmentsForEmailList assignments={assignments.people} shame />
+      <Grid item xs={12}>
+        <CustomLoader isLoading={loadingUserPayments} />
+      </Grid>
+      <Grid item xs={12}>
+        <ShameEmailContent
+          params={params}
+          valuePerPerson={assignments.valuePerPerson}
+          month={monthsHelper.getMonthFromDate(date)}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <PaymentsSummary assignments={{ assignments }} />
+      </Grid>
+      <Grid item xs={12}>
+        <AssignmentsForEmailList assignments={assignments.people} shame />
+      </Grid>
     </Content>
   );
 };

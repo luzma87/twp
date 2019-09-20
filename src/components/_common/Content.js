@@ -1,9 +1,12 @@
+import { Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 const Content = ({ children }) => (
   <div style={{ padding: 24 }}>
-    {children}
+    <Grid container spacing={2}>
+      {children}
+    </Grid>
   </div>
 );
 

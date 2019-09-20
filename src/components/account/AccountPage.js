@@ -70,63 +70,61 @@ const AccountPage = ({ authUser, firebase }) => {
 
   return (
     <Content>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <PageTitle label="Mi cuenta" />
-        </Grid>
+      <Grid item xs={12}>
+        <PageTitle label="Mi cuenta" />
+      </Grid>
 
-        <Grid item xs={12} sm={10} md={11} lg={8} xl={6}>
-          <Paper style={{ padding: 16 }}>
-            <Grid container spacing={3}>
+      <Grid item xs={12} sm={10} md={11} lg={8} xl={6}>
+        <Paper style={{ padding: 16 }}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <CardTitle label="Actualizar mis datos" icon="user-astronaut" />
+              <PersonForm
+                onPersonChange={(event) => onPersonChange(event)}
+                personValues={personValues}
+                isEditing
+                restricted
+              />
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <CardTitle label="Actualizar mi auto" icon="rocket" />
+              <CarForm
+                onCarChange={(event) => onCarChange(event)}
+                carValues={personValues.car}
+              />
+            </Grid>
+
+            <Grid item container xs={12} justify="flex-end">
               <Grid item xs={12} md={6}>
-                <CardTitle label="Actualizar mis datos" icon="user-astronaut" />
-                <PersonForm
-                  onPersonChange={(event) => onPersonChange(event)}
-                  personValues={personValues}
-                  isEditing
-                  restricted
-                />
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <CardTitle label="Actualizar mi auto" icon="rocket" />
-                <CarForm
-                  onCarChange={(event) => onCarChange(event)}
-                  carValues={personValues.car}
-                />
-              </Grid>
-
-              <Grid item container xs={12} justify="flex-end">
-                <Grid item xs={12} md={6}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    disabled={isInvalid}
-                    style={{ marginTop: 24, width: '100%' }}
-                    onClick={(event) => onSubmit(event)}
-                  >
-                    <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  disabled={isInvalid}
+                  style={{ marginTop: 24, width: '100%' }}
+                  onClick={(event) => onSubmit(event)}
+                >
+                  <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
                   Guardar
-                  </Button>
-                </Grid>
+                </Button>
               </Grid>
             </Grid>
-          </Paper>
-        </Grid>
+          </Grid>
+        </Paper>
+      </Grid>
 
-        <Grid item xs={12} sm={10} md={11} lg={8} xl={6}>
-          <Paper style={{ padding: 16 }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <CardTitle label="cambiar password" icon="unlock-alt" />
-              </Grid>
-              <Grid item xs={12}>
-                <PasswordChangeForm />
-              </Grid>
+      <Grid item xs={12} sm={10} md={11} lg={8} xl={6}>
+        <Paper style={{ padding: 16 }}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <CardTitle label="cambiar password" icon="unlock-alt" />
             </Grid>
-          </Paper>
-        </Grid>
+            <Grid item xs={12}>
+              <PasswordChangeForm />
+            </Grid>
+          </Grid>
+        </Paper>
       </Grid>
     </Content>
   );
