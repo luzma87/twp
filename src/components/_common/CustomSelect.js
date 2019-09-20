@@ -9,7 +9,7 @@ const CustomSelect = (props) => {
     id, value, label, values, onChange,
   } = props;
   return (
-    <FormControl style={{ marginTop: 16 }}>
+    <FormControl style={{ marginTop: 16, width: '100%' }}>
       <InputLabel>{label}</InputLabel>
       <Select
         value={value}

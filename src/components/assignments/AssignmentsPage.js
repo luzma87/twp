@@ -1,3 +1,4 @@
+import { Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
@@ -159,34 +160,42 @@ const AssignmentsPage = ({ firebase }) => {
 
   return (
     <Content>
-      <CustomLoader isLoading={loadingBuildings || loadingUsers} />
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <CustomLoader isLoading={loadingBuildings || loadingUsers} />
+        </Grid>
+        <Grid item xs={12}>
+          <CustomError error={errorMessage} />
+        </Grid>
+        <Grid item xs={12}>
+          <AssignmentForm
+            assignmentValues={assignmentValues}
+            places={availablePlaces}
+            users={availableUsers}
+            onChange={(event) => onAssignmentChange(event)}
+            onSubmit={(event) => onSubmit(event)}
+            isLoading={loadingSave}
+          />
+        </Grid>
 
-      <CustomError error={errorMessage} />
-      <AssignmentForm
-        assignmentValues={assignmentValues}
-        places={availablePlaces}
-        users={availableUsers}
-        onChange={(event) => onAssignmentChange(event)}
-        onSubmit={(event) => onSubmit(event)}
-        isLoading={loadingSave}
-      />
+        <Grid item xs={5} md={3} lg={2}>
+          <CustomSelect
+            id="filter"
+            value={filter}
+            label="Edificio"
+            values={buildingsForFilter}
+            onChange={(event) => onFilterChange(event)}
+          />
+        </Grid>
 
-      <div style={{ marginBottom: 16 }}>
-        <CustomSelect
-          id="filter"
-          value={filter}
-          label="Edificio"
-          values={buildingsForFilter}
-          onChange={(event) => onFilterChange(event)}
-        />
-      </div>
-
-      <AssignmentsList
-        assignments={assignments}
-        buildingFilter={filter}
-        skill
-        onDelete={(uid, building, place) => onDelete(uid, building, place)}
-      />
+        <Grid item xs={12}>
+          <AssignmentsList
+            assignments={assignments}
+            buildingFilter={filter}
+            onDelete={(uid, building, place) => onDelete(uid, building, place)}
+          />
+        </Grid>
+      </Grid>
     </Content>
   );
 };

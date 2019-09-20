@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { compose } from 'recompose';
@@ -17,40 +17,39 @@ const AssignmentForm = ({
   const icon = isLoading ? 'spinner' : 'save';
 
   return (
-    <form
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '200px 200px 150px',
-        gridColumnGap: 60,
-      }}
-      onSubmit={(event) => onSubmit(event)}
-    >
-      <CustomSelect
-        id="user"
-        value={assignmentValues.user}
-        label="Persona"
-        values={users}
-        onChange={(event) => onChange(event)}
-      />
-      <CustomSelect
-        id="place"
-        value={assignmentValues.place}
-        label="Puesto"
-        values={places}
-        onChange={(event) => onChange(event)}
-      />
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        style={{ margin: '24px 0' }}
-        disabled={isInvalid || isLoading}
-        onClick={(event) => onSubmit(event)}
-      >
-        <FontAwesomeIcon icon={['far', icon]} style={{ marginRight: 16 }} />
+    <Grid container spacing={2}>
+      <Grid item xs={6} sm={5} md={4}>
+        <CustomSelect
+          id="user"
+          value={assignmentValues.user}
+          label="Persona"
+          values={users}
+          onChange={(event) => onChange(event)}
+        />
+      </Grid>
+      <Grid item xs={6} sm={5} md={4}>
+        <CustomSelect
+          id="place"
+          value={assignmentValues.place}
+          label="Puesto"
+          values={places}
+          onChange={(event) => onChange(event)}
+        />
+      </Grid>
+      <Grid item xs={6} sm={5} md={3}>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          style={{ width: '100%' }}
+          disabled={isInvalid || isLoading}
+          onClick={(event) => onSubmit(event)}
+        >
+          <FontAwesomeIcon icon={['far', icon]} style={{ marginRight: 16 }} />
             Guardar
-      </Button>
-    </form>
+        </Button>
+      </Grid>
+    </Grid>
   );
 };
 
