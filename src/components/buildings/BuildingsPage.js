@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
@@ -34,19 +34,31 @@ const BuildingsPage = ({ firebase }) => {
 
   return (
     <Content>
-      <CustomLoader isLoading={isLoading} />
-      <div>
-        <CreateButton linkTo={routes.BUILDINGS_CREATE} />
-        <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(true)}>
-          <FontAwesomeIcon icon={['far', 'warehouse']} style={{ marginRight: 8 }} color="#2E7D32" />
+      <Grid container>
+        <Grid item xs={12}>
+          <CustomLoader isLoading={isLoading} />
+        </Grid>
+        <Grid item container xs={12}>
+          <Grid item>
+            <CreateButton linkTo={routes.BUILDINGS_CREATE} />
+          </Grid>
+          <Grid item>
+            <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(true)}>
+              <FontAwesomeIcon icon={['far', 'warehouse']} style={{ marginRight: 8 }} color="#2E7D32" />
           Mostrar solo activos
-        </Button>
-        <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(false)}>
-          <FontAwesomeIcon icon={['far', 'warehouse']} style={{ marginRight: 8 }} color="#B71C1C" />
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(false)}>
+              <FontAwesomeIcon icon={['far', 'warehouse']} style={{ marginRight: 8 }} color="#B71C1C" />
           Mostrar todos
-        </Button>
-      </div>
-      <BuildingsList buildings={buildings} activeOnly={activeOnly} />
+            </Button>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <BuildingsList buildings={buildings} activeOnly={activeOnly} />
+        </Grid>
+      </Grid>
     </Content>
   );
 };

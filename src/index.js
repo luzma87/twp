@@ -10,6 +10,8 @@ import {
   faGhost,
   faHandHoldingUsd,
   faIdCard,
+  faInfoSquare,
+  faMapMarkedAlt,
   faMeteor as farMeteor,
   faMoneyCheckEditAlt,
   faPaperPlane,
@@ -25,6 +27,7 @@ import {
   faTrashAlt,
   faUndo,
   faUnlockAlt,
+  faUser,
   faUserAstronaut,
   faWarehouse,
 } from '@fortawesome/pro-regular-svg-icons';
@@ -43,7 +46,8 @@ library.add(
   farMeteor, fasMeteor, faAlicorn, faWarehouse, faSpinner,
   faDrawSquare, faTrashAlt, faGhost, faRepeat, faEnvelopeOpenDollar,
   faPencilAlt, faMoneyCheckEditAlt, faHandHoldingUsd, faBadgeDollar,
-  faUndo, faSackDollar, faUnlockAlt, faAt, faIdCard,
+  faUndo, faSackDollar, faUnlockAlt, faAt, faIdCard, faUser,
+  faMapMarkedAlt, faInfoSquare,
 );
 
 ReactDOM.render(
