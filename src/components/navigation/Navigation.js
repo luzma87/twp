@@ -1,15 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  AppBar, Hidden, IconButton, Menu, MenuItem, Toolbar, Tooltip,
+  AppBar, Hidden, IconButton, Toolbar, Tooltip,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import roles from '../../constants/roles';
 import routes from '../../constants/routes';
 import shapes from '../../constants/shapes';
 import AuthUserContext from '../session/context';
 import SignOutButton from '../signOut/SignOutButton';
+import AdminMenu from './AdminMenu';
 import NavBarHybridButton from './NavBarHybridButton';
 import NavBarIconButton from './NavBarIconButton';
 import NavBarTextLink from './NavBarTextLink';
@@ -73,46 +73,7 @@ const NavigationAuth = ({ authUser }) => {
           <FontAwesomeIcon icon={['far', 'alicorn']} />
         </IconButton>
       </Tooltip>
-      <Menu
-        id="menu-appbar"
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        open={open}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleClose}>
-          <Link to={routes.USERS} className="link">
-            <FontAwesomeIcon icon={['far', 'user-astronaut']} style={{ marginRight: 8 }} />
-            Personas
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link to={routes.BUILDINGS} className="link">
-            <FontAwesomeIcon icon={['far', 'warehouse']} style={{ marginRight: 8 }} />
-            Puestos
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link to={routes.ASSIGNMENT_EMAIL} className="link">
-            <FontAwesomeIcon icon={['far', 'envelope-open-dollar']} style={{ marginRight: 8 }} />
-            Email
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link to={routes.PARAMS} className="link">
-            <FontAwesomeIcon icon={['far', 'alicorn']} style={{ marginRight: 8 }} />
-            Admin
-          </Link>
-        </MenuItem>
-      </Menu>
+      <AdminMenu anchorEl={anchorEl} handleClose={handleClose} open={open} />
     </Hidden>
   ) : null;
 
