@@ -1,15 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  Card, CardActions, CardContent, Checkbox, Typography,
+  Card, CardContent, Checkbox, Typography,
 } from '@material-ui/core';
 import moment from 'moment';
 import numeral from 'numeral';
-import React from 'react';
 import PropTypes from 'prop-types';
-import routes from '../../constants/routes';
+import React from 'react';
 import CardTitle from '../_common/CardTitle';
-import CustomButton from '../_common/CustomButton';
-import MeteorRating from '../_common/meteorRating/MeteorRating';
 import TextWithIcon from '../_common/TextWithIcon';
 
 const getIconColor = (active) => (active ? '#2E7D32' : '#B71C1C');

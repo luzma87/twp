@@ -51,7 +51,6 @@ UserPlace.defaultProps = {
   building: {},
   user: {},
   uid: '',
-  place: '',
 };
 
 export default UserPlace;

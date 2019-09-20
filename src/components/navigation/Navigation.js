@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  AppBar, Hidden, Toolbar, IconButton, Menu, MenuItem, Tooltip,
+  AppBar, Hidden, IconButton, Menu, MenuItem, Toolbar, Tooltip,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -12,7 +12,6 @@ import AuthUserContext from '../session/context';
 import SignOutButton from '../signOut/SignOutButton';
 import NavBarHybridButton from './NavBarHybridButton';
 import NavBarIconButton from './NavBarIconButton';
-import NavBarTextButton from './NavBarTextButton';
 import NavBarTextLink from './NavBarTextLink';
 
 const Navigation = () => (

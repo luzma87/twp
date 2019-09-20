@@ -1,13 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  Checkbox, Hidden, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography,
-} from '@material-ui/core';
-import moment from 'moment';
-import numeral from 'numeral';
+import { Hidden, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
-import UsersCards from '../users/UsersCards';
-import UsersTable from '../users/UsersTable';
 import PaymentsCards from './PaymentsCards';
 import PaymentsTable from './PaymentsTable';
 
