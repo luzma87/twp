@@ -17,7 +17,7 @@ jobs:
             - v1-dependencies-
       - run:
           name: Install dependencies
-          command: yarn install --ignore-engines
+          command: yarn install --ignore-engines --frozen-lockfile
       - run:
           name: Verify Cypress
           command: yarn run cypress verify
@@ -29,3 +29,7 @@ jobs:
       - run:
           name: Start server and run Cypress
           command: yarn test
+      - store_artifacts:
+          path: cypress/screenshots
+      - store_artifacts:
+          path: cypress/videos
