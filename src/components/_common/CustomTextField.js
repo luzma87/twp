@@ -9,6 +9,9 @@ const CustomTextField = (props) => {
   return (
     <TextField
       {...other}
+      inputProps={{
+        'data-cy': id,
+      }}
       name={id}
       variant="outlined"
       style={style}

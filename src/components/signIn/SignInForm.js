@@ -73,6 +73,7 @@ const SignInFormBase = ({ firebase, history }) => {
         />
       </div>
       <Button
+        data-cy="login-button"
         variant="contained"
         color="primary"
         size="large"

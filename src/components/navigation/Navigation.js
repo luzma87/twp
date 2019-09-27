@@ -78,7 +78,7 @@ const NavigationAuth = ({ authUser }) => {
   ) : null;
 
   return (
-    <AppBar position="static" className="root">
+    <AppBar position="static" className="root" data-cy="navbar">
       <Toolbar style={{ justifyContent: 'space-between' }}>
         <div className="navbar-part">
           <NavBarTextLink to={routes.HOME} text="TWP" title="Inicio" />

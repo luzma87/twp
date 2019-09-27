@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  Box, Button, TextField, Typography,
+  Box, Button, Typography,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import CustomError from '../_common/CustomError';
 import withFirebase from '../firebase/withFirebase';
+import CustomTextField from '../_common/CustomTextField';
 
 const INITIAL_STATE = {
   email: '',
@@ -44,18 +45,16 @@ const PasswordForgetFormBase = ({ firebase }) => {
   return (
     <form onSubmit={(event) => onSubmit(event)}>
       <div>
-        <TextField
+        <CustomTextField
           id="email"
           label="Email"
           onChange={(event) => onChange(event)}
-          margin="normal"
-          variant="outlined"
           type="email"
-          name="email"
           value={email}
         />
       </div>
       <Button
+        data-cy="send-forgot-pass-button"
         variant="contained"
         color="primary"
         size="large"
@@ -69,6 +68,7 @@ const PasswordForgetFormBase = ({ firebase }) => {
       <CustomError error={error} />
       {!error && isDone ? (
         <Box
+          data-cy="forgot-pass-msg"
           bgcolor="secondary.main"
           color="secondary.contrastText"
           style={{ padding: 8, borderRadius: 8, marginTop: 16 }}

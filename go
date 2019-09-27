@@ -99,6 +99,10 @@ function task_check_dep {
   ncu -a
 }
 
+function task_cypress {
+  DISPLAY=localhost:0.0 yarn run cypress open
+}
+
 function task_help {
   help_message="usage: ./go"
   help_message+=" ${misc_fg}colors${normal_fg}"
@@ -108,6 +112,8 @@ function task_help {
 
   help_message+=" | ${start_fg}clean${normal_fg}"
   help_message+=" | ${start_fg}start${normal_fg}"
+
+  help_message+=" | ${start_fg}cypress${normal_fg}"
 
   help_message+=" | ${deploy_fg}build${normal_fg}"
   help_message+=" | ${deploy_fg}deploy${normal_fg}"
@@ -125,6 +131,8 @@ function execute_task {
 
     clean) task_clean ;;
     start) task_start ;;
+
+    cypress) task_cypress ;;
 
     build) task_build ;;
     deploy) task_deploy ;;

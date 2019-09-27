@@ -12,7 +12,7 @@ const PasswordForgetPage = () => (
         }}
       >
         <Typography gutterBottom color="textSecondary" variant="h4">
-      Recuperar password
+            Recuperar password
         </Typography>
         <PasswordForgetForm />
         <div style={{ textAlign: 'right' }}>
