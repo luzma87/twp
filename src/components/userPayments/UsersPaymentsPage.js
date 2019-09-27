@@ -68,7 +68,7 @@ const UsersPaymentsPage = ({ firebase }) => {
         </Button>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} sm={6}>
         <MonthsSelect
           date={date}
           value={selectedMonth}

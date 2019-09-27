@@ -121,16 +121,6 @@ const UserPaymentPage = ({ authUser, firebase }) => {
     </Button>
   );
 
-  const monthsSelect = (
-    <div style={{ marginBottom: 32 }}>
-      <MonthsSelect
-        date={date}
-        value={selectedMonth}
-        onChange={(event) => onSelectMonth(event)}
-      />
-    </div>
-  );
-
   const assignmentExists = assignments !== undefined
     && assignments !== null
     && Object.keys(assignments).length > 0;
@@ -184,8 +174,14 @@ const UserPaymentPage = ({ authUser, firebase }) => {
         <PageTitle label="Mis pagos" />
       </Grid>
 
-      <Grid item xs={12}>
-        {monthsSelect}
+      <Grid item xs={12} sm={6}>
+        {(
+          <MonthsSelect
+              date={date}
+              value={selectedMonth}
+              onChange={(event) => onSelectMonth(event)}
+          />
+        )}
       </Grid>
 
       <Grid container justify="flex-start" spacing={2} item xs={12} sm={12} md={11} lg={9} xl={8}>
