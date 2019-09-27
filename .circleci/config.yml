@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:7.10
+      - image: cypress/base:10
     working_directory: ~/repo
 
     steps:
@@ -15,11 +15,17 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-      - run: yarn install --ignore-engines
-      - run: yarn run cypress verify
+      - run:
+          name: Install dependencies
+          command: yarn install --ignore-engines
+      - run:
+          name: Verify Cypress
+          command: yarn run cypress verify
       - save_cache:
           paths:
             - ~/.npm
             - ~/.cache
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn test
+      - run:
+          name: Start server and run Cypress
+          command: yarn test
