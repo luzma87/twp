@@ -25,7 +25,15 @@ const Navigation = () => (
 );
 
 const myPaymentsButton = (isAdmin) => (isAdmin
-  ? <NavBarIconButton title="Mis pagos" icon="hand-holding-usd" to={routes.USER_PAYMENT} color="#CD3564" />
+  ? (
+    <NavBarIconButton
+      id="my-payments"
+      title="Mis pagos"
+      icon="hand-holding-usd"
+      to={routes.USER_PAYMENT}
+      color="#CD3564"
+    />
+  )
   : <NavBarHybridButton title="Mis pagos" icon="hand-holding-usd" to={routes.USER_PAYMENT} color="secondary" />);
 
 const NavigationAuth = ({ authUser }) => {
@@ -45,17 +53,17 @@ const NavigationAuth = ({ authUser }) => {
   const adminNav = userRoles[roles.ADMIN] ? (
     <>
       <Hidden smDown>
-        <NavBarIconButton title="Personas" icon="user-astronaut" to={routes.USERS} />
-        <NavBarIconButton title="Puestos" icon="warehouse" to={routes.BUILDINGS} />
+        <NavBarIconButton id="people" title="Personas" icon="user-astronaut" to={routes.USERS} />
+        <NavBarIconButton id="places" title="Puestos" icon="warehouse" to={routes.BUILDINGS} />
       </Hidden>
-      <NavBarIconButton title="Asignaciones" icon="rocket" to={routes.ASSIGNMENTS} />
+      <NavBarIconButton id="assignments" title="Asignaciones" icon="rocket" to={routes.ASSIGNMENTS} />
       <Hidden smDown>
-        <NavBarIconButton title="Email" icon="envelope-open-dollar" to={routes.ASSIGNMENT_EMAIL} />
+        <NavBarIconButton id="email" title="Email" icon="envelope-open-dollar" to={routes.ASSIGNMENT_EMAIL} />
       </Hidden>
-      <NavBarIconButton title="Pagos" icon="money-check-edit-alt" to={routes.PAYMENTS} />
-      <NavBarIconButton title="Pagos Usuarios" icon="sack-dollar" to={routes.ALL_USERS_PAYMENTS} />
+      <NavBarIconButton id="owner-payments" title="Pagos" icon="money-check-edit-alt" to={routes.PAYMENTS} />
+      <NavBarIconButton id="user-payments" title="Pagos Usuarios" icon="sack-dollar" to={routes.ALL_USERS_PAYMENTS} />
       <Hidden smDown>
-        <NavBarIconButton title="Params" icon="alicorn" to={routes.PARAMS} />
+        <NavBarIconButton id="params" title="Params" icon="alicorn" to={routes.PARAMS} />
       </Hidden>
     </>
   ) : null;
@@ -88,7 +96,7 @@ const NavigationAuth = ({ authUser }) => {
 
         <div className="navbar-part">
           {adminMenu}
-          <NavBarIconButton title="Mi cuenta" icon="user" to={routes.ACCOUNT} />
+          <NavBarIconButton id="my-account" title="Mi cuenta" icon="user" to={routes.ACCOUNT} />
           <SignOutButton />
         </div>
       </Toolbar>

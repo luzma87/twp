@@ -11,6 +11,11 @@ class SignInPage {
     cy.visit(URL);
   }
 
+  checkUrl() {
+    cy.url()
+      .should('include', URL);
+  }
+
   fillEmail(email) {
     cy.get(EMAIL_FIELD).type(email);
     return this;
@@ -27,11 +32,6 @@ class SignInPage {
 
   gotoForgotPass() {
     cy.get(PASS_FORGOT_BUTTON).click();
-  }
-
-  checkUrl() {
-    cy.url()
-      .should('include', URL);
   }
 }
 

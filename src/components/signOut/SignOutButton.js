@@ -7,7 +7,12 @@ import withFirebase from '../firebase/withFirebase';
 
 const SignOutButton = ({ firebase }) => (
   <Tooltip title="Salir">
-    <IconButton aria-label="Salir" color="inherit" onClick={() => firebase.doSignOut()}>
+    <IconButton
+      data-cy="logout-nav-button"
+      aria-label="Salir"
+      color="inherit"
+      onClick={() => firebase.doSignOut()}
+    >
       <FontAwesomeIcon icon={['far', 'sign-out-alt']} color="white" />
     </IconButton>
   </Tooltip>

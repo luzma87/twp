@@ -12,6 +12,11 @@ class ForgotPassPage {
     return this;
   }
 
+  checkUrl() {
+    cy.url()
+      .should('include', URL);
+  }
+
   gotoSingIn() {
     cy.get(SIGN_IN_BUTTON).click();
   }
@@ -23,11 +28,6 @@ class ForgotPassPage {
   checkSentMessage() {
     cy.get(SENT_MAIL_MESSAGE)
       .should('contain', 'Email con recuperación de password enviado');
-  }
-
-  checkUrl() {
-    cy.url()
-      .should('include', URL);
   }
 }
 
