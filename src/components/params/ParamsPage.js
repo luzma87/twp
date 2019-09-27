@@ -19,6 +19,7 @@ const INITIAL_STATE = {
   accountInfo: '',
   emailText: '',
   shameEmailText: '',
+  shameGif: '',
   oneTimeExtra: 0,
 };
 
@@ -130,6 +131,14 @@ const ParamsPage = ({ firebase }) => {
                   multiline
                   rows={6}
                   value={params.shameEmailText}
+                  onChange={(event) => onParamChange(event)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>
+                <CustomTextField
+                  id="shameGif"
+                  label="Gif email recordatorio"
+                  value={params.shameGif}
                   onChange={(event) => onParamChange(event)}
                 />
               </Grid>
