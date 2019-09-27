@@ -103,6 +103,10 @@ function task_cypress {
   DISPLAY=localhost:0.0 yarn run cypress open
 }
 
+function task_cypress_ci {
+  yarn run cypress run
+}
+
 function task_help {
   help_message="usage: ./go"
   help_message+=" ${misc_fg}colors${normal_fg}"
@@ -114,6 +118,7 @@ function task_help {
   help_message+=" | ${start_fg}start${normal_fg}"
 
   help_message+=" | ${start_fg}cypress${normal_fg}"
+  help_message+=" | ${start_fg}cypress_ci${normal_fg}"
 
   help_message+=" | ${deploy_fg}build${normal_fg}"
   help_message+=" | ${deploy_fg}deploy${normal_fg}"
@@ -133,6 +138,7 @@ function execute_task {
     start) task_start ;;
 
     cypress) task_cypress ;;
+    cypress_ci) task_cypress_ci ;;
 
     build) task_build ;;
     deploy) task_deploy ;;

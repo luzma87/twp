@@ -32,3 +32,6 @@ package-lock.json
 .firebase
 
 db.json
+
+cypress/screenshots
+cypress/videos
