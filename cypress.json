@@ -2,7 +2,6 @@
   "baseUrl": "http://localhost:3000",
   "reporter": "junit",
   "reporterOptions": {
-    "mochaFile": "results/my-test-output.xml",
-    "toConsole": true
+    "mochaFile": "cypress/results/results.xml"
   }
 }
