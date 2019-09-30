@@ -106,7 +106,7 @@ class Assignments {
     this.assignments.sort(constants.assignmentSortByUser).forEach((element) => {
       map[element.user.uid] = {
         user: element.user.name,
-        place: element.building.getPlaceString(element.placeId),
+        place: element.building.getPlaceShortString(element.placeId),
       };
     });
 

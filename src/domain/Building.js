@@ -21,6 +21,12 @@ class Building {
     return `${this.name} #${place.number} (${place.owner})`;
   }
 
+  getPlaceShortString(placeId) {
+    const place = this.places[placeId];
+    if (place.number === '?') return this.name;
+    return `${this.name} #${place.number}`;
+  }
+
   // eslint-disable-next-line class-methods-use-this
   getPlaceInfo(place) {
     return `#${place.number}, ${constants.carSizeLabel(place.size)}, ${numeral(place.price).format('$0,0.00')}, ${place.owner}`;
