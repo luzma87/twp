@@ -1,5 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Grid, Paper } from '@material-ui/core';
+import {
+  Box, Button, Grid, Paper, Typography,
+} from '@material-ui/core';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
@@ -68,6 +71,10 @@ const AccountPage = ({ authUser, firebase }) => {
     || personValues.car.model === ''
     || personValues.car.plate === '';
 
+  const lastPassChange = personValues.lastPassChange
+    ? moment(personValues.lastPassChange).format('DD/MM/YYYY')
+    : 'nunca, por favor cámbialo';
+
   return (
     <Content>
       <Grid item xs={12}>
@@ -118,10 +125,24 @@ const AccountPage = ({ authUser, firebase }) => {
         <Paper style={{ padding: 16 }}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <CardTitle label="cambiar password" icon="unlock-alt" />
+              <CardTitle label="Cambiar password" icon="unlock-alt" />
             </Grid>
             <Grid item xs={12}>
-              <PasswordChangeForm />
+              <Box
+                bgcolor="text.hint"
+                color="background.paper"
+                style={{ padding: 8, borderRadius: 8, marginTop: 16 }}
+              >
+                <Typography>
+                  {`Último cambio de password: ${lastPassChange}`}
+                </Typography>
+              </Box>
+              <PasswordChangeForm
+                user={authUser}
+                onPasswordChanged={() => {
+                  setValues({ ...personValues, lastPassChange: moment().format() });
+                }}
+              />
             </Grid>
           </Grid>
         </Paper>

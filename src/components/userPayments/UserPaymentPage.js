@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  Box,
   Button, Grid, Paper, Typography,
 } from '@material-ui/core';
 import { get } from 'lodash';
@@ -9,8 +10,10 @@ import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import monthsHelper from '../../constants/monthsHelper';
+import routes from '../../constants/routes';
 import shapes from '../../constants/shapes';
 import Content from '../_common/Content';
+import CustomButton from '../_common/CustomButton';
 import MonthsSelect from '../_common/MonthsSelect';
 import PageTitle from '../_common/PageTitle';
 import EmailContent from '../email/EmailContent';
@@ -168,8 +171,26 @@ const UserPaymentPage = ({ authUser, firebase }) => {
     );
   }
 
+  const passChangeWarn = authUser.lastPassChange === undefined
+    ? (
+      <Box
+        bgcolor="secondary.main"
+        color="secondary.contrastText"
+        style={{ padding: 8, borderRadius: 8, marginTop: 16 }}
+      >
+        <Typography>
+          Si aún no lo has hecho, por favor cambia tu password yendo a
+          <CustomButton to={routes.ACCOUNT} style={{ marginLeft: 8 }}>
+            Mi cuenta
+          </CustomButton>
+        </Typography>
+      </Box>
+    )
+    : null;
+
   return (
     <Content>
+      {passChangeWarn}
       <Grid item xs={12}>
         <PageTitle label="Mis pagos" />
       </Grid>
@@ -177,9 +198,9 @@ const UserPaymentPage = ({ authUser, firebase }) => {
       <Grid item xs={12} sm={6}>
         {(
           <MonthsSelect
-              date={date}
-              value={selectedMonth}
-              onChange={(event) => onSelectMonth(event)}
+            date={date}
+            value={selectedMonth}
+            onChange={(event) => onSelectMonth(event)}
           />
         )}
       </Grid>
