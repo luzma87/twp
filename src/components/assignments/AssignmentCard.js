@@ -7,13 +7,15 @@ import CardTitle from '../_common/CardTitle';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 import TextWithIcon from '../_common/TextWithIcon';
 
-const AssignmentCard = ({ assignment, onDelete }) => {
+const AssignmentCard = ({
+  assignment, textFilter, index, onDelete,
+}) => {
   const { user, building, placeId } = assignment;
   const place = building.places[placeId];
   const placeElement = place
     ? (
       <div style={{ display: 'flex', alignItems: 'baseline' }}>
-        <TextWithIcon text={building.getPlaceString(placeId)} icon="draw-square" />
+        <TextWithIcon text={building.getPlaceString(placeId)} icon="draw-square" textFilter={textFilter} />
         <MeteorRating id="placeDifficulty" compact value={place.difficulty} />
       </div>
     )
@@ -23,7 +25,8 @@ const AssignmentCard = ({ assignment, onDelete }) => {
       <CardContent>
         <div style={{ display: 'flex', alignItems: 'baseline' }}>
           <CardTitle
-            label={user.name}
+            textFilter={textFilter}
+            label={`${index}. ${user.name}`}
             icon="user-astronaut"
           />
           <MeteorRating id={user.uid} value={user.parkingMeteors} compact />
@@ -42,11 +45,15 @@ const AssignmentCard = ({ assignment, onDelete }) => {
 
 AssignmentCard.propTypes = {
   assignment: PropTypes.any,
+  index: PropTypes.number,
+  textFilter: PropTypes.string,
   onDelete: PropTypes.func.isRequired,
 };
 
 AssignmentCard.defaultProps = {
   assignment: {},
+  index: 0,
+  textFilter: '',
 };
 
 export default AssignmentCard;

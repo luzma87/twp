@@ -9,6 +9,7 @@ import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
 import CustomLoader from '../_common/CustomLoader';
 import CustomSelect from '../_common/CustomSelect';
+import CustomTextField from '../_common/CustomTextField';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
 import AssignmentForm from './AssignmentForm';
@@ -44,6 +45,7 @@ const AssignmentsPage = ({ firebase }) => {
   const [availablePlaces, setAvailablePlaces] = useState({});
   const [availableUsers, setAvailableUsers] = useState({});
   const [filter, setFilter] = useState(ALL_BUILDINGS.value);
+  const [textFilter, setTextFilter] = useState('');
   const [errorMessage, setErrorMessage] = React.useState(null);
 
   useEffect(() => {
@@ -150,8 +152,11 @@ const AssignmentsPage = ({ firebase }) => {
   };
 
   const onFilterChange = (event) => {
-    const selectedValue = event.target.value;
-    setFilter(selectedValue);
+    setFilter(event.target.value);
+  };
+
+  const onTextFilterChange = (event) => {
+    setTextFilter(event.target.value);
   };
 
   const onDelete = (uid, building, place) => {
@@ -186,11 +191,20 @@ const AssignmentsPage = ({ firebase }) => {
           onChange={(event) => onFilterChange(event)}
         />
       </Grid>
+      <Grid item xs={5} md={3} lg={2}>
+        <CustomTextField
+          onChange={(event) => onTextFilterChange(event)}
+          label="Filtrar"
+          id="textFilter"
+          value={textFilter}
+        />
+      </Grid>
 
       <Grid item xs={12}>
         <AssignmentsList
           assignments={assignments}
           buildingFilter={filter}
+          textFilter={textFilter}
           onDelete={(uid, building, place) => onDelete(uid, building, place)}
         />
       </Grid>

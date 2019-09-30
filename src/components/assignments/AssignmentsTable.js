@@ -4,9 +4,11 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import PropTypes from 'prop-types';
+import Highlighter from 'react-highlight-words';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 
-const AssignmentsTable = ({ list, onDelete }) => (
+
+const AssignmentsTable = ({ list, textFilter, onDelete }) => (
   <Paper>
     <Table>
       <TableHead>
@@ -26,7 +28,12 @@ const AssignmentsTable = ({ list, onDelete }) => (
             <TableRow key={user.uid}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>
-                {user.name}
+                <Highlighter
+                  highlightClassName="highlighter"
+                  searchWords={[textFilter]}
+                  autoEscape
+                  textToHighlight={user.name}
+                />
                 <MeteorRating id="userSkill" compact value={user.parkingMeteors} />
               </TableCell>
               <TableCell>
@@ -35,7 +42,12 @@ const AssignmentsTable = ({ list, onDelete }) => (
               <TableCell>
                 {place ? (
                   <>
-                    {`${building.getPlaceString(placeId)}`}
+                    <Highlighter
+                      highlightClassName="highlighter"
+                      searchWords={[textFilter]}
+                      autoEscape
+                      textToHighlight={`${building.getPlaceString(placeId)}`}
+                    />
                     <MeteorRating id="placeDifficulty" compact value={place.difficulty} />
                   </>
                 ) : null}
@@ -55,11 +67,13 @@ const AssignmentsTable = ({ list, onDelete }) => (
 
 AssignmentsTable.propTypes = {
   list: PropTypes.any,
+  textFilter: PropTypes.string,
   onDelete: PropTypes.func.isRequired,
 };
 
 AssignmentsTable.defaultProps = {
   list: [],
+  textFilter: '',
 };
 
 export default AssignmentsTable;
