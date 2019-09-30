@@ -14,7 +14,7 @@ const BuildingsList = ({ buildings, activeOnly }) => {
   return (
     <>
       <Typography style={{ marginBottom: 16 }}>
-        {`Mostrando ${list.length} edificios (${activeMessage})`}
+        {`Mostrando ${list.length} / ${buildings.getTotalCount()} edificios (${activeMessage})`}
       </Typography>
       <Hidden smDown>
         <BuildingsTable list={list} />
