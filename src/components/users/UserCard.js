@@ -10,12 +10,12 @@ import TextWithIcon from '../_common/TextWithIcon';
 const getIcon = (isAdmin) => (isAdmin ? 'alicorn' : 'user-astronaut');
 const getIconColor = (active) => (active ? '#2E7D32' : '#B71C1C');
 
-const UserCard = ({ person }) => (
+const UserCard = ({ person, index }) => (
   <Card>
     <CardContent>
       <div style={{ display: 'flex', alignItems: 'baseline' }}>
         <CardTitle
-          label={person.name}
+          label={`${index}. ${person.name}`}
           icon={getIcon(person.getIsAdmin())}
           iconColor={getIconColor(person.isActive)}
         />
@@ -35,10 +35,12 @@ const UserCard = ({ person }) => (
 
 UserCard.propTypes = {
   person: PropTypes.any,
+  index: PropTypes.number,
 };
 
 UserCard.defaultProps = {
   person: {},
+  index: 0,
 };
 
 export default UserCard;

@@ -12,7 +12,7 @@ import TextWithIcon from '../_common/TextWithIcon';
 
 const getIconColor = (active) => (active ? '#2E7D32' : '#B71C1C');
 
-const BuildingCard = ({ building }) => {
+const BuildingCard = ({ building, index }) => {
   const moreInfo = building.observations
     ? <TextWithIcon text={building.observations} icon="info-square" />
     : null;
@@ -22,7 +22,7 @@ const BuildingCard = ({ building }) => {
       <CardContent>
         <div style={{ display: 'flex', alignItems: 'baseline' }}>
           <CardTitle
-            label={building.name}
+            label={`${index}. ${building.name}`}
             icon="warehouse"
           />
         </div>
@@ -54,10 +54,12 @@ const BuildingCard = ({ building }) => {
 
 BuildingCard.propTypes = {
   building: PropTypes.any,
+  index: PropTypes.number,
 };
 
 BuildingCard.defaultProps = {
   building: {},
+  index: 0,
 };
 
 export default BuildingCard;

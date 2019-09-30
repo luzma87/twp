@@ -13,6 +13,7 @@ const BuildingsTable = ({ list }) => (
     <Table>
       <TableHead>
         <TableRow>
+          <TableCell />
           <TableCell>Nombre</TableCell>
           <TableCell>Dirección</TableCell>
           <TableCell>Observaciones</TableCell>
@@ -21,10 +22,11 @@ const BuildingsTable = ({ list }) => (
       </TableHead>
       <TableBody>
         {
-            list.map((building) => {
+            list.map((building, index) => {
               const places = Object.values(building.places);
               return (
                 <TableRow key={building.id}>
+                  <TableCell>{index + 1}</TableCell>
                   <TableCell>
                     <FontAwesomeIcon
                       icon={['far', 'warehouse']}

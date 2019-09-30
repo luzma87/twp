@@ -11,6 +11,7 @@ const AssignmentsTable = ({ list, onDelete }) => (
     <Table>
       <TableHead>
         <TableRow>
+          <TableCell />
           <TableCell>Persona</TableCell>
           <TableCell>Auto</TableCell>
           <TableCell>Puesto</TableCell>
@@ -18,11 +19,12 @@ const AssignmentsTable = ({ list, onDelete }) => (
         </TableRow>
       </TableHead>
       <TableBody>
-        {list.map((assignment) => {
+        {list.map((assignment, index) => {
           const { user, building, placeId } = assignment;
           const place = building.places[placeId];
           return (
             <TableRow key={user.uid}>
+              <TableCell>{index + 1}</TableCell>
               <TableCell>
                 {user.name}
                 <MeteorRating id="userSkill" compact value={user.parkingMeteors} />

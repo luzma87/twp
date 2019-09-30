@@ -5,9 +5,9 @@ import BuildingCard from './BuildingCard';
 
 const BuildingsCards = ({ list }) => (
   <Grid container spacing={2}>
-    {list.map((building) => (
+    {list.map((building, index) => (
       <Grid key={building.id} item xs={12} sm={6}>
-        <BuildingCard building={building} />
+        <BuildingCard building={building} index={index + 1} />
       </Grid>
     ))}
   </Grid>

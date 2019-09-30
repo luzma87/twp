@@ -5,12 +5,12 @@ import PaymentCard from './PaymentCard';
 
 const PaymentsCards = ({ list, onPay }) => (
   <Grid container spacing={2}>
-    {list.map((payment) => {
+    {list.map((payment, index) => {
       const { owner, building } = payment;
       const ownerKey = `${building.id}_${owner}`;
       return (
         <Grid key={ownerKey} item xs={12} sm={6}>
-          <PaymentCard payment={payment} onPay={(event) => onPay(event)} />
+          <PaymentCard payment={payment} index={index + 1} onPay={(event) => onPay(event)} />
         </Grid>
       );
     })}

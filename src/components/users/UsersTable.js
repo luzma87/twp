@@ -13,6 +13,7 @@ const UsersTable = ({ list }) => (
     <Table>
       <TableHead>
         <TableRow>
+          <TableCell />
           <TableCell>Nombre</TableCell>
           <TableCell>E-mail</TableCell>
           <TableCell>Admin?</TableCell>
@@ -22,8 +23,9 @@ const UsersTable = ({ list }) => (
         </TableRow>
       </TableHead>
       <TableBody>
-        {list.map((person) => (
+        {list.map((person, index) => (
           <TableRow key={person.uid}>
+            <TableCell>{index + 1}</TableCell>
             <TableCell>
               <FontAwesomeIcon
                 icon={['far', 'user-astronaut']}

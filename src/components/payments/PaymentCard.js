@@ -11,7 +11,7 @@ import TextWithIcon from '../_common/TextWithIcon';
 
 const getIconColor = (active) => (active ? '#2E7D32' : '#B71C1C');
 
-const PaymentCard = ({ payment, onPay }) => {
+const PaymentCard = ({ payment, index, onPay }) => {
   const {
     owner, ownerInfo, ownerPayment, places, building, total, payed, id,
   } = payment;
@@ -21,7 +21,7 @@ const PaymentCard = ({ payment, onPay }) => {
       <CardContent>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
           <CardTitle
-            label={owner}
+            label={`${index}. ${owner}`}
             icon="money-check-edit-alt"
             iconColor={getIconColor(total > 0)}
           />
@@ -66,11 +66,13 @@ const PaymentCard = ({ payment, onPay }) => {
 
 PaymentCard.propTypes = {
   payment: PropTypes.any,
+  index: PropTypes.number,
   onPay: PropTypes.func.isRequired,
 };
 
 PaymentCard.defaultProps = {
   payment: {},
+  index: 0,
 };
 
 export default PaymentCard;
