@@ -20,11 +20,39 @@ const getDateToSave = (date) => ({
   year: date.getFullYear(),
 });
 
-const getPaymentsId = (date) => `payment_${date.getMonth()}_${date.getFullYear()}`;
+const getDateToSaveNext = (date) => {
+  let month = date.getMonth();
+  let year = date.getFullYear();
+  if (month === 11) {
+    month = 0;
+    year += 1;
+  } else {
+    month += 1;
+  }
+  return ({
+    month,
+    year,
+  });
+};
+
+const getCurrentPaymentsId = (date) => `payment_${date.getMonth()}_${date.getFullYear()}`;
+const getNextPaymentsId = (date) => {
+  let month = date.getMonth();
+  let year = date.getFullYear();
+  if (month === 11) {
+    month = 0;
+    year += 1;
+  } else {
+    month += 1;
+  }
+  return `payment_${month}_${year}`;
+};
+const getPaymentsId = (dateToSave) => `payment_${dateToSave.month}_${dateToSave.year}`;
 
 const AssignmentEmailPage = ({ firebase }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isSaved, setSaved] = useState(false);
+  const [isSavedNext, setSavedNext] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
   const [loadingBuildings, setLoadingBuildings] = useState(false);
   const [loadingUsers, setLoadingUsers] = useState(false);
@@ -40,7 +68,13 @@ const AssignmentEmailPage = ({ firebase }) => {
     setLoadingUsers(true);
     setLoadingParams(true);
     setLoadingUserPayments(true);
-    firebase.userPayment(getPaymentsId(date)).on('value', (snapshotUserPayments) => {
+    firebase.userPayment(getNextPaymentsId(date)).on('value', (snapshotUserPayments) => {
+      const savedValues = snapshotUserPayments.val();
+      if (savedValues) {
+        setSavedNext(true);
+      }
+    });
+    firebase.userPayment(getCurrentPaymentsId(date)).on('value', (snapshotUserPayments) => {
       const savedValues = snapshotUserPayments.val();
       setLoadingUserPayments(false);
 
@@ -85,9 +119,7 @@ const AssignmentEmailPage = ({ firebase }) => {
     };
   }, [firebase, date]);
 
-  const onSave = (event) => {
-    setLoadingSave(true);
-    const dateToSave = getDateToSave(date);
+  const saveAssignments = (dateToSave) => {
     const userPayments = {
       params,
       assignments,
@@ -98,8 +130,9 @@ const AssignmentEmailPage = ({ firebase }) => {
       date: dateToSave,
     };
 
+    const paymentsId = getPaymentsId(dateToSave);
     firebase
-      .userPayment(getPaymentsId(date))
+      .userPayment(paymentsId)
       .set(userPayments)
       .then(() => {
         setLoadingSave(false);
@@ -110,7 +143,7 @@ const AssignmentEmailPage = ({ firebase }) => {
       });
 
     firebase
-      .ownerPayment(getPaymentsId(date))
+      .ownerPayment(paymentsId)
       .set(ownerPayments)
       .then(() => {
         setLoadingSave(false);
@@ -119,24 +152,46 @@ const AssignmentEmailPage = ({ firebase }) => {
         setErrorMessage(error);
         setLoadingSave(false);
       });
+  };
+
+  const onSave = (event, isNext) => {
+    setLoadingSave(true);
+    const dateToSave = isNext ? getDateToSaveNext(date) : getDateToSave(date);
+    saveAssignments(dateToSave);
     event.preventDefault();
   };
 
   const isLoading = loadingBuildings || loadingUsers || loadingParams || loadingUserPayments;
   const icon = loadingSave ? 'spinner' : 'save';
+  const getMonthElement = (savedFlag, isNext) => {
+    const month = isNext
+      ? monthsHelper.getNextMonthFromDate(date)
+      : monthsHelper.getMonthFromDate(date);
+    return savedFlag
+      ? (
+        <Typography style={{ marginBottom: 32 }} color="textSecondary">
+          {`Ya está guardado para ${month}`}
+        </Typography>
+      )
+      : (
+        <Button style={{ marginBottom: 32 }} onClick={(event) => onSave(event, isNext)}>
+          <FontAwesomeIcon icon={['far', icon]} style={{ marginRight: 8 }} />
+          {`Guardar para registrar pagos (${month})`}
+        </Button>
+      );
+  };
+  const nextMonthElement = getMonthElement(isSavedNext, true);
+  const currentMonthElement = getMonthElement(isSaved, false);
+
   return (
     <Content>
-      <Grid item xs={12}>
-        {isSaved ? (
-          <Typography style={{ marginBottom: 32 }} color="textSecondary">
-            {`Ya está guardado para ${monthsHelper.getMonthFromDate(date)}`}
-          </Typography>
-        ) : (
-          <Button style={{ marginBottom: 32 }} onClick={(event) => onSave(event)}>
-            <FontAwesomeIcon icon={['far', icon]} style={{ marginRight: 8 }} />
-          Guardar para registrar pagos
-          </Button>
-        )}
+      <Grid item xs={12} container>
+        <Grid item xs={6}>
+          {currentMonthElement}
+        </Grid>
+        <Grid item xs={6}>
+          {nextMonthElement}
+        </Grid>
       </Grid>
       <Grid item sx={12}>
         <CustomError error={errorMessage} />

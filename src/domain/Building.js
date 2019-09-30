@@ -18,7 +18,7 @@ class Building {
 
   getPlaceString(placeId) {
     const place = this.places[placeId];
-    return `${this.name} #${place.number}`;
+    return `${this.name} #${place.number} (${place.owner})`;
   }
 
   // eslint-disable-next-line class-methods-use-this
