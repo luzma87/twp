@@ -9,6 +9,10 @@ class Users {
     }
   }
 
+  getTotalCount() {
+    return this.list.length;
+  }
+
   getSorted(activeOnly) {
     if (activeOnly) {
       return this.getActive().sort(constants.userSort);

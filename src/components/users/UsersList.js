@@ -10,12 +10,13 @@ const UsersList = ({ users, activeOnly }) => {
   if (!(users instanceof Users)) {
     return null;
   }
+
   const list = users.getSorted(activeOnly);
   const activeMessage = activeOnly ? 'sólo activos' : 'todos';
   return (
     <>
       <Typography style={{ marginBottom: 16 }}>
-        {`Mostrando ${list.length} usuarios (${activeMessage})`}
+        {`Mostrando ${list.length} / ${users.getTotalCount()} usuarios (${activeMessage})`}
       </Typography>
       <Hidden smDown>
         <UsersTable list={list} />
