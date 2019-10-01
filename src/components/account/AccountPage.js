@@ -25,6 +25,7 @@ const INITIAL_STATE = {
   isAdmin: false,
   isActive: true,
   parkingMeteors: 1,
+  parkingDifficulty: 1,
   car: {
     brand: '',
     model: '',

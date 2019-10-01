@@ -22,6 +22,7 @@ const PersonForm = (props) => {
     bank,
     isActive,
     parkingMeteors,
+    parkingDifficulty,
   } = personValues;
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}>
@@ -98,7 +99,20 @@ const PersonForm = (props) => {
             onChange={(event) => onPersonChange(event)}
           />
         )}
-        label="Parking"
+        label="Mi parking skill"
+        labelPlacement="top"
+        style={{ marginTop: 8, textAlign: 'left' }}
+      />
+      <FormControlLabel
+        value="top"
+        control={(
+          <MeteorRating
+            id="parkingDifficulty"
+            value={parkingDifficulty}
+            onChange={(event) => onPersonChange(event)}
+          />
+        )}
+        label="Dificultad de mi puesto"
         labelPlacement="top"
         style={{ marginTop: 8, textAlign: 'left' }}
       />
