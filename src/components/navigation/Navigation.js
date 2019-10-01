@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   AppBar, Hidden, IconButton, Toolbar, Tooltip,
 } from '@material-ui/core';
@@ -8,6 +7,7 @@ import React from 'react';
 import roles from '../../constants/roles';
 import routes from '../../constants/routes';
 import shapes from '../../constants/shapes';
+import CustomIcon from '../_common/CustomIcon';
 import AuthUserContext from '../session/context';
 import SignOutButton from '../signOut/SignOutButton';
 import AdminMenu from './AdminMenu';
@@ -44,17 +44,17 @@ const NavigationAuth = ({ authUser, theme }) => {
   const adminNav = userRoles[roles.ADMIN] ? (
     <>
       <Hidden smDown>
-        <NavBarIconButton id="people" title="Personas" icon="user-astronaut" to={routes.USERS} />
-        <NavBarIconButton id="places" title="Puestos" icon="warehouse" to={routes.BUILDINGS} />
+        <NavBarIconButton id="people" title="Personas" icon="user" themed to={routes.USERS} />
+        <NavBarIconButton id="places" title="Puestos" icon="building" themed to={routes.BUILDINGS} />
       </Hidden>
-      <NavBarIconButton id="assignments" title="Asignaciones" icon="rocket" to={routes.ASSIGNMENTS} />
+      <NavBarIconButton id="assignments" title="Asignaciones" icon="car" themed to={routes.ASSIGNMENTS} />
       <Hidden smDown>
         <NavBarIconButton id="email" title="Email" icon="envelope-open-dollar" to={routes.ASSIGNMENT_EMAIL} />
       </Hidden>
       <NavBarIconButton id="owner-payments" title="Pagos" icon="money-check-edit-alt" to={routes.PAYMENTS} />
       <NavBarIconButton id="user-payments" title="Pagos Usuarios" icon="sack-dollar" to={routes.ALL_USERS_PAYMENTS} />
       <Hidden smDown>
-        <NavBarIconButton id="params" title="Params" icon="alicorn" to={routes.PARAMS} />
+        <NavBarIconButton id="params" title="Params" icon="admin" themed to={routes.PARAMS} />
       </Hidden>
     </>
   ) : null;
@@ -69,7 +69,7 @@ const NavigationAuth = ({ authUser, theme }) => {
           onClick={handleMenu}
           color="secondary"
         >
-          <FontAwesomeIcon icon={['far', 'alicorn']} />
+          <CustomIcon icon="admin" themed />
         </IconButton>
       </Tooltip>
       <AdminMenu anchorEl={anchorEl} handleClose={handleClose} open={open} />

@@ -12,7 +12,7 @@ import TextWithIcon from '../_common/TextWithIcon';
 
 const BuildingCard = ({ building, index }) => {
   const moreInfo = building.observations
-    ? <TextWithIcon text={building.observations} icon="info-square" />
+    ? <TextWithIcon text={building.observations} icon="place" themed />
     : null;
   const places = Object.values(building.places);
   return (
@@ -21,7 +21,8 @@ const BuildingCard = ({ building, index }) => {
         <div style={{ display: 'flex', alignItems: 'baseline' }}>
           <CardTitle
             label={`${index}. ${building.name}`}
-            icon="warehouse"
+            icon="building"
+            themed
             isActive={building.isActive}
           />
         </div>
@@ -31,7 +32,7 @@ const BuildingCard = ({ building, index }) => {
         <ul className="fa-ul">
           {places.map((place) => (
             <li key={place.id}>
-              <ActiveIndicator icon="draw-square" isActive={place.isActive} listItem />
+              <ActiveIndicator icon="place" themed isActive={place.isActive} listItem />
               {`${building.getPlaceInfo(place)}, `}
               <MeteorRating id="placeDifficulty" value={place.difficulty} compact />
             </li>

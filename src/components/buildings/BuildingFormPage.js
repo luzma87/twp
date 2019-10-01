@@ -156,14 +156,14 @@ const BuildingFormPage = ({ firebase, history, match }) => {
               </Grid>
             </Grid>
             <Grid item xs={12} md={6}>
-              <CardTitle label="Edificio" icon="warehouse" />
+              <CardTitle label="Edificio" icon="building" themed />
               <BuildingForm
                 onBuildingChange={(event) => onBuildingChange(event)}
                 buildingValues={buildingValues}
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              <CardTitle label="Puesto" icon="draw-square" />
+              <CardTitle label="Puesto" icon="place" themed />
               <PlacesSummary
                 onPlaceChange={(event) => onPlaceChange(event)}
                 onAddPlace={() => onAddPlace()}

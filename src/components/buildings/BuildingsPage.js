@@ -44,13 +44,13 @@ const BuildingsPage = ({ firebase, theme }) => {
         </Grid>
         <Grid item>
           <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(true)}>
-            <ActiveIndicator isActive icon="warehouse" />
+            <ActiveIndicator isActive icon="building" themed />
             Mostrar solo activos
           </Button>
         </Grid>
         <Grid item>
           <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(false)}>
-            <ActiveIndicator isActive={false} icon="warehouse" />
+            <ActiveIndicator isActive={false} icon="building" themed />
             Mostrar todos
           </Button>
         </Grid>

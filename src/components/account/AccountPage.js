@@ -1,5 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Box, Button, Grid, Paper, Typography, } from '@material-ui/core';
+import {
+  Box, Button, Grid, Paper, Typography,
+} from '@material-ui/core';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -89,7 +91,7 @@ const AccountPage = ({ authUser, firebase }) => {
         <Paper style={{ padding: 16 }}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-              <CardTitle label="Actualizar mis datos" icon="user-astronaut" />
+              <CardTitle label="Actualizar mis datos" icon="user" themed />
               <PersonForm
                 onPersonChange={(event) => onPersonChange(event)}
                 personValues={personValues}
@@ -99,7 +101,7 @@ const AccountPage = ({ authUser, firebase }) => {
             </Grid>
 
             <Grid item xs={12} md={6}>
-              <CardTitle label="Actualizar mi auto" icon="rocket" />
+              <CardTitle label="Actualizar mi auto" icon="car" themed />
               <CarForm
                 onCarChange={(event) => onCarChange(event)}
                 carValues={personValues.car}

@@ -1,12 +1,12 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Paper, Table, TableBody, TableCell, TableHead, TableRow,
 } from '@material-ui/core';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
-import ActiveIndicator from "../_common/ActiveIndicator";
+import ActiveIndicator from '../_common/ActiveIndicator';
+import CustomIcon from '../_common/CustomIcon';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 
 const UsersTable = ({ list }) => (
@@ -28,7 +28,7 @@ const UsersTable = ({ list }) => (
           <TableRow key={person.uid}>
             <TableCell>{index + 1}</TableCell>
             <TableCell>
-              <ActiveIndicator isActive={person.isActive} icon="user-astronaut" />
+              <ActiveIndicator isActive={person.isActive} icon="user" themed />
               <Link to={`${routes.USERS_EDIT_ID}${person.uid}`} style={{ color: 'black' }}>
                 {person.name}
               </Link>
@@ -38,10 +38,7 @@ const UsersTable = ({ list }) => (
             </TableCell>
             <TableCell>
               {person.getIsAdmin() ? (
-                <FontAwesomeIcon
-                  icon={['far', 'alicorn']}
-                  size="2x"
-                />
+                <CustomIcon icon="admin" themed size="2x" />
               ) : null}
             </TableCell>
             <TableCell>

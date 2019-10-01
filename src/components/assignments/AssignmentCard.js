@@ -15,7 +15,7 @@ const AssignmentCard = ({
   const placeElement = place
     ? (
       <div style={{ display: 'flex', alignItems: 'baseline' }}>
-        <TextWithIcon text={building.getPlaceString(placeId)} icon="draw-square" textFilter={textFilter} />
+        <TextWithIcon text={building.getPlaceString(placeId)} icon="place" themed textFilter={textFilter} />
         <MeteorRating id="placeDifficulty" compact value={place.difficulty} />
       </div>
     )
@@ -27,11 +27,12 @@ const AssignmentCard = ({
           <CardTitle
             textFilter={textFilter}
             label={`${index}. ${user.name}`}
-            icon="user-astronaut"
+            icon="user"
+            themed
           />
           <MeteorRating id={user.uid} value={user.parkingMeteors} compact />
         </div>
-        <TextWithIcon text={user.getCarString()} icon="rocket" />
+        <TextWithIcon text={user.getCarString()} icon="car" themed />
         {placeElement}
       </CardContent>
       <CardActions>

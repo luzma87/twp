@@ -79,7 +79,7 @@ const ParamsPage = ({ firebase }) => {
         <Paper style={{ padding: 32 }}>
           <Grid container>
             <Grid item xs={12}>
-              <CardTitle label="Params" icon="alicorn" />
+              <CardTitle label="Params" icon="admin" themed />
             </Grid>
             <Grid item xs={12} container spacing={2}>
               <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column' }}>

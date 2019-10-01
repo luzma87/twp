@@ -28,7 +28,7 @@ const BuildingsTable = ({ list }) => (
                 <TableRow key={building.id}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>
-                    <ActiveIndicator isActive={building.isActive} icon="warehouse" />
+                    <ActiveIndicator isActive={building.isActive} icon="building" themed />
                     <Link to={`${routes.BUILDINGS_EDIT_ID}${building.id}`} style={{ color: 'black' }}>
                       {building.name}
                     </Link>
@@ -42,7 +42,7 @@ const BuildingsTable = ({ list }) => (
                   <TableCell>
                     {places.map((place) => (
                       <div key={place.id}>
-                        <ActiveIndicator isActive={place.isActive} icon="draw-square" />
+                        <ActiveIndicator isActive={place.isActive} icon="place" themed />
                         {`${building.getPlaceInfo(place)}, `}
                         <MeteorRating id="placeDifficulty" value={place.difficulty} compact />
                       </div>

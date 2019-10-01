@@ -149,7 +149,7 @@ const UserFormPage = ({ firebase, history, match }) => {
               <CustomError error={errorMessage} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <CardTitle label="Persona" icon="user-astronaut" />
+              <CardTitle label="Persona" icon="user" themed />
               <PersonForm
                 onPersonChange={(event) => onPersonChange(event)}
                 personValues={personValues}
@@ -157,7 +157,7 @@ const UserFormPage = ({ firebase, history, match }) => {
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              <CardTitle label="Auto" icon="rocket" />
+              <CardTitle label="Auto" icon="car" themed />
               <CarForm
                 onCarChange={(event) => onCarChange(event)}
                 carValues={car}

@@ -33,7 +33,7 @@ const PaymentCard = ({ payment, index, onPay }) => {
             }}
           />
         </div>
-        <TextWithIcon icon="warehouse" text={building.name} />
+        <TextWithIcon icon="building" text={building.name} themed />
         <TextWithIcon icon="at" text={ownerInfo} />
         <TextWithIcon icon="piggy-bank" text={ownerPayment} />
         <Typography style={{ marginTop: 16 }}>
@@ -42,7 +42,7 @@ const PaymentCard = ({ payment, index, onPay }) => {
         <ul className="fa-ul">
           {places.map((place) => (
             <li key={place.id}>
-              <ActiveIndicator isActive={place.isActive} icon="draw-square" />
+              <ActiveIndicator isActive={place.isActive} icon="place" themed />
               <span style={{ marginRight: 16 }}>
                 {place.number}
               </span>

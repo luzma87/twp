@@ -20,10 +20,10 @@ const AdminMenu = ({ anchorEl, open, handleClose }) => (
     open={open}
     onClose={handleClose}
   >
-    <AdminMenuItem text="Personas" icon="user-astronaut" to={routes.USERS} handleClose={handleClose} />
-    <AdminMenuItem text="Puestos" icon="warehouse" to={routes.BUILDINGS} handleClose={handleClose} />
+    <AdminMenuItem text="Personas" icon="user" themed to={routes.USERS} handleClose={handleClose} />
+    <AdminMenuItem text="Puestos" icon="building" themed to={routes.BUILDINGS} handleClose={handleClose} />
     <AdminMenuItem text="Email" icon="envelope-open-dollar" to={routes.ASSIGNMENT_EMAIL} handleClose={handleClose} />
-    <AdminMenuItem text="Params" icon="alicorn" to={routes.PARAMS} handleClose={handleClose} />
+    <AdminMenuItem text="Params" icon="admin" themed to={routes.PARAMS} handleClose={handleClose} />
   </Menu>
 );
 

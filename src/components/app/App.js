@@ -1,5 +1,5 @@
 import {
-  blue, green, red, yellow,
+  blue, blueGrey, green, pink, red, yellow,
 } from '@material-ui/core/colors';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -29,6 +29,13 @@ const theme = createMuiTheme({
     secondary: yellow,
     active: green,
     inactive: red,
+  },
+  icons: {
+    building: 'warehouse',
+    place: 'draw-square',
+    user: 'user-astronaut',
+    admin: 'alicorn',
+    car: 'rocket',
   },
 });
 

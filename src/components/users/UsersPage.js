@@ -42,13 +42,13 @@ const UsersPage = ({ firebase }) => {
         </Grid>
         <Grid item>
           <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(true)}>
-            <ActiveIndicator isActive icon="user-astronaut" />
+            <ActiveIndicator isActive icon="user" themed />
               Mostrar solo activos
           </Button>
         </Grid>
         <Grid item>
           <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(false)}>
-            <ActiveIndicator isActive={false} icon="user-astronaut" />
+            <ActiveIndicator isActive={false} icon="user" themed />
               Mostrar todos
           </Button>
         </Grid>
