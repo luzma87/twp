@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
+import ActiveIndicator from '../_common/ActiveIndicator';
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
 import CustomLoader from '../_common/CustomLoader';
@@ -107,23 +108,25 @@ const PaymentsPage = ({ firebase }) => {
       </Grid>
       <Grid item xs={12}>
         <Button style={{ marginBottom: 16 }} onClick={() => setPositiveOnly(true)}>
-          <FontAwesomeIcon icon={['far', 'money-check-edit-alt']} style={{ marginRight: 8 }} color="#2E7D32" />
-              Mostrar solo &gt;0
+          <ActiveIndicator isActive icon="money-check-edit-alt" />
+          Mostrar solo &gt;0
         </Button>
         <Button style={{ marginBottom: 16 }} onClick={() => setPositiveOnly(false)}>
-          <FontAwesomeIcon icon={['far', 'money-check-edit-alt']} style={{ marginRight: 8 }} color="#B71C1C" />
-              Mostrar todos
+          <ActiveIndicator isActive={false} icon="money-check-edit-alt" />
+          Mostrar todos
         </Button>
       </Grid>
-      {payments
-        ? (
-          <PaymentsList
-            payments={payments.payments}
-            positiveOnly={positiveOnly}
-            onPay={(event) => onPay(event)}
-          />
-        )
-        : null}
+      <Grid item xs={12}>
+        {payments
+          ? (
+            <PaymentsList
+              payments={payments.payments}
+              positiveOnly={positiveOnly}
+              onPay={(event) => onPay(event)}
+            />
+          )
+          : null}
+      </Grid>
     </Content>
   );
 };

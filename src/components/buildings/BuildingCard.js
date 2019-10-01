@@ -1,16 +1,14 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Card, CardActions, CardContent, Typography,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import routes from '../../constants/routes';
+import ActiveIndicator from '../_common/ActiveIndicator';
 import CardTitle from '../_common/CardTitle';
 import CustomButton from '../_common/CustomButton';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 import TextWithIcon from '../_common/TextWithIcon';
-
-const getIconColor = (active) => (active ? '#2E7D32' : '#B71C1C');
 
 const BuildingCard = ({ building, index }) => {
   const moreInfo = building.observations
@@ -24,6 +22,7 @@ const BuildingCard = ({ building, index }) => {
           <CardTitle
             label={`${index}. ${building.name}`}
             icon="warehouse"
+            isActive={building.isActive}
           />
         </div>
         <TextWithIcon text={building.address} icon="map-marked-alt" />
@@ -32,11 +31,7 @@ const BuildingCard = ({ building, index }) => {
         <ul className="fa-ul">
           {places.map((place) => (
             <li key={place.id}>
-              <FontAwesomeIcon
-                icon={['far', 'draw-square']}
-                listItem
-                color={getIconColor(place.isActive)}
-              />
+              <ActiveIndicator icon="draw-square" isActive={place.isActive} listItem />
               {`${building.getPlaceInfo(place)}, `}
               <MeteorRating id="placeDifficulty" value={place.difficulty} compact />
             </li>
@@ -44,7 +39,7 @@ const BuildingCard = ({ building, index }) => {
         </ul>
       </CardContent>
       <CardActions>
-        <CustomButton to={`${routes.BUILDINGS_EDIT_ID}${building.uid}`} size="small">
+        <CustomButton to={`${routes.BUILDINGS_EDIT_ID}${building.id}`} size="small">
           Editar
         </CustomButton>
       </CardActions>

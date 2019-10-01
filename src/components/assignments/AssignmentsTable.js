@@ -1,12 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow,
-} from '@material-ui/core';
-import React from 'react';
+import { IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import Highlighter from 'react-highlight-words';
+import React from 'react';
+import CustomHighlighter from '../_common/CustomHighlighter';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
-
 
 const AssignmentsTable = ({ list, textFilter, onDelete }) => (
   <Paper>
@@ -28,12 +25,7 @@ const AssignmentsTable = ({ list, textFilter, onDelete }) => (
             <TableRow key={user.uid}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>
-                <Highlighter
-                  highlightClassName="highlighter"
-                  searchWords={[textFilter]}
-                  autoEscape
-                  textToHighlight={user.name}
-                />
+                <CustomHighlighter filter={[textFilter]} text={user.name} />
                 <MeteorRating id="userSkill" compact value={user.parkingMeteors} />
               </TableCell>
               <TableCell>
@@ -42,12 +34,7 @@ const AssignmentsTable = ({ list, textFilter, onDelete }) => (
               <TableCell>
                 {place ? (
                   <>
-                    <Highlighter
-                      highlightClassName="highlighter"
-                      searchWords={[textFilter]}
-                      autoEscape
-                      textToHighlight={`${building.getPlaceString(placeId)}`}
-                    />
+                    <CustomHighlighter filter={[textFilter]} text={`${building.getPlaceString(placeId)}`} />
                     <MeteorRating id="placeDifficulty" compact value={place.difficulty} />
                     [
                     <MeteorRating id="userPlaceDifficulty" compact value={user.parkingDifficulty} />

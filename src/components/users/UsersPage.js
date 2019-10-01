@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -6,6 +5,7 @@ import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import routes from '../../constants/routes';
 import Users from '../../domain/Users';
+import ActiveIndicator from '../_common/ActiveIndicator';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
 import CustomLoader from '../_common/CustomLoader';
@@ -42,13 +42,13 @@ const UsersPage = ({ firebase }) => {
         </Grid>
         <Grid item>
           <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(true)}>
-            <FontAwesomeIcon icon={['far', 'user-astronaut']} style={{ marginRight: 8 }} color="#2E7D32" />
+            <ActiveIndicator isActive icon="user-astronaut" />
               Mostrar solo activos
           </Button>
         </Grid>
         <Grid item>
           <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(false)}>
-            <FontAwesomeIcon icon={['far', 'user-astronaut']} style={{ marginRight: 8 }} color="#B71C1C" />
+            <ActiveIndicator isActive={false} icon="user-astronaut" />
               Mostrar todos
           </Button>
         </Grid>

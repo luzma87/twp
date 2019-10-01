@@ -8,7 +8,6 @@ import MeteorRating from '../_common/meteorRating/MeteorRating';
 import TextWithIcon from '../_common/TextWithIcon';
 
 const getIcon = (isAdmin) => (isAdmin ? 'alicorn' : 'user-astronaut');
-const getIconColor = (active) => (active ? '#2E7D32' : '#B71C1C');
 
 const UserCard = ({ person, index }) => (
   <Card>
@@ -17,7 +16,7 @@ const UserCard = ({ person, index }) => (
         <CardTitle
           label={`${index}. ${person.name}`}
           icon={getIcon(person.getIsAdmin())}
-          iconColor={getIconColor(person.isActive)}
+          isActive={person.isActive}
         />
         <MeteorRating id={person.uid} value={person.parkingMeteors} compact />
       </div>

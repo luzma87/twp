@@ -11,8 +11,8 @@ const PasswordForgetPage = () => (
           marginTop: 40, padding: 24, textAlign: 'center',
         }}
       >
-        <Typography gutterBottom color="textSecondary" variant="h4">
-            Recuperar password
+        <Typography gutterBottom color="primary" variant="h4">
+          Recuperar password
         </Typography>
         <PasswordForgetForm />
         <div style={{ textAlign: 'right' }}>

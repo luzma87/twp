@@ -6,6 +6,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
+import ActiveIndicator from "../_common/ActiveIndicator";
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 
 const UsersTable = ({ list }) => (
@@ -27,10 +28,7 @@ const UsersTable = ({ list }) => (
           <TableRow key={person.uid}>
             <TableCell>{index + 1}</TableCell>
             <TableCell>
-              <FontAwesomeIcon
-                icon={['far', 'user-astronaut']}
-                style={{ marginRight: 8, color: person.isActive ? '#2E7D32' : '#B71C1C' }}
-              />
+              <ActiveIndicator isActive={person.isActive} icon="user-astronaut" />
               <Link to={`${routes.USERS_EDIT_ID}${person.uid}`} style={{ color: 'black' }}>
                 {person.name}
               </Link>

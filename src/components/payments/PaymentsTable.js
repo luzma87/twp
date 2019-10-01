@@ -1,11 +1,11 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Checkbox, Paper, Table, TableBody, TableCell, TableHead, TableRow,
 } from '@material-ui/core';
 import moment from 'moment';
 import numeral from 'numeral';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import ActiveIndicator from '../_common/ActiveIndicator';
 
 const PaymentsTable = ({ list, onPay }) => (
   <Paper>
@@ -32,10 +32,7 @@ const PaymentsTable = ({ list, onPay }) => (
             <TableRow key={ownerKey}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>
-                <FontAwesomeIcon
-                  icon={['far', 'money-check-edit-alt']}
-                  style={{ marginRight: 8, color: total > 0 ? '#2E7D32' : '#B71C1C' }}
-                />
+                <ActiveIndicator isActive={total > 0} icon="money-check-edit-alt" />
                 {building.name}
               </TableCell>
               <TableCell>{owner}</TableCell>

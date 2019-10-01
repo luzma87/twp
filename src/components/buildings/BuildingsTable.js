@@ -1,11 +1,11 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Paper, Table, TableBody, TableCell, TableHead, TableRow,
 } from '@material-ui/core';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
+import ActiveIndicator from '../_common/ActiveIndicator';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 
 const BuildingsTable = ({ list }) => (
@@ -28,10 +28,7 @@ const BuildingsTable = ({ list }) => (
                 <TableRow key={building.id}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>
-                    <FontAwesomeIcon
-                      icon={['far', 'warehouse']}
-                      style={{ marginRight: 8, color: building.isActive ? '#2E7D32' : '#B71C1C' }}
-                    />
+                    <ActiveIndicator isActive={building.isActive} icon="warehouse" />
                     <Link to={`${routes.BUILDINGS_EDIT_ID}${building.id}`} style={{ color: 'black' }}>
                       {building.name}
                     </Link>
@@ -45,10 +42,7 @@ const BuildingsTable = ({ list }) => (
                   <TableCell>
                     {places.map((place) => (
                       <div key={place.id}>
-                        <FontAwesomeIcon
-                          icon={['far', 'draw-square']}
-                          style={{ marginRight: 8, color: place.isActive ? '#2E7D32' : '#B71C1C' }}
-                        />
+                        <ActiveIndicator isActive={place.isActive} icon="draw-square" />
                         {`${building.getPlaceInfo(place)}, `}
                         <MeteorRating id="placeDifficulty" value={place.difficulty} compact />
                       </div>

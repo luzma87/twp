@@ -82,7 +82,7 @@ const SignInFormBase = ({ firebase, history }) => {
         onClick={(event) => onSubmit(event)}
       >
         <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
-            Entrar
+        Entrar
       </Button>
       <CustomError error={error} />
     </form>

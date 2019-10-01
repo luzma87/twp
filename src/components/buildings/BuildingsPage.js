@@ -1,11 +1,13 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Grid } from '@material-ui/core';
+import { withTheme } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
+
 import conditions from '../../constants/conditions';
 import routes from '../../constants/routes';
 import Buildings from '../../domain/Buildings';
+import ActiveIndicator from '../_common/ActiveIndicator';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
 import CustomLoader from '../_common/CustomLoader';
@@ -13,11 +15,10 @@ import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
 import BuildingsList from './BuildingsList';
 
-const BuildingsPage = ({ firebase }) => {
+const BuildingsPage = ({ firebase, theme }) => {
   const [isLoading, setLoading] = useState(false);
   const [activeOnly, setActiveOnly] = useState(true);
   const [buildings, setBuildings] = useState([]);
-
 
   useEffect(() => {
     setLoading(true);
@@ -43,14 +44,14 @@ const BuildingsPage = ({ firebase }) => {
         </Grid>
         <Grid item>
           <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(true)}>
-            <FontAwesomeIcon icon={['far', 'warehouse']} style={{ marginRight: 8 }} color="#2E7D32" />
-          Mostrar solo activos
+            <ActiveIndicator isActive icon="warehouse" />
+            Mostrar solo activos
           </Button>
         </Grid>
         <Grid item>
           <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(false)}>
-            <FontAwesomeIcon icon={['far', 'warehouse']} style={{ marginRight: 8 }} color="#B71C1C" />
-          Mostrar todos
+            <ActiveIndicator isActive={false} icon="warehouse" />
+            Mostrar todos
           </Button>
         </Grid>
       </Grid>
@@ -63,8 +64,10 @@ const BuildingsPage = ({ firebase }) => {
 
 BuildingsPage.propTypes = {
   firebase: PropTypes.any.isRequired,
+  theme: PropTypes.any.isRequired,
 };
 export default compose(
   withAuthorization(conditions.isAdminUser),
   withFirebase,
+  withTheme,
 )(BuildingsPage);

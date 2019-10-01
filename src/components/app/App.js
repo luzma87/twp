@@ -1,3 +1,8 @@
+import {
+  blue, green, red, yellow,
+} from '@material-ui/core/colors';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import routes from '../../constants/routes';
@@ -18,10 +23,18 @@ import UsersPaymentsPage from '../userPayments/UsersPaymentsPage';
 import UserFormPage from '../users/UserFormPage';
 import UsersPage from '../users/UsersPage';
 
+const theme = createMuiTheme({
+  palette: {
+    primary: blue,
+    secondary: yellow,
+    active: green,
+    inactive: red,
+  },
+});
 
 const App = () => (
   <BrowserRouter>
-    <div>
+    <ThemeProvider theme={theme}>
       <Navigation />
       <Route exact path={routes.HOME} component={UserPaymentPage} />
       <Route path={routes.SIGN_IN} component={SignInPage} />
@@ -45,7 +58,7 @@ const App = () => (
 
       <Route path={routes.USER_PAYMENT} component={UserPaymentPage} />
       <Route path={routes.ALL_USERS_PAYMENTS} component={UsersPaymentsPage} />
-    </div>
+    </ThemeProvider>
   </BrowserRouter>
 );
 

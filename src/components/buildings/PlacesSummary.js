@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Box, Grid, IconButton, Tooltip,
 } from '@material-ui/core';
+import { withTheme } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
 import constants from '../../constants/constants';
@@ -10,7 +11,7 @@ import PlaceForm from './PlaceForm';
 
 const PlacesSummary = (props) => {
   const {
-    placeValues, onPlaceChange, onAddPlace, onDeletePlace, onEditPlace, allPlaces,
+    placeValues, onPlaceChange, onAddPlace, onDeletePlace, onEditPlace, allPlaces, theme,
   } = props;
   return (
     <>
@@ -26,7 +27,11 @@ const PlacesSummary = (props) => {
           color="background.paper"
           key={place.id}
           style={{
-            padding: 8, marginTop: 8, border: 'solid 1px #333', borderRadius: 5,
+            padding: 8,
+            marginTop: 8,
+            border: 'solid 1px',
+            borderRadius: 5,
+            borderColor: theme.palette.grey[600],
           }}
         >
           <Grid container justify="space-between">
@@ -68,10 +73,11 @@ PlacesSummary.propTypes = {
   onDeletePlace: PropTypes.func.isRequired,
   onEditPlace: PropTypes.func.isRequired,
   allPlaces: PropTypes.shape({}).isRequired,
+  theme: PropTypes.any.isRequired,
 };
 
 PlacesSummary.defaultProps = {
   placeValues: {},
 };
 
-export default PlacesSummary;
+export default withTheme(PlacesSummary);

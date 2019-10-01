@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Card, CardContent, Checkbox, Typography,
 } from '@material-ui/core';
@@ -6,10 +5,9 @@ import moment from 'moment';
 import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import React from 'react';
+import ActiveIndicator from '../_common/ActiveIndicator';
 import CardTitle from '../_common/CardTitle';
 import TextWithIcon from '../_common/TextWithIcon';
-
-const getIconColor = (active) => (active ? '#2E7D32' : '#B71C1C');
 
 const PaymentCard = ({ payment, index, onPay }) => {
   const {
@@ -23,7 +21,7 @@ const PaymentCard = ({ payment, index, onPay }) => {
           <CardTitle
             label={`${index}. ${owner}`}
             icon="money-check-edit-alt"
-            iconColor={getIconColor(total > 0)}
+            isActive={total > 0}
           />
           <Checkbox
             name={id}
@@ -44,11 +42,7 @@ const PaymentCard = ({ payment, index, onPay }) => {
         <ul className="fa-ul">
           {places.map((place) => (
             <li key={place.id}>
-              <FontAwesomeIcon
-                icon={['far', 'draw-square']}
-                listItem
-                color={getIconColor(place.isActive)}
-              />
+              <ActiveIndicator isActive={place.isActive} icon="draw-square" />
               <span style={{ marginRight: 16 }}>
                 {place.number}
               </span>

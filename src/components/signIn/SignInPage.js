@@ -18,8 +18,8 @@ const SignInPage = ({ firebase }) => {
             marginTop: 40, padding: 24, textAlign: 'center',
           }}
         >
-          <Typography gutterBottom color="textSecondary" variant="h4">
-                        TW Parking
+          <Typography gutterBottom color="primary" variant="h4">
+            TW Parking
           </Typography>
           <SignInForm />
           <div style={{ textAlign: 'right' }}>

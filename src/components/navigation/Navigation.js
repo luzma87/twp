@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   AppBar, Hidden, IconButton, Toolbar, Tooltip,
 } from '@material-ui/core';
+import { withTheme } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
 import roles from '../../constants/roles';
@@ -14,29 +15,19 @@ import NavBarHybridButton from './NavBarHybridButton';
 import NavBarIconButton from './NavBarIconButton';
 import NavBarTextLink from './NavBarTextLink';
 
-const Navigation = () => (
-  <div>
-    <AuthUserContext.Consumer>
-      {(authUser) => (authUser
-        ? <NavigationAuth authUser={authUser} />
-        : null)}
-    </AuthUserContext.Consumer>
-  </div>
-);
-
-const myPaymentsButton = (isAdmin) => (isAdmin
+const myPaymentsButton = (isAdmin, theme) => (isAdmin
   ? (
     <NavBarIconButton
       id="my-payments"
       title="Mis pagos"
       icon="hand-holding-usd"
       to={routes.USER_PAYMENT}
-      color="#CD3564"
+      color={theme.palette.secondary.dark}
     />
   )
   : <NavBarHybridButton title="Mis pagos" icon="hand-holding-usd" to={routes.USER_PAYMENT} color="secondary" />);
 
-const NavigationAuth = ({ authUser }) => {
+const NavigationAuth = ({ authUser, theme }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -76,7 +67,7 @@ const NavigationAuth = ({ authUser }) => {
           aria-controls="menu-appbar"
           aria-haspopup="true"
           onClick={handleMenu}
-          color="inherit"
+          color="secondary"
         >
           <FontAwesomeIcon icon={['far', 'alicorn']} />
         </IconButton>
@@ -90,7 +81,7 @@ const NavigationAuth = ({ authUser }) => {
       <Toolbar style={{ justifyContent: 'space-between' }}>
         <div className="navbar-part">
           <NavBarTextLink to={routes.HOME} text="TWP" title="Inicio" />
-          {myPaymentsButton(userRoles[roles.ADMIN])}
+          {myPaymentsButton(userRoles[roles.ADMIN], theme)}
           {adminNav}
         </div>
 
@@ -106,6 +97,21 @@ const NavigationAuth = ({ authUser }) => {
 
 NavigationAuth.propTypes = {
   authUser: PropTypes.shape(shapes.user).isRequired,
+  theme: PropTypes.any.isRequired,
 };
 
-export default Navigation;
+const Navigation = ({ theme }) => (
+  <div>
+    <AuthUserContext.Consumer>
+      {(authUser) => (authUser
+        ? <NavigationAuth authUser={authUser} theme={theme} />
+        : null)}
+    </AuthUserContext.Consumer>
+  </div>
+);
+
+Navigation.propTypes = {
+  theme: PropTypes.any.isRequired,
+};
+
+export default withTheme(Navigation);
