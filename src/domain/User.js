@@ -10,6 +10,7 @@ class User {
     this.isAdmin = userObj.isAdmin;
     this.isActive = userObj.isActive;
     this.parkingMeteors = userObj.parkingMeteors;
+    this.parkingDifficulty = userObj.parkingDifficulty;
     this.roles = userObj.roles;
     this.car = userObj.car;
   }

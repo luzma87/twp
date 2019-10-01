@@ -49,6 +49,9 @@ const AssignmentsTable = ({ list, textFilter, onDelete }) => (
                       textToHighlight={`${building.getPlaceString(placeId)}`}
                     />
                     <MeteorRating id="placeDifficulty" compact value={place.difficulty} />
+                    [
+                    <MeteorRating id="userPlaceDifficulty" compact value={user.parkingDifficulty} />
+                    ]
                   </>
                 ) : null}
               </TableCell>
