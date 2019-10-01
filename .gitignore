@@ -35,3 +35,4 @@ db.json
 
 cypress/screenshots
 cypress/videos
+cypress/results

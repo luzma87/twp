@@ -15,7 +15,7 @@ const INITIAL_STATE = {
   error: null,
 };
 
-const PasswordChangeForm = ({ firebase, user, onPasswordChanged }) => {
+const PasswordChangeForm = ({ firebase, user }) => {
   const [values, setValues] = useState(INITIAL_STATE);
   const [isLoading, setLoading] = useState(false);
   const [isDone, setDone] = useState(false);
@@ -35,7 +35,6 @@ const PasswordChangeForm = ({ firebase, user, onPasswordChanged }) => {
         setValues(INITIAL_STATE);
         setLoading(false);
         setDone(true);
-        onPasswordChanged();
       })
       .catch((error) => {
         setValues({ ...values, error });
@@ -115,7 +114,6 @@ const PasswordChangeForm = ({ firebase, user, onPasswordChanged }) => {
 };
 
 PasswordChangeForm.propTypes = {
-  onPasswordChanged: PropTypes.func.isRequired,
   firebase: PropTypes.any.isRequired,
   user: PropTypes.any,
 };

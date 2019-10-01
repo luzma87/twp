@@ -138,12 +138,7 @@ const AccountPage = ({ authUser, firebase }) => {
                   {`Último cambio de password: ${lastPassChange}`}
                 </Typography>
               </Box>
-              <PasswordChangeForm
-                user={authUser}
-                onPasswordChanged={() => {
-                  setValues({ ...personValues, lastPassChange: moment().format() });
-                }}
-              />
+              <PasswordChangeForm user={authUser} />
             </Grid>
           </Grid>
         </Paper>

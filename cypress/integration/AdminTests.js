@@ -6,8 +6,8 @@ describe('As an admin', () => {
     const signInPage = new SignInPage();
     const userPaymentPage = new UserPaymentPage();
     signInPage.visit();
-    signInPage.fillEmail('luzma_87@yahoo.com');
-    signInPage.fillPassword('234234');
+    signInPage.fillEmail('lmunda@thoughtworks.com');
+    signInPage.fillPassword('123123');
     cy.get('[data-cy=navbar]')
       .should('not.exist');
     signInPage.submitLogin();

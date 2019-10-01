@@ -47,8 +47,7 @@ class Firebase {
     return this.auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         this.user(authUser.uid)
-          .once('value')
-          .then((snapshot) => {
+          .on('value', (snapshot) => {
             const dbUser = snapshot.val();
             if (dbUser) {
               if (!dbUser.roles) {
