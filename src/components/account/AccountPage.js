@@ -1,7 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  Box, Button, Grid, Paper, Typography,
-} from '@material-ui/core';
+import { Box, Button, Grid, Paper, Typography, } from '@material-ui/core';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -37,6 +35,7 @@ const INITIAL_STATE = {
 const AccountPage = ({ authUser, firebase }) => {
   const [personValues, setValues] = useState(INITIAL_STATE);
   const [isLoading, setLoading] = useState(false);
+  const [isSaved, setSaved] = useState(false);
 
   useEffect(() => {
     setValues({ ...INITIAL_STATE, ...authUser });
@@ -62,6 +61,10 @@ const AccountPage = ({ authUser, firebase }) => {
       .user(personValues.uid)
       .set(personValues).then(() => {
         setLoading(false);
+        setSaved(true);
+        setTimeout(() => {
+          setSaved(false);
+        }, 3000);
       });
     event.preventDefault();
   };
@@ -118,6 +121,19 @@ const AccountPage = ({ authUser, firebase }) => {
                 </Button>
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            {isSaved ? (
+              <Box
+                bgcolor="secondary.main"
+                color="secondary.contrastText"
+                style={{ padding: 8, borderRadius: 8, marginTop: 16 }}
+              >
+                <Typography>
+                  Información actualizada
+                </Typography>
+              </Box>
+            ) : null}
           </Grid>
         </Paper>
       </Grid>
