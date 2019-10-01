@@ -25,8 +25,8 @@ import UsersPage from '../users/UsersPage';
 
 const theme = createMuiTheme({
   palette: {
-    primary: blue,
-    secondary: yellow,
+    primary: blueGrey,
+    secondary: pink,
     active: green,
     inactive: red,
   },
