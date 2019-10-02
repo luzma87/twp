@@ -18,7 +18,6 @@ import MonthsSelect from '../_common/MonthsSelect';
 import PageTitle from '../_common/PageTitle';
 import EmailContent from '../email/EmailContent';
 import withAuthorization from '../session/withAuthorization';
-import UserPayment from './UserPayment';
 import UserPlace from './UserPlace';
 
 const getPaymentDate = (date) => moment(date).format();
@@ -106,7 +105,7 @@ const UserPaymentPage = ({ authUser, firebase }) => {
     return 'badge-dollar';
   };
 
-  const getLabel = () => (payed ? 'Deshacer pago' : 'Marcar como pagado');
+  const getLabel = () => (payed ? 'Deshacer' : 'Registrar pago');
 
   const getCallback = () => (payed ? onUndo : onPay);
 
@@ -115,11 +114,18 @@ const UserPaymentPage = ({ authUser, firebase }) => {
       variant="contained"
       color="primary"
       size="large"
-      style={{ margin: '24px 0', width: '100%' }}
+      style={{
+        width: '100%',
+        height: 'calc(100% - 0px)',
+      }}
       disabled={isLoading}
       onClick={(event) => getCallback()(event)}
     >
-      <FontAwesomeIcon icon={['far', getIcon()]} pulse={isLoading} style={{ marginRight: 16 }} />
+      <FontAwesomeIcon
+        icon={['far', getIcon()]}
+        pulse={isLoading}
+        style={{ marginRight: 16 }}
+      />
       {getLabel()}
     </Button>
   );
@@ -143,31 +149,38 @@ const UserPaymentPage = ({ authUser, firebase }) => {
 
   if (myAssignment) {
     content = (
-      <>
-        <Grid item xs={12} sm={9} md={6} lg={5} xl={4}>
-          <UserPayment assignments={assignments} uid={authUser.uid} />
-        </Grid>
-        <Grid item xs={12} sm={9} md={6} lg={5} xl={4}>
+      <Grid container justify="stretch">
+        <Grid
+          item
+          sm={9}
+          xs={12}
+          style={{ alignSelf: 'stretch' }}
+          className="singleColumn"
+        >
           <UserPlace
             assignments={assignments}
             building={building}
             user={authUser}
           />
         </Grid>
-        <Grid item xs={12} container spacing={2}>
-          <Grid item xs={12} sm={9} md={6} lg={5} xl={4}>
-            {getButton()}
-          </Grid>
+        <Grid
+          item
+          sm={3}
+          xs={12}
+          style={{ alignSelf: 'stretch' }}
+          className="singleColumn"
+        >
+          {getButton()}
         </Grid>
-        <Grid item xs={12} sm={9} md={6} lg={5} xl={4}>
+        <Grid item xs={12} sm={12} className="singleColumn">
           <Paper style={{ padding: 16 }}>
-            <Typography style={{ marginBottom: 16 }}>
-              Información de la cuenta para el depósito:
+            <Typography variant="h4" style={{ marginBottom: 16 }}>
+              Donde pago?
             </Typography>
             <EmailContent text={accountInfo} />
           </Paper>
         </Grid>
-      </>
+      </Grid>
     );
   }
 
@@ -192,20 +205,18 @@ const UserPaymentPage = ({ authUser, firebase }) => {
     <Content>
       {passChangeWarn}
       <Grid item xs={12}>
-        <PageTitle label="Mis pagos" />
-      </Grid>
-
-      <Grid item xs={12} sm={6}>
-        {(
-          <MonthsSelect
-            date={date}
-            value={selectedMonth}
-            onChange={(event) => onSelectMonth(event)}
-          />
-        )}
-      </Grid>
-
-      <Grid container justify="flex-start" spacing={2} item xs={12} sm={12} md={11} lg={9} xl={8}>
+        <Grid item className="title">
+          <PageTitle label="Mis pagos" icon="hand-holding-usd" />
+        </Grid>
+        <Grid className="singleColumn">
+          {
+            <MonthsSelect
+              date={date}
+              value={selectedMonth}
+              onChange={(event) => onSelectMonth(event)}
+            />
+          }
+        </Grid>
         {content}
       </Grid>
     </Content>

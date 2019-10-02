@@ -9,7 +9,9 @@ const CustomSelect = (props) => {
     id, value, label, values, onChange,
   } = props;
   return (
-    <FormControl style={{ marginTop: 16, width: '100%' }}>
+    <FormControl
+      style={{ marginTop: 16, width: '100%' }}
+    >
       <InputLabel>{label}</InputLabel>
       <Select
         value={value}
@@ -23,7 +25,11 @@ const CustomSelect = (props) => {
           const item = values[val];
           const itemValue = item.value;
           const itemLabel = item.label;
-          return <MenuItem key={val} value={itemValue}>{itemLabel}</MenuItem>;
+          return (
+            <MenuItem key={val} value={itemValue}>
+              {itemLabel}
+            </MenuItem>
+          );
         })}
       </Select>
     </FormControl>

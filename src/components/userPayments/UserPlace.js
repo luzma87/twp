@@ -1,10 +1,11 @@
-import { Paper, Typography } from '@material-ui/core';
+import { Paper, Typography, Grid } from '@material-ui/core';
 import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import monthsHelper from '../../constants/monthsHelper';
 import shapes from '../../constants/shapes';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
+import UserPayment from './UserPayment';
 
 const UserPlace = ({
   assignments, building, user,
@@ -28,13 +29,29 @@ const UserPlace = ({
 
   return (
     <Paper style={{ padding: 16 }}>
-      <Typography variant="h6" style={{ marginBottom: 16 }}>Mi puesto</Typography>
-      <Typography>{`Edificio ${building.name}, en la ${building.address}`}</Typography>
-      <Typography>
-        {`Puesto ${myPlace.number} [de ${myPlace.owner}]`}
-        <MeteorRating id="puesto" value={myPlace.difficulty} compact />
-      </Typography>
-      <Typography>{myPlace.otherInfo ? `(${myPlace.otherInfo})` : ''}</Typography>
+      <Grid
+        container
+        alignContent="space-around"
+        justify="space-around"
+        alignItems="space-around"
+      >
+        <Grid item>
+          <Typography variant="h4" style={{ marginBottom: 16 }}>
+            Donde parqueo?
+          </Typography>
+          <Typography>{`Edificio ${building.name}, en la ${building.address}`}</Typography>
+          <Typography>
+            {`Puesto ${myPlace.number} [de ${myPlace.owner}]`}
+            <MeteorRating id="puesto" value={myPlace.difficulty} compact />
+          </Typography>
+          <Typography>
+            {myPlace.otherInfo ? `(${myPlace.otherInfo})` : ''}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <UserPayment assignments={assignments} uid={user.uid} />
+        </Grid>
+      </Grid>
     </Paper>
   );
 };

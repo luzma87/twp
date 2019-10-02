@@ -16,6 +16,36 @@ code {
   flex-grow: 1;
 }
 
+
+.title {
+  color: #333;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.title-text {
+  width: auto;
+}
+
+.title-icon {
+  --size: 70px;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  box-sizing: border-box;
+  background: #D4D4D4;
+  margin-right: 20px;
+  padding: 14px;
+  text-align: center;
+  font-size: 30px;
+  color: rgb(104, 11, 121);
+  box-shadow: -2px -0px 3px rgb(104, 11, 121);
+}
+
+.singleColumn {
+  margin: 15px 0 !important;
+}
+
 .navbar-part {
   display: flex;
   align-items: center;

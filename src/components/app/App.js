@@ -1,5 +1,8 @@
 import {
-  blueGrey, green, pink, red,
+  green,
+  grey,
+  red,
+  purple,
 } from '@material-ui/core/colors';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -25,8 +28,8 @@ import UsersPage from '../users/UsersPage';
 
 const theme = createMuiTheme({
   palette: {
-    primary: blueGrey,
-    secondary: pink,
+    primary: purple,
+    secondary: grey,
     active: green,
     inactive: red,
   },
