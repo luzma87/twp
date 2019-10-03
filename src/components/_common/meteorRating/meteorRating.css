@@ -2,12 +2,12 @@
   color: rgb(98, 19, 105);
 }
 .full-meteor.hoverable:hover {
-  color: #dd8a7c;
+  color: #7c3f82;
 }
 
 .empty-meteor {
-  color: #ffc3b7;
+  color: #9b72a0;
 }
 .empty-meteor.hoverable:hover {
-  color: #e53d1b;
+  color: rgb(98, 19, 105);
 }
