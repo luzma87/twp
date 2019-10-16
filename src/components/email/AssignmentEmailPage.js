@@ -10,49 +10,19 @@ import Assignments from '../../domain/Assignments';
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
 import CustomLoader from '../_common/CustomLoader';
+import MonthsSelect from '../_common/MonthsSelect';
 import AssignmentsForEmailList from '../assignments/AssignmentsForEmailList';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
 import AssignmentEmailContent from './AssignmentEmailContent';
 
-const getDateToSave = (date) => ({
-  month: date.getMonth(),
-  year: date.getFullYear(),
-});
-
-const getDateToSaveNext = (date) => {
-  let month = date.getMonth();
-  let year = date.getFullYear();
-  if (month === 11) {
-    month = 0;
-    year += 1;
-  } else {
-    month += 1;
-  }
-  return ({
-    month,
-    year,
-  });
-};
-
 const getCurrentPaymentsId = (date) => `payment_${date.getMonth()}_${date.getFullYear()}`;
-const getNextPaymentsId = (date) => {
-  let month = date.getMonth();
-  let year = date.getFullYear();
-  if (month === 11) {
-    month = 0;
-    year += 1;
-  } else {
-    month += 1;
-  }
-  return `payment_${month}_${year}`;
-};
+
 const getPaymentsId = (dateToSave) => `payment_${dateToSave.month}_${dateToSave.year}`;
 
 const AssignmentEmailPage = ({ firebase }) => {
   const [errorMessage, setErrorMessage] = useState(null);
-  const [isSaved, setSaved] = useState(false);
-  const [isSavedNext, setSavedNext] = useState(false);
+  const [isSavedForMonth, setSavedForMonth] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
   const [loadingBuildings, setLoadingBuildings] = useState(false);
   const [loadingUsers, setLoadingUsers] = useState(false);
@@ -62,18 +32,13 @@ const AssignmentEmailPage = ({ firebase }) => {
   const [payments, setPayments] = useState([]);
   const [params, setParams] = useState({});
   const [date] = useState(new Date());
+  const [selectedMonth, setSelectedMonth] = useState(monthsHelper.getCurrentMonthForSelect());
 
   useEffect(() => {
     setLoadingBuildings(true);
     setLoadingUsers(true);
     setLoadingParams(true);
     setLoadingUserPayments(true);
-    firebase.userPayment(getNextPaymentsId(date)).on('value', (snapshotUserPayments) => {
-      const savedValues = snapshotUserPayments.val();
-      if (savedValues) {
-        setSavedNext(true);
-      }
-    });
     firebase.userPayment(getCurrentPaymentsId(date)).on('value', (snapshotUserPayments) => {
       const savedValues = snapshotUserPayments.val();
       setLoadingUserPayments(false);
@@ -83,7 +48,7 @@ const AssignmentEmailPage = ({ firebase }) => {
         setLoadingUsers(false);
         setLoadingParams(false);
         setLoadingUserPayments(false);
-        setSaved(true);
+        setSavedForMonth(true);
         setParams(savedValues.params);
         setAssignments(savedValues.assignments);
       } else {
@@ -119,7 +84,8 @@ const AssignmentEmailPage = ({ firebase }) => {
     };
   }, [firebase, date]);
 
-  const saveAssignments = (dateToSave) => {
+  const saveAssignments = () => {
+    const dateToSave = monthsHelper.getDateObjectFromSelect(selectedMonth);
     const userPayments = {
       params,
       assignments,
@@ -154,43 +120,93 @@ const AssignmentEmailPage = ({ firebase }) => {
       });
   };
 
-  const onSave = (event, isNext) => {
+  const onSave = (event) => {
     setLoadingSave(true);
-    const dateToSave = isNext ? getDateToSaveNext(date) : getDateToSave(date);
-    saveAssignments(dateToSave);
+    saveAssignments();
     event.preventDefault();
   };
 
   const isLoading = loadingBuildings || loadingUsers || loadingParams || loadingUserPayments;
   const icon = loadingSave ? 'spinner' : 'save';
-  const getMonthElement = (savedFlag, isNext) => {
-    const month = isNext
-      ? monthsHelper.getNextMonthFromDate(date)
-      : monthsHelper.getMonthFromDate(date);
-    return savedFlag
+
+  const getNewMonthElement = () => {
+    const month = monthsHelper.getDisplayMonthFromSelect(selectedMonth);
+    return isSavedForMonth
       ? (
-        <Typography style={{ marginBottom: 32 }} color="textSecondary">
+        <Typography color="textSecondary">
           {`Ya está guardado para ${month}`}
         </Typography>
       )
       : (
-        <Button style={{ marginBottom: 32 }} onClick={(event) => onSave(event, isNext)}>
+        <Button onClick={(event) => onSave(event)}>
           <FontAwesomeIcon icon={['far', icon]} style={{ marginRight: 8 }} />
           {`Guardar para registrar pagos (${month})`}
         </Button>
       );
   };
-  const nextMonthElement = getMonthElement(isSavedNext, true);
-  const currentMonthElement = getMonthElement(isSaved, false);
+
+  const onSelectMonth = (event) => {
+    const { value } = event.target;
+    setSelectedMonth(value);
+    const dateLookup = `payment_${value}`;
+
+    setLoadingBuildings(true);
+    setLoadingUsers(true);
+    setLoadingParams(true);
+    setLoadingUserPayments(true);
+
+    firebase.userPayment(dateLookup).on('value', (snapshotUserPayments) => {
+      const savedValues = snapshotUserPayments.val();
+      setLoadingUserPayments(false);
+      if (savedValues) {
+        setLoadingBuildings(false);
+        setLoadingUsers(false);
+        setLoadingParams(false);
+        setLoadingUserPayments(false);
+        setSavedForMonth(true);
+        setParams(savedValues.params);
+        setAssignments(savedValues.assignments);
+      } else {
+        setSavedForMonth(false);
+        firebase.users().on('value', (snapshotUsers) => {
+          const usersObject = snapshotUsers.val();
+          setLoadingUsers(false);
+          let asg;
+          firebase.buildings().on('value', (snapshotBuildings) => {
+            const buildingsObject = snapshotBuildings.val();
+            const usersList = Object.values(usersObject).filter((u) => u.isActive);
+            asg = new Assignments(usersList, buildingsObject);
+            setLoadingBuildings(false);
+
+            firebase.params().on('value', (snapshotParams) => {
+              const paramsObject = snapshotParams.val();
+              setParams(paramsObject);
+              const a = asg.getListForEmail(paramsObject);
+              const b = asg.getListForPayments();
+              setPayments(b);
+              setAssignments(a);
+              setLoadingParams(false);
+            });
+          });
+        });
+      }
+    });
+  };
+
+  const currentMonthElement = getNewMonthElement();
 
   return (
     <Content>
-      <Grid item xs={12} container>
-        <Grid item xs={6}>
-          {currentMonthElement}
-        </Grid>
-        <Grid item xs={6}>
-          {nextMonthElement}
+      <Grid item xs={12}>
+        {currentMonthElement}
+      </Grid>
+      <Grid item xs={12} container spacing={2} style={{ marginBottom: 16 }}>
+        <Grid item xs={4}>
+          <MonthsSelect
+            date={date}
+            value={selectedMonth}
+            onChange={(event) => onSelectMonth(event)}
+          />
         </Grid>
       </Grid>
       <Grid item sx={12}>
@@ -200,12 +216,16 @@ const AssignmentEmailPage = ({ firebase }) => {
         <CustomLoader isLoading={isLoading} />
       </Grid>
       <Grid item sx={12}>
-        <AssignmentEmailContent
-          params={params}
-          valuePerPerson={assignments.valuePerPerson}
-          month={monthsHelper.getMonthFromDate(date)}
-        />
-        <AssignmentsForEmailList assignments={assignments.people} />
+        {isLoading ? null : (
+          <>
+            <AssignmentEmailContent
+              params={params}
+              valuePerPerson={assignments.valuePerPerson}
+              month={monthsHelper.getDisplayMonthFromSelect(selectedMonth)}
+            />
+            <AssignmentsForEmailList assignments={assignments.people} />
+          </>
+        )}
       </Grid>
     </Content>
   );

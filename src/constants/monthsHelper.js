@@ -26,6 +26,12 @@ const getDisplayMonthFromSelect = (selectedMonth) => {
   return `${getDisplayMonthForSelect(parseInt(month, 10))} ${year}`;
 };
 
+
+const getDateObjectFromSelect = (selectedMonth) => {
+  const [month, year] = selectedMonth.split('_');
+  return { month, year };
+};
+
 const getMonthsForSelect = (date) => {
   const currentMonth = date.getMonth();
   const currentYear = date.getFullYear();
@@ -62,6 +68,7 @@ const monthsHelper = {
   getDisplayMonthWithYear,
   getDisplayMonthFromSelect,
   getCurrentMonthForSelect,
+  getDateObjectFromSelect,
 };
 
 export default monthsHelper;
