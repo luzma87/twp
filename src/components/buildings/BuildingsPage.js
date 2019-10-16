@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Grid } from '@material-ui/core';
 import { withTheme } from '@material-ui/styles';
 import PropTypes from 'prop-types';
@@ -10,6 +11,7 @@ import Buildings from '../../domain/Buildings';
 import ActiveIndicator from '../_common/ActiveIndicator';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
+import CustomButton from '../_common/CustomButton';
 import CustomLoader from '../_common/CustomLoader';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
@@ -52,6 +54,17 @@ const BuildingsPage = ({ firebase, theme }) => {
           <Button style={{ marginBottom: 16 }} onClick={() => setActiveOnly(false)}>
             <ActiveIndicator isActive={false} icon="building" themed />
             Mostrar todos
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            onClick={() => {
+
+            }}
+            style={{ marginBottom: 16 }}
+          >
+            <FontAwesomeIcon icon={['far', 'meteor']} style={{ marginRight: 8 }} />
+            Actualizar dificultad
           </Button>
         </Grid>
       </Grid>
