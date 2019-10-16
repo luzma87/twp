@@ -94,8 +94,10 @@ const AssignmentsPage = ({ firebase }) => {
             const places = Object.values(building.places);
             const freePlaces = places.filter((p) => p.user === undefined);
             freePlaces.forEach((place) => {
-              const placeKey = `${building.uid}_${place.id}`;
-              freePlacesList.push({ select: createPlaceForSelect(building, place), placeKey });
+              if (place.isActive) {
+                const placeKey = `${building.uid}_${place.id}`;
+                freePlacesList.push({ select: createPlaceForSelect(building, place), placeKey });
+              }
             });
           });
           freePlacesList = freePlacesList.sort((a, b) => {
