@@ -5,17 +5,22 @@ import moment from 'moment';
 import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withTheme } from '@material-ui/styles';
 import ActiveIndicator from '../_common/ActiveIndicator';
 import CardTitle from '../_common/CardTitle';
 import TextWithIcon from '../_common/TextWithIcon';
 
-const PaymentCard = ({ payment, index, onPay }) => {
+const PaymentCard = ({
+  payment, index, onPay, theme,
+}) => {
   const {
     owner, ownerInfo, ownerPayment, places, building, total, payed, id,
   } = payment;
   const placesCount = places.length;
+  const checked = payed !== '';
+  const background = checked ? theme.palette.primary[50] : 'inherit';
   return (
-    <Card>
+    <Card style={{ background }}>
       <CardContent>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
           <CardTitle
@@ -25,7 +30,7 @@ const PaymentCard = ({ payment, index, onPay }) => {
           />
           <Checkbox
             name={id}
-            checked={payed !== ''}
+            checked={checked}
             onChange={(event) => onPay(event)}
             color="primary"
             inputProps={{
@@ -50,7 +55,7 @@ const PaymentCard = ({ payment, index, onPay }) => {
             </li>
           ))}
         </ul>
-        {payed !== ''
+        {checked
           ? `Pagado el ${moment(payed).format('DD/MM/YYYY')}`
           : 'No pagado'}
       </CardContent>
@@ -62,6 +67,7 @@ PaymentCard.propTypes = {
   payment: PropTypes.any,
   index: PropTypes.number,
   onPay: PropTypes.func.isRequired,
+  theme: PropTypes.any.isRequired,
 };
 
 PaymentCard.defaultProps = {
@@ -69,4 +75,4 @@ PaymentCard.defaultProps = {
   index: 0,
 };
 
-export default PaymentCard;
+export default withTheme(PaymentCard);

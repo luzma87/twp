@@ -9,7 +9,7 @@ const PaymentsCards = ({ list, onPay }) => (
       const { owner, building } = payment;
       const ownerKey = `${building.id}_${owner}`;
       return (
-        <Grid key={ownerKey} item xs={12} sm={6}>
+        <Grid key={ownerKey} item >
           <PaymentCard payment={payment} index={index + 1} onPay={(event) => onPay(event)} />
         </Grid>
       );
