@@ -33,13 +33,13 @@ code {
   height: var(--size);
   border-radius: 50%;
   box-sizing: border-box;
-  background: #D4D4D4;
+  /*background: #D4D4D4;*/
   margin-right: 20px;
   padding: 14px;
   text-align: center;
   font-size: 30px;
-  color: rgb(104, 11, 121);
-  box-shadow: -2px -0px 3px rgb(104, 11, 121);
+  /*color: rgb(104, 11, 121);*/
+  /*box-shadow: -2px -0px 3px rgb(104, 11, 121);*/
 }
 
 .singleColumn {

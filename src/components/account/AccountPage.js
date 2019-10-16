@@ -83,8 +83,8 @@ const AccountPage = ({ authUser, firebase }) => {
 
   return (
     <Content>
-      <Grid item xs={12}>
-        <PageTitle label="Mi cuenta" />
+      <Grid item xs={12} className="title">
+        <PageTitle label="Mi cuenta" icon="user" />
       </Grid>
 
       <Grid item xs={12} sm={10} md={11} lg={8} xl={6}>

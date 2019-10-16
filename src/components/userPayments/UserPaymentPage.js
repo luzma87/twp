@@ -209,13 +209,11 @@ const UserPaymentPage = ({ authUser, firebase }) => {
           <PageTitle label="Mis pagos" icon="hand-holding-usd" />
         </Grid>
         <Grid className="singleColumn">
-          {
-            <MonthsSelect
-              date={date}
-              value={selectedMonth}
-              onChange={(event) => onSelectMonth(event)}
-            />
-          }
+          <MonthsSelect
+            date={date}
+            value={selectedMonth}
+            onChange={(event) => onSelectMonth(event)}
+          />
         </Grid>
         {content}
       </Grid>

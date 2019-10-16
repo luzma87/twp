@@ -1,8 +1,5 @@
 import {
-  green,
-  grey,
-  red,
-  purple,
+  amber, green, purple, red,
 } from '@material-ui/core/colors';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -29,7 +26,7 @@ import UsersPage from '../users/UsersPage';
 const theme = createMuiTheme({
   palette: {
     primary: purple,
-    secondary: grey,
+    secondary: amber,
     active: green,
     inactive: red,
   },
@@ -41,7 +38,6 @@ const theme = createMuiTheme({
     car: 'rocket',
   },
 });
-
 const App = () => (
   <BrowserRouter>
     <ThemeProvider theme={theme}>
