@@ -11,7 +11,6 @@ import Buildings from '../../domain/Buildings';
 import ActiveIndicator from '../_common/ActiveIndicator';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
-import CustomButton from '../_common/CustomButton';
 import CustomLoader from '../_common/CustomLoader';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
@@ -59,11 +58,22 @@ const BuildingsPage = ({ firebase, theme }) => {
         <Grid item>
           <Button
             onClick={() => {
-
+              const updates = {};
+              firebase.users().on('value', (snapshot) => {
+                const usersObject = snapshot.val();
+                Object.values(usersObject).forEach((user) => {
+                  const { parkingDifficulty, place } = user;
+                  if (parkingDifficulty && place) {
+                    const { building: userBuilding, place: userPlace } = place;
+                    updates[`buildings/${userBuilding}/places/${userPlace}/difficulty`] = parkingDifficulty;
+                  }
+                });
+                firebase.databaseRef().update(updates);
+              });
             }}
             style={{ marginBottom: 16 }}
           >
-            <FontAwesomeIcon icon={['far', 'meteor']} style={{ marginRight: 8 }} />
+            <FontAwesomeIcon icon={['far', 'meteor']} style={{ marginRight: 8, color: theme.palette.primary.main }} />
             Actualizar dificultad
           </Button>
         </Grid>
