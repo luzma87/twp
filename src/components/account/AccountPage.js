@@ -68,6 +68,11 @@ const AccountPage = ({ authUser, firebase }) => {
           setSaved(false);
         }, 3000);
       });
+    const { place } = personValues;
+    const { building: userBuilding, place: userPlace } = place;
+    const updates = {};
+    updates[`buildings/${userBuilding}/places/${userPlace}/difficulty`] = personValues.parkingDifficulty;
+    firebase.databaseRef().update(updates);
     event.preventDefault();
   };
 

@@ -34,6 +34,21 @@ const BuildingsPage = ({ firebase, theme }) => {
     };
   }, [firebase]);
 
+  const updateDifficulty = () => {
+    const updates = {};
+    firebase.users().on('value', (snapshot) => {
+      const usersObject = snapshot.val();
+      Object.values(usersObject).forEach((user) => {
+        const { parkingDifficulty, place } = user;
+        if (parkingDifficulty && place) {
+          const { building: userBuilding, place: userPlace } = place;
+          updates[`buildings/${userBuilding}/places/${userPlace}/difficulty`] = parkingDifficulty;
+        }
+      });
+      firebase.databaseRef().update(updates);
+    });
+  };
+
   return (
     <Content>
       <Grid item xs={12}>
@@ -57,20 +72,7 @@ const BuildingsPage = ({ firebase, theme }) => {
         </Grid>
         <Grid item>
           <Button
-            onClick={() => {
-              const updates = {};
-              firebase.users().on('value', (snapshot) => {
-                const usersObject = snapshot.val();
-                Object.values(usersObject).forEach((user) => {
-                  const { parkingDifficulty, place } = user;
-                  if (parkingDifficulty && place) {
-                    const { building: userBuilding, place: userPlace } = place;
-                    updates[`buildings/${userBuilding}/places/${userPlace}/difficulty`] = parkingDifficulty;
-                  }
-                });
-                firebase.databaseRef().update(updates);
-              });
-            }}
+            onClick={updateDifficulty}
             style={{ marginBottom: 16 }}
           >
             <FontAwesomeIcon icon={['far', 'meteor']} style={{ marginRight: 8, color: theme.palette.primary.main }} />
