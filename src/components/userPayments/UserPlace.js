@@ -28,7 +28,7 @@ const UserPlace = ({
   }
 
   return (
-    <Paper style={{ padding: 16 }}>
+    <Paper style={{ padding: 16, borderTopRightRadius: 0, borderBottomRightRadius: 0 }}>
       <Grid
         container
         alignContent="space-around"
@@ -39,7 +39,9 @@ const UserPlace = ({
           <Typography variant="h4" style={{ marginBottom: 16 }}>
             Donde parqueo?
           </Typography>
-          <Typography>{`Edificio ${building.name}, en la ${building.address}`}</Typography>
+          <Typography>
+            {`Edificio ${building.name}, en la ${building.address}`}
+          </Typography>
           <Typography>
             {`Puesto ${myPlace.number} [de ${myPlace.owner}]`}
             <MeteorRating id="puesto" value={myPlace.difficulty} compact />

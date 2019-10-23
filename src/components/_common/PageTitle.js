@@ -9,7 +9,7 @@ const PageTitle = ({ label, icon, theme }) => (
     <div
       className="title-icon"
       style={{
-        background: theme.palette.grey[400],
+        background: theme.palette.titleButton[400],
         color: theme.palette.primary.dark,
         boxShadow: `-2px -0px 3px ${theme.palette.primary.dark}`,
       }}

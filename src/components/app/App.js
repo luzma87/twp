@@ -1,5 +1,5 @@
 import {
-  amber, green, purple, red,
+  amber, green, grey, purple, red,
 } from '@material-ui/core/colors';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -29,6 +29,7 @@ const theme = createMuiTheme({
     secondary: amber,
     active: green,
     inactive: red,
+    titleButton: grey,
   },
   icons: {
     building: 'warehouse',

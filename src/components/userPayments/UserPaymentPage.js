@@ -117,6 +117,8 @@ const UserPaymentPage = ({ authUser, firebase }) => {
       style={{
         width: '100%',
         height: 'calc(100% - 0px)',
+        borderBottomLeftRadius: 0,
+        borderTopLeftRadius: 0,
       }}
       disabled={isLoading}
       onClick={(event) => getCallback()(event)}
