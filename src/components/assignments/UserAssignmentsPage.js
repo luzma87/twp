@@ -87,13 +87,15 @@ const UserAssignmentsPage = ({ firebase, authUser }) => {
     <Content>
       <CustomLoader isLoading={loadingBuildings || loadingUsers} />
 
-      <Paper style={{
-        marginTop: 24, marginBottom: 24, padding: 16, width: 350,
-      }}
-      >
-        <Typography variant="h5" style={{ marginBottom: 16 }}>Mi puesto</Typography>
-        {myAssignment ? `${myAssignment.building.name} ${myAssignment.placeId}` : null}
-      </Paper>
+      {myAssignment ? (
+        <Paper style={{
+          marginTop: 24, marginBottom: 24, padding: 16, width: 350,
+        }}
+        >
+          <Typography variant="h5" style={{ marginBottom: 16 }}>Mi puesto</Typography>
+          {`${myAssignment.building.name} ${myAssignment.placeId}`}
+        </Paper>
+      ) : null}
 
       <div style={{ marginBottom: 16 }}>
         <CustomSelect
