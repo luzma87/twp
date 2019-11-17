@@ -9,7 +9,9 @@ const CustomError = ({ error }) => (
       <Box
         bgcolor="error.main"
         color="error.contrastText"
-        style={{ padding: 8, borderRadius: 8, marginTop: 16 }}
+        style={{
+          padding: 8, borderRadius: 8, marginTop: 16, marginBottom: 16,
+        }}
       >
         <Typography>
           {error.message}

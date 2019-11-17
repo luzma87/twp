@@ -1,6 +1,7 @@
 import { Paper } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
+import SignInLink from '../signIn/SignInLink';
 import PasswordForgetForm from './PasswordForgetForm';
 
 const PasswordForgetPage = () => (
@@ -13,6 +14,9 @@ const PasswordForgetPage = () => (
       Recuperar password
     </Typography>
     <PasswordForgetForm />
+    <div style={{ textAlign: 'right' }}>
+      <SignInLink />
+    </div>
   </Paper>
 );
 

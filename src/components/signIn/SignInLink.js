@@ -3,10 +3,10 @@ import React from 'react';
 import routes from '../../constants/routes';
 import customLink from '../navigation/customLink';
 
-const PasswordForgetLink = () => (
-  <Button component={customLink(routes.PASSWORD_FORGET)}>
-    Olvidé mi password
+const SignInLink = () => (
+  <Button component={customLink(routes.SIGN_IN)}>
+    Entrar
   </Button>
 );
 
-export default PasswordForgetLink;
+export default SignInLink;

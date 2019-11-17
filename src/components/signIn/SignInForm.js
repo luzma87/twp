@@ -1,12 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import routes from '../../constants/routes';
 import CustomError from '../_common/CustomError';
+import CustomTextField from '../_common/CustomTextField';
 import withFirebase from '../firebase/withFirebase';
 
 const INITIAL_STATE = {
@@ -29,6 +29,7 @@ const SignInFormBase = ({ firebase, history }) => {
         history.push(routes.HOME);
       })
       .catch((error) => {
+        setLoading(false);
         setValues({ ...values, error });
       });
     event.preventDefault();
@@ -38,35 +39,37 @@ const SignInFormBase = ({ firebase, history }) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
+  const onKeyPress = (event, isInvalid) => {
+    if (!isInvalid && event.charCode === 13) {
+      onSubmit(event);
+    }
+  };
+
   const { email, password, error } = values;
   const isInvalid = password === '' || email === '';
   const icon = isLoading ? 'spinner' : 'sign-in-alt';
   return (
     <form onSubmit={(event) => onSubmit(event)}>
       <div>
-        <TextField
+        <CustomTextField
           id="email"
           label="Email"
           onChange={(event) => onChange(event)}
-          margin="normal"
-          variant="outlined"
           type="email"
-          name="email"
           value={email}
           autoComplete="username email"
+          onKeyPress={(event) => onKeyPress(event, isInvalid)}
         />
       </div>
       <div>
-        <TextField
+        <CustomTextField
           id="password"
           label="Password"
           onChange={(event) => onChange(event)}
-          margin="normal"
-          variant="outlined"
           type="password"
-          name="password"
           value={password}
           autoComplete="current-password"
+          onKeyPress={(event) => onKeyPress(event, isInvalid)}
         />
       </div>
       <Button
