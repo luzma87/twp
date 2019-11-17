@@ -35,8 +35,10 @@ const UserPayment = ({ assignments, uid, past }) => {
           ? `Mi puesto: ${myAssignment.place}`
           : `No asignado en ${getDisplayMonth(assignments.date)} `}
       </Typography>
-      <Typography>
-        {payed ? `Pagado el ${moment(payed).format('DD/MM/YYYY HH:mm')}` : 'No pagado'}
+      <Typography color={payed ? 'primary' : 'error'}>
+        <strong>
+          {payed ? `Pagado el ${moment(payed).format('DD/MM/YYYY HH:mm')}` : 'No pagado'}
+        </strong>
       </Typography>
     </Paper>
   );

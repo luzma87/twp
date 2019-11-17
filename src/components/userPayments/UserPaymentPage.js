@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { get } from 'lodash';
 import moment from 'moment';
@@ -9,33 +10,63 @@ import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import shapes from '../../constants/shapes';
 import Content from '../_common/Content';
+import CustomSelect from '../_common/CustomSelect';
 import EmailContent from '../email/EmailContent';
 import withAuthorization from '../session/withAuthorization';
 import UserPayment from './UserPayment';
 
+const monthNames = [
+  'Enero', 'Febrero', 'Marzo',
+  'Abril', 'Mayo', 'Junio', 'Julio',
+  'Agosto', 'Septiembre', 'Octubre',
+  'Noviembre', 'Diciembre',
+];
+
 const getDisplayMonth = (date) => {
   if (date === undefined) return '';
-  const monthNames = [
-    'Enero', 'Febrero', 'Marzo',
-    'Abril', 'Mayo', 'Junio', 'Julio',
-    'Agosto', 'Septiembre', 'Octubre',
-    'Noviembre', 'Diciembre',
-  ];
   const monthIndex = date.month;
   return `${monthNames[monthIndex]} ${date.year}`;
+};
+
+const getDisplayMonthForSelect = (monthIndex) => monthNames[monthIndex];
+
+const getDisplayMonthFromSelect = (selectedMonth) => {
+  const [month, year] = selectedMonth.split('_');
+  return `${getDisplayMonthForSelect(parseInt(month, 10))} ${year}`;
+};
+
+const monthsForSelect = (date) => {
+  const currentMonth = date.getMonth();
+  const currentYear = date.getFullYear();
+  const months = {};
+  for (let i = 0; i < 4; i += 1) {
+    let month = currentMonth - i;
+    let year = currentYear;
+    if (month < 0) {
+      month = 12 + month;
+      year = currentYear - 1;
+    }
+    const key = `${i}_${month}_${year}`;
+    months[key] = {
+      label: `${getDisplayMonthForSelect(month)} ${year}`,
+      value: `${month}_${year}`,
+    };
+  }
+  return months;
 };
 
 const getPaymentDate = (date) => moment(date).format();
 
 const getPaymentsId = (date, month) => `payment_${date.getMonth() - month}_${date.getFullYear()}`;
 
+const getSelectedPaymentsId = (selectedMonth) => `payment_${selectedMonth}`;
+
 const UserPaymentPage = ({ authUser, firebase }) => {
   const [assignments, setAssignments] = useState({});
-  const [prevAssignments, setPrevAssignments] = useState({});
-  const [prevAssignments2, setPrevAssignments2] = useState({});
   const [date] = useState(new Date());
   const [isLoading, setLoading] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState({});
 
   useEffect(() => {
     setLoading(true);
@@ -43,27 +74,13 @@ const UserPaymentPage = ({ authUser, firebase }) => {
       const savedValues = snapshotUserPayments.val();
       if (savedValues) {
         setAssignments(savedValues);
+        const startingDate = savedValues.date;
+        setSelectedMonth(`${startingDate.month}_${startingDate.year}`);
       }
-      firebase.userPayment(getPaymentsId(date, 1)).on('value', (snapshotPrevUserPayments) => {
-        const savedPrevValues = snapshotPrevUserPayments.val();
-        if (savedPrevValues) {
-          setPrevAssignments(savedPrevValues);
-        }
-
-        firebase.userPayment(getPaymentsId(date, 2)).on('value', (snapshotPrevUserPayments2) => {
-          const savedPrevValues2 = snapshotPrevUserPayments2.val();
-          if (savedPrevValues2) {
-            setPrevAssignments2(savedPrevValues2);
-          }
-          setLoading(false);
-        });
-      });
+      setLoading(false);
     });
 
     return function cleanup() {
-      firebase.buildings().off();
-      firebase.params().off();
-      firebase.users().off();
       firebase.userPayment().off();
     };
   }, [firebase, date, authUser]);
@@ -72,7 +89,7 @@ const UserPaymentPage = ({ authUser, firebase }) => {
     setLoadingSave(true);
 
     const updates = {};
-    updates[`userPayments/${getPaymentsId(date, 0)}/assignments/people/${authUser.uid}/payed`] = value;
+    updates[`userPayments/${getSelectedPaymentsId(selectedMonth)}/assignments/people/${authUser.uid}/payed`] = value;
 
     firebase.databaseRef()
       .update(updates)
@@ -91,6 +108,16 @@ const UserPaymentPage = ({ authUser, firebase }) => {
     event.preventDefault();
   };
 
+  const onSelectMonth = (event) => {
+    const { value } = event.target;
+    setSelectedMonth(value);
+    firebase.userPayment(getSelectedPaymentsId(value)).on('value', (snapshotUserPayments) => {
+      const savedValues = snapshotUserPayments.val();
+      setAssignments(savedValues);
+      setLoading(false);
+    });
+  };
+
   const myAssignment = get(assignments, `assignments.people.${authUser.uid}`, undefined);
   const payed = get(myAssignment, 'payed', undefined);
 
@@ -101,22 +128,17 @@ const UserPaymentPage = ({ authUser, firebase }) => {
     if (payed) {
       const icon = loadingSave ? 'spinner' : 'undo';
       return (
-        <>
-          <Typography style={{ marginTop: 24 }} color="textSecondary">
-            {`Pagado el ${moment(payed).format('DD/MM/YYYY HH:mm')}`}
-          </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{ margin: '24px 0' }}
-            disabled={isLoading}
-            onClick={(event) => onUndo(event)}
-          >
-            <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          style={{ margin: '24px 0' }}
+          disabled={isLoading}
+          onClick={(event) => onUndo(event)}
+        >
+          <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
             Deshacer pago
-          </Button>
-        </>
+        </Button>
       );
     }
     const icon = loadingSave ? 'spinner' : 'badge-dollar';
@@ -130,10 +152,22 @@ const UserPaymentPage = ({ authUser, firebase }) => {
         onClick={(event) => onPay(event)}
       >
         <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
-        Ya pagué
+        Marcar como pagado
       </Button>
     );
   };
+
+  const monthsSelect = (
+    <div style={{ marginBottom: 32 }}>
+      <CustomSelect
+        id="month"
+        value={selectedMonth}
+        label="Mes"
+        values={monthsForSelect(date)}
+        onChange={(event) => onSelectMonth(event)}
+      />
+    </div>
+  );
 
   if (!myAssignment) {
     return (
@@ -141,7 +175,13 @@ const UserPaymentPage = ({ authUser, firebase }) => {
         <Typography variant="h5" style={{ marginBottom: 24 }}>
           Mis pagos
         </Typography>
-        {`No asignado en ${getDisplayMonth(assignments.date)} `}
+
+        {monthsSelect}
+        <Typography>
+          {assignments
+            ? `No asignado en ${getDisplayMonth(assignments.date)} `
+            : `No asignado en ${getDisplayMonthFromSelect(selectedMonth)}`}
+        </Typography>
       </Content>
     );
   }
@@ -152,18 +192,16 @@ const UserPaymentPage = ({ authUser, firebase }) => {
         Mis pagos
       </Typography>
 
+      {monthsSelect}
       <UserPayment assignments={assignments} uid={authUser.uid} />
       {getPaymentElement()}
 
-      <Typography style={{ marginTop: 24, marginBottom: 16 }}>
-        Información de la cuenta:
-      </Typography>
-      <EmailContent text={accountInfo} />
-      <div style={{ display: 'flex', marginTop: 32 }}>
-        <UserPayment assignments={prevAssignments} uid={authUser.uid} past />
-        <UserPayment assignments={prevAssignments2} uid={authUser.uid} past />
-      </div>
-
+      <Paper style={{ padding: 16, width: 350 }}>
+        <Typography style={{ marginBottom: 16 }}>
+        Información de la cuenta para el depósito:
+        </Typography>
+        <EmailContent text={accountInfo} />
+      </Paper>
     </Content>
   );
 };
