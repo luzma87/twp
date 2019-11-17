@@ -4,11 +4,11 @@ import routes from '../../constants/routes';
 import AccountPage from '../account/AccountPage';
 import AssignmentFormPage from '../assignments/AssignmentFormPage';
 import AssignmentsPage from '../assignments/AssignmentsPage';
+import UserAssignmentsPage from "../assignments/UserAssignmentsPage";
 import BuildingFormPage from '../buildings/BuildingFormPage';
 import BuildingsPage from '../buildings/BuildingsPage';
 import AssignmentEmailPage from '../email/AssignmentEmailPage';
 import ShameEmailPage from '../email/ShameEmailPage';
-import HomePage from '../home/HomePage';
 import Navigation from '../navigation/Navigation';
 import ParamsPage from '../params/ParamsPage';
 import PasswordForgetPage from '../passwordForget/PasswordForgetPage';
@@ -42,7 +42,7 @@ const App = () => (
 
       <Route exact path={routes.ASSIGNMENTS} component={AssignmentsPage} />
       <Route path={routes.ASSIGNMENTS_CREATE} component={AssignmentFormPage} />
-      <Route path={routes.USER_ASSIGNMENTS} component={HomePage} />
+      <Route path={routes.USER_ASSIGNMENTS} component={UserAssignmentsPage} />
 
       <Route exact path={routes.PAYMENTS} component={PaymentsPage} />
 

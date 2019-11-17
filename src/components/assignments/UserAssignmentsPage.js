@@ -1,13 +1,16 @@
+import { Paper } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import constants from '../../constants/constants';
+import shapes from '../../constants/shapes';
 import Assignments from '../../domain/Assignments';
 import Content from '../_common/Content';
 import CustomLoader from '../_common/CustomLoader';
 import CustomSelect from '../_common/CustomSelect';
-import AssignmentsList from '../assignments/AssignmentsList';
+import AssignmentsList from './AssignmentsList';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
 
@@ -16,7 +19,7 @@ const ALL_BUILDINGS = {
   label: 'Todos',
 };
 
-const HomePage = ({ firebase }) => {
+const UserAssignmentsPage = ({ firebase, authUser }) => {
   const [buildingsForFilter, setBuildingsForFilter] = useState({});
   const [filter, setFilter] = useState(ALL_BUILDINGS.value);
   const [loadingBuildings, setLoadingBuildings] = useState(false);
@@ -76,28 +79,42 @@ const HomePage = ({ firebase }) => {
     setFilter(selectedValue);
   };
 
+  let myAssignment;
+  if (assignments && assignments.assignments) {
+    myAssignment = assignments.assignments.find((a) => a.user.uid === authUser.uid);
+  }
   return (
     <Content>
       <CustomLoader isLoading={loadingBuildings || loadingUsers} />
-      <CustomSelect
-        id="filter"
-        value={filter}
-        label="Edificio"
-        values={buildingsForFilter}
-        onChange={(event) => onFilterChange(event)}
-      />
-      <br />
-      <br />
+
+      <Paper style={{
+        marginTop: 24, marginBottom: 24, padding: 16, width: 350,
+      }}
+      >
+        <Typography variant="h5" style={{ marginBottom: 16 }}>Mi puesto</Typography>
+        {myAssignment ? `${myAssignment.building.name} ${myAssignment.placeId}` : null}
+      </Paper>
+
+      <div style={{ marginBottom: 16 }}>
+        <CustomSelect
+          id="filter"
+          value={filter}
+          label="Edificio"
+          values={buildingsForFilter}
+          onChange={(event) => onFilterChange(event)}
+        />
+      </div>
       <AssignmentsList assignments={assignments} buildingFilter={filter} />
     </Content>
   );
 };
 
-HomePage.propTypes = {
+UserAssignmentsPage.propTypes = {
+  authUser: PropTypes.shape(shapes.user).isRequired,
   firebase: PropTypes.any.isRequired,
 };
 
 export default compose(
   withAuthorization(conditions.isLoggedUser),
   withFirebase,
-)(HomePage);
+)(UserAssignmentsPage);

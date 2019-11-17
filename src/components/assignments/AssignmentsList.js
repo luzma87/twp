@@ -41,9 +41,7 @@ const AssignmentsList = ({ assignments, skill, buildingFilter }) => {
                 </TableCell>
                 <TableCell>
                   {`${building.getPlaceString(placeId)}`}
-                  {skill ? (
-                    <MeteorRating id="placeDifficulty" compact value={place.difficulty} />
-                  ) : ''}
+                  <MeteorRating id="placeDifficulty" compact value={place.difficulty} />
                 </TableCell>
               </TableRow>
             );
