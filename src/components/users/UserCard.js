@@ -6,6 +6,7 @@ import CardTitle from '../_common/CardTitle';
 import CustomButton from '../_common/CustomButton';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 import TextWithIcon from '../_common/TextWithIcon';
+import UsersBank from './UsersBank';
 
 const getIcon = (isAdmin) => (isAdmin ? 'admin' : 'user');
 
@@ -24,6 +25,7 @@ const UserCard = ({ person, index }) => (
       <TextWithIcon icon="at" text={person.email} />
       <TextWithIcon icon="id-card" text={person.id} />
       <TextWithIcon icon="car" themed text={person.getCarString()} />
+      <UsersBank bank={person.bank} label />
     </CardContent>
     <CardActions>
       <CustomButton to={`${routes.USERS_EDIT_ID}${person.uid}`} size="small">

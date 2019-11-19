@@ -6,8 +6,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
 import ActiveIndicator from '../_common/ActiveIndicator';
-import CustomIcon from '../_common/CustomIcon';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
+import UsersBank from './UsersBank';
+
+const getIcon = (isAdmin) => (isAdmin ? 'admin' : 'user');
 
 const UsersTable = ({ list }) => (
   <Paper>
@@ -17,8 +19,8 @@ const UsersTable = ({ list }) => (
           <TableCell />
           <TableCell>Nombre</TableCell>
           <TableCell>E-mail</TableCell>
-          <TableCell>Admin?</TableCell>
           <TableCell>Cédula</TableCell>
+          <TableCell>Banco</TableCell>
           <TableCell>Parking</TableCell>
           <TableCell>Auto</TableCell>
         </TableRow>
@@ -28,7 +30,7 @@ const UsersTable = ({ list }) => (
           <TableRow key={person.uid}>
             <TableCell>{index + 1}</TableCell>
             <TableCell>
-              <ActiveIndicator isActive={person.isActive} icon="user" themed />
+              <ActiveIndicator isActive={person.isActive} icon={getIcon(person.isAdmin)} themed />
               <Link to={`${routes.USERS_EDIT_ID}${person.uid}`} style={{ color: 'black' }}>
                 {person.name}
               </Link>
@@ -37,12 +39,10 @@ const UsersTable = ({ list }) => (
               {person.email}
             </TableCell>
             <TableCell>
-              {person.getIsAdmin() ? (
-                <CustomIcon icon="admin" themed size="2x" />
-              ) : null}
+              {person.id}
             </TableCell>
             <TableCell>
-              {person.id}
+              <UsersBank bank={person.bank} />
             </TableCell>
             <TableCell>
               <MeteorRating id="parkingMeteors" value={person.parkingMeteors} size="lg" compact />
