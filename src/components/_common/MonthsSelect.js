@@ -7,7 +7,7 @@ const MonthsSelect = ({ value, date, onChange }) => (
   <CustomSelect
     id="month"
     value={value}
-    label="Mes"
+    label="Selecciona el mes aquí"
     values={monthsHelper.getMonthsForSelect(date)}
     onChange={(event) => onChange(event)}
   />

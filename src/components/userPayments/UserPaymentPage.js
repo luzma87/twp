@@ -3,6 +3,8 @@ import {
   Box,
   Button, Grid, Paper, Typography,
 } from '@material-ui/core';
+import { withTheme } from '@material-ui/styles';
+import Hidden from '@material-ui/core/Hidden';
 import { get } from 'lodash';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -18,6 +20,7 @@ import MonthsSelect from '../_common/MonthsSelect';
 import PageTitle from '../_common/PageTitle';
 import EmailContent from '../email/EmailContent';
 import withAuthorization from '../session/withAuthorization';
+import UserPayment from './UserPayment';
 import UserPlace from './UserPlace';
 
 const getPaymentDate = (date) => moment(date).format();
@@ -26,7 +29,7 @@ const getPaymentsId = (date, month) => `payment_${date.getMonth() - month}_${dat
 
 const getSelectedPaymentsId = (selectedMonth) => `payment_${selectedMonth}`;
 
-const UserPaymentPage = ({ authUser, firebase }) => {
+const UserPaymentPage = ({ authUser, firebase, theme }) => {
   const [assignments, setAssignments] = useState({});
   const [building, setBuilding] = useState({});
   const [date] = useState(new Date());
@@ -151,10 +154,39 @@ const UserPaymentPage = ({ authUser, firebase }) => {
 
   if (myAssignment) {
     content = (
-      <Grid container justify="stretch">
+      <Grid container>
+        <Grid item xs={12} md={9}>
+          <Paper style={{ padding: 16 }}>
+            <Grid container>
+              <Grid item xs={12} md={6}>
+                <Typography variant="h4" style={{ marginBottom: 16 }}>
+                    Dónde pago?
+                </Typography>
+                <EmailContent text={accountInfo} />
+              </Grid>
+              <Hidden mdUp>
+                <div style={{
+                  width: '100%',
+                  height: 2,
+                  background: theme.palette.grey[500],
+                  margin: '16px 0',
+                }}
+                />
+              </Hidden>
+              <Grid item xs={12} md={6}>
+                <Typography variant="h4" style={{ marginBottom: 16 }}>
+                    Cuánto pago?
+                </Typography>
+                <UserPayment assignments={assignments} uid={authUser.uid} />
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={3} style={{ alignSelf: 'stretch' }}>
+          {getButton()}
+        </Grid>
         <Grid
           item
-          sm={9}
           xs={12}
           style={{ alignSelf: 'stretch' }}
           className="singleColumn"
@@ -164,23 +196,6 @@ const UserPaymentPage = ({ authUser, firebase }) => {
             building={building}
             user={authUser}
           />
-        </Grid>
-        <Grid
-          item
-          sm={3}
-          xs={12}
-          style={{ alignSelf: 'stretch' }}
-          className="singleColumn"
-        >
-          {getButton()}
-        </Grid>
-        <Grid item xs={12} sm={12} className="singleColumn">
-          <Paper style={{ padding: 16 }}>
-            <Typography variant="h4" style={{ marginBottom: 16 }}>
-              Donde pago?
-            </Typography>
-            <EmailContent text={accountInfo} />
-          </Paper>
         </Grid>
       </Grid>
     );
@@ -210,7 +225,7 @@ const UserPaymentPage = ({ authUser, firebase }) => {
         <Grid item className="title">
           <PageTitle label="Mis pagos" icon="hand-holding-usd" />
         </Grid>
-        <Grid className="singleColumn">
+        <Grid item xs={4} className="singleColumn">
           <MonthsSelect
             date={date}
             value={selectedMonth}
@@ -226,8 +241,10 @@ const UserPaymentPage = ({ authUser, firebase }) => {
 UserPaymentPage.propTypes = {
   authUser: PropTypes.shape(shapes.user).isRequired,
   firebase: PropTypes.any.isRequired,
+  theme: PropTypes.any.isRequired,
 };
 
 export default compose(
   withAuthorization(conditions.isLoggedUser),
+  withTheme
 )(UserPaymentPage);

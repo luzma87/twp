@@ -1,11 +1,10 @@
-import { Paper, Typography, Grid } from '@material-ui/core';
+import { Grid, Paper, Typography } from '@material-ui/core';
 import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import monthsHelper from '../../constants/monthsHelper';
 import shapes from '../../constants/shapes';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
-import UserPayment from './UserPayment';
 
 const UserPlace = ({
   assignments, building, user,
@@ -33,11 +32,10 @@ const UserPlace = ({
         container
         alignContent="space-around"
         justify="space-around"
-        alignItems="space-around"
       >
-        <Grid item>
+        <Grid item xs={12}>
           <Typography variant="h4" style={{ marginBottom: 16 }}>
-            Donde parqueo?
+            Dónde parqueo?
           </Typography>
           <Typography>
             {`Edificio ${building.name}, en la ${building.address}`}
@@ -49,9 +47,6 @@ const UserPlace = ({
           <Typography>
             {myPlace.otherInfo ? `(${myPlace.otherInfo})` : ''}
           </Typography>
-        </Grid>
-        <Grid item>
-          <UserPayment assignments={assignments} uid={user.uid} />
         </Grid>
       </Grid>
     </Paper>
