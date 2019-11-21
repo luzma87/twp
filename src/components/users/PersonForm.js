@@ -43,7 +43,7 @@ const PersonForm = (props) => {
         id="email"
         label="E-mail"
         value={email}
-        disabled={restricted}
+        disabled={restricted || isEditing}
         onChange={(event) => onPersonChange(event)}
         autoComplete="username"
       />
