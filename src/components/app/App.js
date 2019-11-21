@@ -8,6 +8,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import routes from '../../constants/routes';
 import AccountPage from '../account/AccountPage';
 import AssignmentsPage from '../assignments/AssignmentsPage';
+import AssignmentsUpdatesPage from "../assignments/AssignmentsUpdatesPage";
 import BuildingFormPage from '../buildings/BuildingFormPage';
 import BuildingsPage from '../buildings/BuildingsPage';
 import AssignmentEmailPage from '../email/AssignmentEmailPage';
@@ -60,6 +61,7 @@ const App = () => (
       <Route path={routes.BUILDINGS_EDIT} component={BuildingFormPage} />
 
       <Route exact path={routes.ASSIGNMENTS} component={AssignmentsPage} />
+      <Route exact path={routes.ASSIGNMENTS_UPDATE} component={AssignmentsUpdatesPage} />
 
       <Route exact path={routes.PAYMENTS} component={PaymentsPage} />
 

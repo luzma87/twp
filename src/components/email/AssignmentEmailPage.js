@@ -6,8 +6,10 @@ import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import monthsHelper from '../../constants/monthsHelper';
+import routes from '../../constants/routes';
 import Assignments from '../../domain/Assignments';
 import Content from '../_common/Content';
+import CustomButton from '../_common/CustomButton';
 import CustomError from '../_common/CustomError';
 import CustomLoader from '../_common/CustomLoader';
 import MonthsSelect from '../_common/MonthsSelect';
@@ -133,9 +135,19 @@ const AssignmentEmailPage = ({ firebase }) => {
     const month = monthsHelper.getDisplayMonthFromSelect(selectedMonth);
     return isSavedForMonth
       ? (
-        <Typography color="textSecondary">
-          {`Ya está guardado para ${month}`}
-        </Typography>
+        <>
+          <Grid item xs={6}>
+            <Typography color="textSecondary">
+              {`Ya está guardado para ${month}`}
+            </Typography>
+          </Grid>
+
+          <Grid item>
+            <CustomButton to={routes.ASSIGNMENTS_UPDATE}>
+              {`Editar ${month}`}
+            </CustomButton>
+          </Grid>
+        </>
       )
       : (
         <Button onClick={(event) => onSave(event)}>
@@ -197,7 +209,7 @@ const AssignmentEmailPage = ({ firebase }) => {
 
   return (
     <Content>
-      <Grid item xs={12}>
+      <Grid item container xs={12}>
         {currentMonthElement}
       </Grid>
       <Grid item xs={12} container spacing={2} style={{ marginBottom: 16 }}>

@@ -20,6 +20,7 @@ const routes = {
   ASSIGNMENTS: '/assignments',
   USER_ASSIGNMENTS: '/userAssignments',
   ASSIGNMENTS_CREATE: '/assignments/create',
+  ASSIGNMENTS_UPDATE: '/assignments/update',
 
   PAYMENTS: '/payments',
 
