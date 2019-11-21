@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { isEmpty } from 'lodash';
 import { compose } from 'recompose';
 import conditions from '../../constants/conditions';
 import CustomSelect from '../_common/CustomSelect';
@@ -21,7 +22,7 @@ const AssignmentForm = ({
       <Grid item xs={6} sm={5} md={4}>
         <CustomSelect
           id="user"
-          value={assignmentValues.user}
+          value={isEmpty(assignmentValues.user) ? '' : assignmentValues.user}
           label="Persona"
           values={users}
           onChange={(event) => onChange(event)}
@@ -30,7 +31,7 @@ const AssignmentForm = ({
       <Grid item xs={6} sm={5} md={4}>
         <CustomSelect
           id="place"
-          value={assignmentValues.place}
+          value={isEmpty(assignmentValues.place) ? '' : assignmentValues.place}
           label="Puesto"
           values={places}
           onChange={(event) => onChange(event)}

@@ -33,7 +33,9 @@ const AssignmentsForUpdateTable = ({ assignments, handleOpenModal }) => {
       <TableBody>
         {
           list.map((assignment) => {
-            const { id, user, place, payed } = assignment;
+            const {
+              id, user, place, payed,
+            } = assignment;
             index += 1;
             return (
               <TableRow key={user}>
