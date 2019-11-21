@@ -80,16 +80,16 @@ class Assignments {
   }
 
   getListForEmail(paramsObject) {
-    let otherBanks = 0;
+    // let otherBanks = 0;
     let placePriceTotal = 0;
     let assignedUsers = 0;
 
     this.users.forEach((user) => {
       if (user.place) {
         assignedUsers += 1;
-        if (user.bank.value !== paramsObject.defaultBank) {
-          otherBanks += parseFloat(paramsObject.differentBank);
-        }
+        // if (user.bank.value !== paramsObject.defaultBank) {
+        //   otherBanks += parseFloat(paramsObject.differentBank);
+        // }
         const userBuilding = this.buildings[user.place.building];
         if (userBuilding) {
           const userPlace = userBuilding.places[user.place.place];
@@ -98,6 +98,7 @@ class Assignments {
       }
     });
 
+    const otherBanks = parseFloat(paramsObject.differentBank) * (this.users.length / 2);
     const extraCosts = parseFloat(paramsObject.hosting) + parseFloat(paramsObject.oneTimeExtra);
     const totalValue = placePriceTotal + otherBanks + extraCosts;
     const valuePerPerson = ceil(totalValue / assignedUsers, 1);
