@@ -4,8 +4,7 @@ module.exports = {
     es6: true,
   },
   extends: [
-    'airbnb',
-    'plugin:cypress/recommended'
+    'airbnb'
   ],
   globals: {
     Atomics: 'readonly',
@@ -19,13 +18,10 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [
-    'react',
-    'chai-friendly'
+    'react'
   ],
   rules: {
     "react/jsx-filename-extension": ["off"],
     "react/forbid-prop-types": ["off"],
-    "no-unused-expressions": 0,
-    "chai-friendly/no-unused-expressions": 2
   },
 };
