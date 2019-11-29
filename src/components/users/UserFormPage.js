@@ -248,7 +248,7 @@ const UserFormPage = ({ firebase, history, match }) => {
                   onClick={(event) => onSubmit(event)}
                 >
                   <FontAwesomeIcon icon={['far', icon]} pulse={isLoading} style={{ marginRight: 16 }} />
-                    Guardar
+                  Guardar
                 </Button>
               </Grid>
             </Grid>
