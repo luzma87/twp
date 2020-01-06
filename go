@@ -91,6 +91,9 @@ function task_deploy {
   echo "${deploy_fg}Tagging in github${normal_fg}"
   git tag -a deploy_${new_deploy} -m "deploy ${new_deploy} to firebase"
   git push origin --tags
+  git add deploys
+  git commit -m "increases deploy version to ${new_deploy}"
+  git push
 
   echo "${deploy_fg}Deploying to firebase${normal_fg}"
   firebase deploy
