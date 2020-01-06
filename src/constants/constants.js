@@ -2,6 +2,7 @@ import guayaquil from '../img/guayaquil.png';
 import pacifico from '../img/pacifico.png';
 import pichincha from '../img/pichincha.png';
 import promerica from '../img/promerica.png';
+import internacional from '../img/internacional.png';
 
 const carSizes = {
   small: { value: 'small', label: 'Pequeño' },
@@ -15,7 +16,9 @@ const banks = {
   pichincha: { value: 'pichincha', label: 'Pichincha', image: pichincha },
   guayaquil: { value: 'guayaquil', label: 'Guayaquil', image: guayaquil },
   promerica: { value: 'promerica', label: 'Promérica', image: promerica },
+  produbanco: { value: 'produbanco', label: 'Produbanco', image: promerica },
   pacifico: { value: 'pacifico', label: 'Pacífico', image: pacifico },
+  internacional: { value: 'internacional', label: 'Internacional', image: internacional },
   otro: { value: 'otro', label: 'Otro' },
 };
 
