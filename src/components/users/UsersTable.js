@@ -6,12 +6,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
 import ActiveIndicator from '../_common/ActiveIndicator';
+import CustomHighlighter from '../_common/CustomHighlighter';
 import MeteorRating from '../_common/meteorRating/MeteorRating';
 import UsersBank from './UsersBank';
 
 const getIcon = (isAdmin) => (isAdmin ? 'admin' : 'user');
 
-const UsersTable = ({ list }) => (
+const UsersTable = ({ list, textFilter }) => (
   <Paper>
     <Table>
       <TableHead>
@@ -32,11 +33,11 @@ const UsersTable = ({ list }) => (
             <TableCell>
               <ActiveIndicator isActive={person.isActive} icon={getIcon(person.isAdmin)} themed />
               <Link to={`${routes.USERS_EDIT_ID}${person.uid}`} style={{ color: 'black' }}>
-                {person.name}
+                <CustomHighlighter filter={[textFilter]} text={person.name} />
               </Link>
             </TableCell>
             <TableCell>
-              {person.email}
+              <CustomHighlighter filter={[textFilter]} text={person.email} />
             </TableCell>
             <TableCell>
               {person.id}
@@ -48,7 +49,7 @@ const UsersTable = ({ list }) => (
               <MeteorRating id="parkingMeteors" value={person.parkingMeteors} size="lg" compact />
             </TableCell>
             <TableCell>
-              {person.getCarString()}
+              <CustomHighlighter filter={[textFilter]} text={person.getCarString()} />
             </TableCell>
           </TableRow>
         ))}
@@ -59,10 +60,12 @@ const UsersTable = ({ list }) => (
 
 UsersTable.propTypes = {
   list: PropTypes.any,
+  textFilter: PropTypes.any,
 };
 
 UsersTable.defaultProps = {
   list: [],
+  textFilter: '',
 };
 
 export default UsersTable;

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import UserCard from './UserCard';
 
-const UsersCards = ({ list }) => (
+const UsersCards = ({ list, textFilter }) => (
   <Grid container spacing={2}>
     {list.map((person, index) => (
       <Grid key={person.uid} item xs={12} sm={6}>
-        <UserCard person={person} index={index + 1} />
+        <UserCard person={person} index={index + 1} textFilter={textFilter} />
       </Grid>
     ))}
   </Grid>
@@ -15,10 +15,12 @@ const UsersCards = ({ list }) => (
 
 UsersCards.propTypes = {
   list: PropTypes.any,
+  textFilter: '',
 };
 
 UsersCards.defaultProps = {
   list: [],
+  textFilter: PropTypes.any,
 };
 
 export default UsersCards;

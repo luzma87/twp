@@ -9,6 +9,7 @@ import ActiveIndicator from '../_common/ActiveIndicator';
 import Content from '../_common/Content';
 import CreateButton from '../_common/CreateButton';
 import CustomLoader from '../_common/CustomLoader';
+import CustomTextField from '../_common/CustomTextField';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
 import UsersList from './UsersList';
@@ -17,6 +18,7 @@ const UsersPage = ({ firebase }) => {
   const [isLoading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const [activeOnly, setActiveOnly] = useState(true);
+  const [textFilter, setTextFilter] = useState('');
 
   useEffect(() => {
     setLoading(true);
@@ -30,6 +32,10 @@ const UsersPage = ({ firebase }) => {
       firebase.users().off();
     };
   }, [firebase]);
+
+  const onTextFilterChange = (event) => {
+    setTextFilter(event.target.value);
+  };
 
   return (
     <Content>
@@ -53,8 +59,20 @@ const UsersPage = ({ firebase }) => {
           </Button>
         </Grid>
       </Grid>
+      <Grid item xs={5} md={3} lg={2}>
+        <CustomTextField
+          onChange={(event) => onTextFilterChange(event)}
+          label="Filtrar"
+          id="textFilter"
+          value={textFilter}
+        />
+      </Grid>
       <Grid item xs={12}>
-        <UsersList users={users} activeOnly={activeOnly} />
+        <UsersList
+          users={users}
+          activeOnly={activeOnly}
+          textFilter={textFilter}
+        />
       </Grid>
     </Content>
   );
