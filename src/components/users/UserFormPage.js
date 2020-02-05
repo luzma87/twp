@@ -1,10 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Grid, Paper } from '@material-ui/core';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import { omit } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -17,7 +12,6 @@ import routes from '../../constants/routes';
 import CardTitle from '../_common/CardTitle';
 import Content from '../_common/Content';
 import CustomError from '../_common/CustomError';
-import CustomTextField from '../_common/CustomTextField';
 import withFirebase from '../firebase/withFirebase';
 import withAuthorization from '../session/withAuthorization';
 import CarForm from './CarForm';
@@ -47,7 +41,6 @@ const UserFormPage = ({ firebase, history, match }) => {
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isEditing, setEditing] = useState(false);
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (editId !== undefined) {
@@ -147,77 +140,10 @@ const UserFormPage = ({ firebase, history, match }) => {
   }
   const icon = isLoading ? 'spinner' : 'save';
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleSave = () => {
-    console.log('saving...', personValues.email, personValues.uid);
-
-    // crear el nuevo usuario con los mismos valores q el anterior
-
-    // buscar el usuario nuevo en db y guardar el uid
-
-    // eliminar el usuario anterior en db
-    /*
-    let userRef = this.database.ref('users/' + userId);
-    userRef.remove()
-     */
-
-    // buscar el usuario anterior en userPayments
-
-    //      copiar los valores con el nuevo id
-
-    //      eliminar los valores con el antiguo id
-
-    // actualizar el campo user del puesto
-  };
-
   return (
     <Content>
-      <Dialog
-        fullWidth
-        open={open}
-        maxWidth="sm"
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          Cambiar de mail
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Nuevo email
-          </DialogContentText>
-          <CustomTextField
-            id="email"
-            label="E-mail"
-            value={email}
-            onChange={(event) => onPersonChange(event)}
-            autoComplete="username"
-            fullWidth
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancelar
-          </Button>
-          <Button onClick={handleSave} color="primary" autoFocus>
-            Guardar
-          </Button>
-        </DialogActions>
-      </Dialog>
-
       <Grid item xs={12} sm={9} md={12} lg={10} xl={8}>
         <Paper style={{ padding: 32 }}>
-          <Button variant="outlined" onClick={handleClickOpen}>
-            Cambiar mail
-          </Button>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <CustomError error={errorMessage} />
