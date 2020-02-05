@@ -109,7 +109,13 @@ function task_clear_port {
 function task_check_dep {
   check_for_tool "ncu" "npm install -g npm-check-updates"
   echo "${checks_fg}checking dependencies (do npm install to upgrade them)${normal_fg}"
-  ncu -a
+  ncu -u
+}
+
+function task_check_dep_unused {
+  check_for_tool "npm-check" "npm install -g npm-check"
+  echo "${checks_fg}checking dependencies${normal_fg}"
+  npm-check
 }
 
 function task_help {
@@ -118,6 +124,7 @@ function task_help {
   help_message+=" | ${misc_fg}clear_port${normal_fg}"
 
   help_message+=" | ${checks_fg}check_dep${normal_fg}"
+  help_message+=" | ${checks_fg}check_dep_u${normal_fg}"
 
   help_message+=" | ${start_fg}clean${normal_fg}"
   help_message+=" | ${start_fg}start${normal_fg}"
@@ -135,6 +142,7 @@ function execute_task {
     clear_port) task_clear_port ;;
 
     check_dep) task_check_dep ;;
+    check_dep_u) task_check_dep_unused ;;
 
     clean) task_clean ;;
     start) task_start ;;
