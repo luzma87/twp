@@ -15,12 +15,12 @@ const UsersCards = ({ list, textFilter }) => (
 
 UsersCards.propTypes = {
   list: PropTypes.any,
-  textFilter: '',
+  textFilter: PropTypes.any,
 };
 
 UsersCards.defaultProps = {
   list: [],
-  textFilter: PropTypes.any,
+  textFilter: '',
 };
 
 export default UsersCards;
