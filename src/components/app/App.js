@@ -8,7 +8,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import routes from '../../constants/routes';
 import AccountPage from '../account/AccountPage';
 import AssignmentsPage from '../assignments/AssignmentsPage';
-import AssignmentsUpdatesPage from "../assignments/AssignmentsUpdatesPage";
+import AssignmentsUpdatesPage from '../assignments/AssignmentsUpdatesPage';
 import BuildingFormPage from '../buildings/BuildingFormPage';
 import BuildingsPage from '../buildings/BuildingsPage';
 import AssignmentEmailPage from '../email/AssignmentEmailPage';
@@ -21,6 +21,8 @@ import withAuthentication from '../session/withAuthentication';
 import SignInPage from '../signIn/SignInPage';
 import UserPaymentPage from '../userPayments/UserPaymentPage';
 import UsersPaymentsPage from '../userPayments/UsersPaymentsPage';
+import BikeFormPage from '../users/BikeFormPage';
+import BikesPage from '../users/BikesPage';
 import UserFormPage from '../users/UserFormPage';
 import UsersPage from '../users/UsersPage';
 
@@ -38,6 +40,7 @@ const theme = createMuiTheme({
     user: 'user-astronaut',
     admin: 'alicorn',
     car: 'rocket',
+    bike: 'starfighter-alt',
   },
 });
 const App = () => (
@@ -67,6 +70,10 @@ const App = () => (
 
       <Route path={routes.USER_PAYMENT} component={UserPaymentPage} />
       <Route path={routes.ALL_USERS_PAYMENTS} component={UsersPaymentsPage} />
+
+      <Route exact path={routes.BIKES} component={BikesPage} />
+      <Route path={routes.BIKES_CREATE} component={BikeFormPage} />
+      <Route path={routes.BIKES_EDIT} component={BikeFormPage} />
     </ThemeProvider>
   </BrowserRouter>
 );

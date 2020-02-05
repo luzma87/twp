@@ -10,7 +10,7 @@ import MeteorRating from '../_common/meteorRating/MeteorRating';
 
 const PersonForm = (props) => {
   const {
-    personValues, onPersonChange, isEditing, restricted,
+    personValues, onPersonChange, isEditing, restricted, isBike,
   } = props;
   const {
     name,
@@ -23,6 +23,8 @@ const PersonForm = (props) => {
     isActive,
     parkingMeteors,
     parkingDifficulty,
+    bikeType,
+    elements
   } = personValues;
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}>
@@ -67,13 +69,32 @@ const PersonForm = (props) => {
           onChange={(event) => onPersonChange(event)}
         />
       )}
-      <CustomSelect
-        id="bank"
-        value={bank}
-        label="Banco"
-        values={constants.banks}
-        onChange={(event) => onPersonChange(event)}
-      />
+      {isBike ? (
+        <>
+          <CustomSelect
+            id="bikeType"
+            value={bikeType}
+            label="Tipo"
+            values={constants.bikeTypes}
+            onChange={(event) => onPersonChange(event)}
+          />
+          <CustomSelect
+            id="elements"
+            value={elements}
+            label="Tiene"
+            values={constants.elementTypes}
+            onChange={(event) => onPersonChange(event)}
+          />
+        </>
+      ) : (
+        <CustomSelect
+          id="bank"
+          value={bank}
+          label="Banco"
+          values={constants.banks}
+          onChange={(event) => onPersonChange(event)}
+        />
+      )}
       {restricted ? null : (
         <div style={{ marginTop: 16 }}>
           <CustomSwitch
@@ -90,32 +111,36 @@ const PersonForm = (props) => {
           />
         </div>
       )}
-      <FormControlLabel
-        value="top"
-        control={(
-          <MeteorRating
-            id="parkingMeteors"
-            value={parkingMeteors}
-            onChange={(event) => onPersonChange(event)}
+      {isBike ? null : (
+        <>
+          <FormControlLabel
+            value="top"
+            control={(
+              <MeteorRating
+                id="parkingMeteors"
+                value={parkingMeteors}
+                onChange={(event) => onPersonChange(event)}
+              />
+            )}
+            label="Mi parking skill"
+            labelPlacement="top"
+            style={{ marginTop: 8, textAlign: 'left' }}
           />
-        )}
-        label="Mi parking skill"
-        labelPlacement="top"
-        style={{ marginTop: 8, textAlign: 'left' }}
-      />
-      <FormControlLabel
-        value="top"
-        control={(
-          <MeteorRating
-            id="parkingDifficulty"
-            value={parkingDifficulty}
-            onChange={(event) => onPersonChange(event)}
+          <FormControlLabel
+            value="top"
+            control={(
+              <MeteorRating
+                id="parkingDifficulty"
+                value={parkingDifficulty}
+                onChange={(event) => onPersonChange(event)}
+              />
+            )}
+            label="Dificultad de mi puesto"
+            labelPlacement="top"
+            style={{ marginTop: 8, textAlign: 'left' }}
           />
-        )}
-        label="Dificultad de mi puesto"
-        labelPlacement="top"
-        style={{ marginTop: 8, textAlign: 'left' }}
-      />
+        </>
+      )}
     </div>
   );
 };
@@ -124,6 +149,7 @@ PersonForm.propTypes = {
   personValues: PropTypes.shape(shapes.user),
   isEditing: PropTypes.bool,
   restricted: PropTypes.bool,
+  isBike: PropTypes.bool,
   onPersonChange: PropTypes.func.isRequired,
 };
 
@@ -131,6 +157,7 @@ PersonForm.defaultProps = {
   personValues: {},
   isEditing: false,
   restricted: false,
+  isBike: false,
 };
 
 export default PersonForm;

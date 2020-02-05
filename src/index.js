@@ -3,6 +3,7 @@ import {
   faAlicorn,
   faAt,
   faBadgeDollar,
+  faBicycle,
   faDrawSquare,
   faEnvelopeOpenDollar,
   faEye,
@@ -25,15 +26,19 @@ import {
   faSignInAlt,
   faSignOutAlt,
   faSpinner,
+  faStarfighterAlt,
   faTrashAlt,
   faUndo,
+  faUniversity,
   faUnlockAlt,
   faUser,
   faUserAstronaut,
   faWarehouse,
-  faUniversity,
 } from '@fortawesome/pro-regular-svg-icons';
-import { faMeteor as fasMeteor } from '@fortawesome/pro-solid-svg-icons';
+import {
+  faMeteor as fasMeteor,
+  faMotorcycle,
+} from '@fortawesome/pro-solid-svg-icons';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/App';
@@ -50,6 +55,7 @@ library.add(
   faPencilAlt, faMoneyCheckEditAlt, faHandHoldingUsd, faBadgeDollar,
   faUndo, faSackDollar, faUnlockAlt, faAt, faIdCard, faUser,
   faMapMarkedAlt, faInfoSquare, faPiggyBank, faUniversity,
+  faStarfighterAlt, faBicycle, faMotorcycle,
 );
 
 ReactDOM.render(

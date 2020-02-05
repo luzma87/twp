@@ -26,6 +26,11 @@ const routes = {
 
   USER_PAYMENT: '/myPayments',
   ALL_USERS_PAYMENTS: '/userPayments',
+
+  BIKES: '/bikes',
+  BIKES_CREATE: '/bikes/create',
+  BIKES_EDIT: '/bikes/edit/:id',
+  BIKES_EDIT_ID: '/bikes/edit/',
 };
 
 export default routes;

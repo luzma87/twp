@@ -49,6 +49,7 @@ const NavigationAuth = ({ authUser, theme }) => {
       </Hidden>
       <NavBarIconButton id="assignments" title="Asignaciones" icon="car" themed to={routes.ASSIGNMENTS} />
       <Hidden smDown>
+        <NavBarIconButton id="bikes" title="Bicis y Motos" icon="bike" themed to={routes.BIKES} />
         <NavBarIconButton id="email" title="Email" icon="envelope-open-dollar" to={routes.ASSIGNMENT_EMAIL} />
       </Hidden>
       <NavBarIconButton id="owner-payments" title="Pagos" icon="money-check-edit-alt" to={routes.PAYMENTS} />

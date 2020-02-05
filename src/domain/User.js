@@ -1,3 +1,4 @@
+import constants from '../constants/constants';
 import roles from '../constants/roles';
 
 class User {
@@ -13,6 +14,9 @@ class User {
     this.parkingDifficulty = userObj.parkingDifficulty;
     this.roles = userObj.roles;
     this.car = userObj.car;
+    this.hasBike = userObj.hasBike;
+    this.bikeType = userObj.bikeType;
+    this.elements = userObj.elements;
   }
 
   getCarString() {
@@ -28,6 +32,16 @@ class User {
       return this.roles[roles.ADMIN] === roles.ADMIN;
     }
     return this.isAdmin;
+  }
+
+  getBikeType() {
+    if (!this.bikeType) return '';
+    return constants.bikeTypes[this.bikeType].label;
+  }
+
+  getElements() {
+    if (!this.elements) return '';
+    return constants.elementTypes[this.elements].label;
   }
 }
 

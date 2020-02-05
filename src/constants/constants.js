@@ -10,6 +10,17 @@ const carSizes = {
   large: { value: 'large', label: 'Grande' },
 };
 
+const bikeTypes = {
+  bike: { value: 'bike', label: 'Bici' },
+  motorbike: { value: 'motorbike', label: 'Moto' },
+};
+
+const elementTypes = {
+  control: { value: 'control', label: 'Sólo control' },
+  card: { value: 'card', label: 'Sólo tarjeta' },
+  controlCard: { value: 'controlCard', label: 'Control y Tarjeta' },
+};
+
 const carSizeLabel = (key) => carSizes[key].label;
 
 const banks = {
@@ -53,6 +64,8 @@ const monthNames = [
 
 const constants = {
   carSizes,
+  bikeTypes,
+  elementTypes,
   banks,
   monthNames,
   userSort,
