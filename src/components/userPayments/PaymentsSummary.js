@@ -17,13 +17,15 @@ const PaymentsSummary = ({ assignments }) => {
   return (
     <>
       <Typography>
-        {`${peoplePayedCount === 1 ? 'Ha' : 'Han'} pagado ${peoplePayedCount} de ${peopleCount} personas`}
+        {`${peoplePayedCount === 1 ? 'Ha' : 'Han'} pagado ${peoplePayedCount} de ${peopleCount} personas (faltan ${peopleCount - peoplePayedCount})`}
       </Typography>
       <Typography>
         {`Han pagado ${numeral(totalPayed).format('$0,0.00')} de ${numeral(totalAmount).format('$0,0.00')}`}
       </Typography>
       <Typography>
-        {`Falta por pagar: ${numeral(totalAmount - totalPayed).format('$0,0.00')}}`}
+        <strong>
+          {`Falta por pagar: ${numeral(totalAmount - totalPayed).format('$0,0.00')}`}
+        </strong>
       </Typography>
     </>
   );
