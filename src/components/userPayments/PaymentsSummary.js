@@ -22,6 +22,9 @@ const PaymentsSummary = ({ assignments }) => {
       <Typography>
         {`Han pagado ${numeral(totalPayed).format('$0,0.00')} de ${numeral(totalAmount).format('$0,0.00')}`}
       </Typography>
+      <Typography>
+        {`Falta por pagar: ${numeral(totalAmount - totalPayed).format('$0,0.00')}}`}
+      </Typography>
     </>
   );
 };
