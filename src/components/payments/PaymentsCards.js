@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import PaymentCard from './PaymentCard';
 
-const PaymentsCards = ({ list, onPay }) => (
+const PaymentsCards = ({ list, onToggle }) => (
   <Grid container spacing={2}>
     {list.map((payment, index) => {
       const { owner, building } = payment;
       const ownerKey = `${building.id}_${owner}`;
       return (
-        <Grid key={ownerKey} item >
-          <PaymentCard payment={payment} index={index + 1} onPay={(event) => onPay(event)} />
+        <Grid key={ownerKey} item>
+          <PaymentCard
+            payment={payment}
+            index={index + 1}
+            onToggle={onToggle}
+          />
         </Grid>
       );
     })}
@@ -19,7 +23,7 @@ const PaymentsCards = ({ list, onPay }) => (
 
 PaymentsCards.propTypes = {
   list: PropTypes.any,
-  onPay: PropTypes.func.isRequired,
+  onToggle: PropTypes.func.isRequired,
 };
 
 PaymentsCards.defaultProps = {

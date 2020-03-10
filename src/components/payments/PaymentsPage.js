@@ -55,13 +55,16 @@ const PaymentsPage = ({ firebase }) => {
     });
   };
 
-  const onPay = (event) => {
+  const onToggle = (event) => {
     const { name } = event.target;
+    const [owner, prop] = name.split('::');
+
     const newPayments = { ...payments };
-    if (newPayments.payments[name].payed === '') {
-      newPayments.payments[name].payed = getPaymentDate(date);
+    const paymentElement = newPayments.payments[owner][prop];
+    if (!paymentElement || paymentElement === '') {
+      newPayments.payments[owner][prop] = getPaymentDate(date);
     } else {
-      newPayments.payments[name].payed = '';
+      newPayments.payments[owner][prop] = '';
     }
     setPayments(newPayments);
   };
@@ -99,7 +102,7 @@ const PaymentsPage = ({ firebase }) => {
         <Grid item xs={3}>
           <Button onClick={(event) => onSave(event)}>
             <FontAwesomeIcon icon={['far', icon]} style={{ marginRight: 8 }} />
-              Guardar
+            Guardar
           </Button>
         </Grid>
       </Grid>
@@ -122,7 +125,7 @@ const PaymentsPage = ({ firebase }) => {
             <PaymentsList
               payments={payments.payments}
               positiveOnly={positiveOnly}
-              onPay={(event) => onPay(event)}
+              onToggle={(event) => onToggle(event)}
             />
           )
           : null}

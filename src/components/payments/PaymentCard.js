@@ -1,24 +1,26 @@
 import {
-  Card, CardContent, Checkbox, Typography,
+  Card, CardContent, Checkbox, FormControlLabel, Typography,
 } from '@material-ui/core';
+import { withTheme } from '@material-ui/styles';
 import moment from 'moment';
 import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { withTheme } from '@material-ui/styles';
 import ActiveIndicator from '../_common/ActiveIndicator';
 import CardTitle from '../_common/CardTitle';
+import CustomIcon from '../_common/CustomIcon';
 import TextWithIcon from '../_common/TextWithIcon';
 
 const PaymentCard = ({
-  payment, index, onPay, theme,
+  payment, index, onToggle, theme,
 }) => {
   const {
-    owner, ownerInfo, ownerPayment, places, building, total, payed, id,
+    owner, ownerInfo, ownerPayment, places, building, total, payed, id, noFunds,
   } = payment;
   const placesCount = places.length;
-  const checked = payed !== '';
-  const background = checked ? theme.palette.primary[50] : 'inherit';
+  const payedChecked = payed !== '';
+  const noFundsChecked = noFunds !== undefined && noFunds !== '';
+  const background = payedChecked ? theme.palette.primary[50] : 'inherit';
   return (
     <Card style={{ background }}>
       <CardContent>
@@ -29,9 +31,9 @@ const PaymentCard = ({
             isActive={total > 0}
           />
           <Checkbox
-            name={id}
-            checked={checked}
-            onChange={(event) => onPay(event)}
+            name={`${id}::payed`}
+            checked={payedChecked}
+            onChange={onToggle}
             color="primary"
             inputProps={{
               'aria-label': 'secondary checkbox',
@@ -55,9 +57,29 @@ const PaymentCard = ({
             </li>
           ))}
         </ul>
-        {checked
-          ? `Pagado el ${moment(payed).format('DD/MM/YYYY')}`
-          : 'No pagado'}
+        <Typography>
+          {payedChecked
+            ? `Pagado el ${moment(payed).format('DD/MM/YYYY')}`
+            : 'No pagado'}
+        </Typography>
+        <Typography color="secondary">
+          <FormControlLabel
+            control={(
+              <Checkbox
+                name={`${id}::noFunds`}
+                checked={noFundsChecked}
+                onChange={onToggle}
+                color="secondary"
+                icon={<CustomIcon icon="square" themed={false} />}
+                checkedIcon={<CustomIcon icon="usd-square" themed={false} />}
+                inputProps={{
+                  'aria-label': 'secondary checkbox',
+                }}
+              />
+          )}
+            label="Sin fondos 😐"
+          />
+        </Typography>
       </CardContent>
     </Card>
   );
@@ -66,7 +88,7 @@ const PaymentCard = ({
 PaymentCard.propTypes = {
   payment: PropTypes.any,
   index: PropTypes.number,
-  onPay: PropTypes.func.isRequired,
+  onToggle: PropTypes.func.isRequired,
   theme: PropTypes.any.isRequired,
 };
 

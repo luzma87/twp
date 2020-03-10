@@ -13,7 +13,9 @@ const sortPayments = (a, b) => {
   return 0;
 };
 
-const PaymentsList = ({ payments, positiveOnly, onPay }) => {
+const PaymentsList = ({
+  payments, positiveOnly, onToggle,
+}) => {
   let list = Object.values(payments);
   let positiveMessage = 'todos';
   if (positiveOnly) {
@@ -26,7 +28,7 @@ const PaymentsList = ({ payments, positiveOnly, onPay }) => {
       <Typography style={{ marginBottom: 16 }}>
         {`Mostrando ${list.length} dueños (${positiveMessage})`}
       </Typography>
-      <PaymentsCards onPay={(event) => onPay(event)} list={list} />
+      <PaymentsCards onToggle={onToggle} list={list} />
       {/* <Hidden smDown> */}
       {/*  <PaymentsTable onPay={(event) => onPay(event)} list={list} /> */}
       {/* </Hidden> */}
@@ -39,7 +41,7 @@ const PaymentsList = ({ payments, positiveOnly, onPay }) => {
 
 PaymentsList.propTypes = {
   payments: PropTypes.any,
-  onPay: PropTypes.func.isRequired,
+  onToggle: PropTypes.func.isRequired,
   positiveOnly: PropTypes.bool,
 };
 
