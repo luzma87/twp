@@ -62,7 +62,8 @@ const AssignmentsPage = ({ firebase }) => {
         usersList = Object.values(usersObject).filter((u) => u.isActive);
         usersList = usersList.sort(constants.userSort);
 
-        const filteredAvailableUsers = usersList.filter((u) => u.place === undefined);
+        const filteredAvailableUsers = usersList
+          .filter((u) => u.place === undefined && u.car !== undefined);
         availableUsersEdit = filteredAvailableUsers.reduce((acc, user, index) => {
           acc[`${index}_${user.uid}`] = createUserForSelect(user);
           return acc;

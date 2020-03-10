@@ -7,7 +7,10 @@ import { withTheme } from '@material-ui/styles';
 const CustomIcon = ({
   icon, theme, themed, ...rest
 }) => {
-  const getIcon = () => (themed ? ['far', theme.icons[icon]] : ['far', icon]);
+  const getIcon = () => {
+    if (Array.isArray(icon)) return icon;
+    return (themed ? ['far', theme.icons[icon]] : ['far', icon]);
+  };
   return (
     <FontAwesomeIcon icon={getIcon(icon)} {...rest} />
   );

@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Paper, Table, TableBody, TableCell, TableHead, TableRow,
 } from '@material-ui/core';
@@ -8,13 +7,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
 import CustomHighlighter from '../_common/CustomHighlighter';
+import CustomIcon from '../_common/CustomIcon';
 
 const getIcon = (person, theme) => {
   const color = person.isActive ? theme.palette.active[500] : theme.palette.inactive[500];
+  let icon = ['fas', 'motorcycle'];
   if (person.bikeType === 'bike') {
-    return <FontAwesomeIcon color={color} icon={['far', 'bicycle']} style={{ marginRight: 4 }} />;
+    icon = ['far', 'bicycle'];
   }
-  return <FontAwesomeIcon color={color} icon={['fas', 'motorcycle']} style={{ marginRight: 4 }} />;
+  return <CustomIcon color={color} icon={icon} style={{ marginRight: 4 }} />;
 };
 
 const BikesTable = ({ list, textFilter, theme }) => (

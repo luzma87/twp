@@ -4,8 +4,8 @@ import { union } from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Users from '../../domain/Users';
+import BikesCards from './BikesCards';
 import BikesTable from './BikesTable';
-import UsersCards from './UsersCards';
 
 const BikesList = ({ users, activeOnly, textFilter }) => {
   if (!(users instanceof Users)) {
@@ -32,7 +32,7 @@ const BikesList = ({ users, activeOnly, textFilter }) => {
         <BikesTable list={list} textFilter={textFilter} />
       </Hidden>
       <Hidden mdUp>
-        <UsersCards list={list} textFilter={textFilter} />
+        <BikesCards list={list} textFilter={textFilter} />
       </Hidden>
     </>
   );
