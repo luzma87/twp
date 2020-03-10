@@ -43,7 +43,8 @@ const PaymentCard = ({
         </div>
         <TextWithIcon icon="building" text={building.name} themed />
         <TextWithIcon icon="at" text={ownerInfo} />
-        <UsersBank bank={ownerPayment} label />
+        {/*<UsersBank bank={ownerPayment} label />*/}
+        <TextWithIcon icon="piggy-bank" text={ownerPayment} />
         <Typography style={{ marginTop: 16 }}>
           <strong>{`${placesCount} puesto${placesCount === 1 ? '' : 's'}: ${numeral(total).format('$0,0.00')}`}</strong>
         </Typography>
