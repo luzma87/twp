@@ -10,6 +10,7 @@ import ActiveIndicator from '../_common/ActiveIndicator';
 import CardTitle from '../_common/CardTitle';
 import CustomIcon from '../_common/CustomIcon';
 import TextWithIcon from '../_common/TextWithIcon';
+import UsersBank from '../users/UsersBank';
 
 const PaymentCard = ({
   payment, index, onToggle, theme,
@@ -42,7 +43,7 @@ const PaymentCard = ({
         </div>
         <TextWithIcon icon="building" text={building.name} themed />
         <TextWithIcon icon="at" text={ownerInfo} />
-        <TextWithIcon icon="piggy-bank" text={ownerPayment} />
+        <UsersBank bank={ownerPayment} label />
         <Typography style={{ marginTop: 16 }}>
           <strong>{`${placesCount} puesto${placesCount === 1 ? '' : 's'}: ${numeral(total).format('$0,0.00')}`}</strong>
         </Typography>
