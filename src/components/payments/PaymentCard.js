@@ -62,14 +62,14 @@ const PaymentCard = ({
             ? `Pagado el ${moment(payed).format('DD/MM/YYYY')}`
             : 'No pagado'}
         </Typography>
-        <Typography color="secondary">
+        <Typography color="primary">
           <FormControlLabel
             control={(
               <Checkbox
                 name={`${id}::noFunds`}
                 checked={noFundsChecked}
                 onChange={onToggle}
-                color="secondary"
+                color="primary"
                 icon={<CustomIcon icon="square" themed={false} />}
                 checkedIcon={<CustomIcon icon="usd-square" themed={false} />}
                 inputProps={{
